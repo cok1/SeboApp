@@ -33,11 +33,45 @@ void GuiGenre::majTable()
 	QSqlRelationalTableModel *model = new QSqlRelationalTableModel();
 	//QSqlTableModel *model = new QSqlTableModel();
 
+	// Choix de la table à afficher
 	model->setTable("Genre");
 
+	// Enregistrement de la relation sur la table catégorie et affichage du libellé
 	model->setRelation(2, QSqlRelation("Categorie", "IdCategorie", "LibelleCategorie"));
 
+	// Récupération des données
 	model->select();
 
+	// Ajustement des titres des colonnes
+	model->setHeaderData(0, Qt::Horizontal, trUtf8("Id Genre"));
+	model->setHeaderData(1, Qt::Horizontal, trUtf8("Libellé"));
+	model->setHeaderData(2, Qt::Horizontal, trUtf8("Catégorie"));
+
+	// Application du modèle sur la vue
 	ui->view->setModel(model);
+
+	// Masquage de la colonne d’en-tête
+	ui->view->verticalHeader()->hide();
+
+	// Masquage de la première colonne contenant l'id
+	ui->view->hideColumn(0);
+
+	ui->view->setItemDelegate(new QSqlRelationalDelegate(ui->view));
+	
+	// Ajustement de la taille des colonnes pour remplir l'espace dispo
+	ui->view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
+
+	// Suppression de l'édition de la table
+	//ui->view->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+	// mode sélection ligne unique complète
+	ui->view->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->view->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	// Autorisation du tri
+	ui->view->setSortingEnabled(true);
+
+
+	// affichage de la table
+	ui->view->show();
 }

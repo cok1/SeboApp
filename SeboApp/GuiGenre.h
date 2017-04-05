@@ -4,6 +4,7 @@
 #include "Tools\Connexion.h"
 #include <qsqlrelationaltablemodel.h>
 #include <qsqldatabase.h>
+#include <qsqlrelationaldelegate.h>
 
 
 namespace Ui { class GuiGenre; };
