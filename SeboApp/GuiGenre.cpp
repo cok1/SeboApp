@@ -30,5 +30,14 @@ void GuiGenre::majTable()
 	//récupération de la base de données
 	QSqlDatabase db = conn->getConnexion();
 
-	QSqlRelationalTableModel *model
+	QSqlRelationalTableModel *model = new QSqlRelationalTableModel();
+	//QSqlTableModel *model = new QSqlTableModel();
+
+	model->setTable("Genre");
+
+	model->setRelation(2, QSqlRelation("Categorie", "IdCategorie", "LibelleCategorie"));
+
+	model->select();
+
+	ui->view->setModel(model);
 }

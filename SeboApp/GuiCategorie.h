@@ -5,6 +5,7 @@
 #include "Tools/Connexion.h"
 #include <qsqldatabase.h>
 #include <qsqltablemodel.h>
+#include <qsqlrelationaldelegate.h>
 #include "DAO\ManagerCategorie.h"
 #include "Entity\Categorie.h"
 #include <vector>
