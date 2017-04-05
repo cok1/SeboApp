@@ -25,12 +25,13 @@ class Ui_GuiGenre
 public:
     QHBoxLayout *horizontalLayout;
     QTableView *view;
+    QTableView *view2;
 
     void setupUi(QWidget *GuiGenre)
     {
         if (GuiGenre->objectName().isEmpty())
             GuiGenre->setObjectName(QStringLiteral("GuiGenre"));
-        GuiGenre->resize(400, 300);
+        GuiGenre->resize(630, 300);
         horizontalLayout = new QHBoxLayout(GuiGenre);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -39,6 +40,11 @@ public:
         view->setObjectName(QStringLiteral("view"));
 
         horizontalLayout->addWidget(view);
+
+        view2 = new QTableView(GuiGenre);
+        view2->setObjectName(QStringLiteral("view2"));
+
+        horizontalLayout->addWidget(view2);
 
 
         retranslateUi(GuiGenre);

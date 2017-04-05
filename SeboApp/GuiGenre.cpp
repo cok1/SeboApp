@@ -74,4 +74,36 @@ void GuiGenre::majTable()
 
 	// affichage de la table
 	ui->view->show();
+
+
+	// Test avec une deuxième table
+	ui->view2->setModel(model);
+
+	// Masquage de la colonne d’en-tête
+	ui->view2->verticalHeader()->hide();
+
+	// Masquage de la première colonne contenant l'id
+	ui->view2->hideColumn(0);
+
+	ui->view2->setItemDelegate(new QSqlRelationalDelegate(ui->view2));
+
+	// Ajustement de la taille des colonnes pour remplir l'espace dispo
+	ui->view2->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
+
+	// Suppression de l'édition de la table
+	//ui->view2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+	// mode sélection ligne unique complète
+	ui->view2->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->view2->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	// Autorisation du tri
+	ui->view2->setSortingEnabled(true);
+
+	ui->view2->setSelectionModel(ui->view->selectionModel());
+
+
+	// affichage de la table
+	ui->view2->show();
+
 }
