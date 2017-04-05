@@ -13,12 +13,19 @@
   <property name="windowTitle">
    <string>GuiGenre</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTableView" name="view"/>
+    <widget class="QComboBox" name="comboBox"/>
    </item>
    <item>
-    <widget class="QTableView" name="view2"/>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTableView" name="view"/>
+     </item>
+     <item>
+      <widget class="QTableView" name="view2"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

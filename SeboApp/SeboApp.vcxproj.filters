@@ -118,6 +118,15 @@
     <ClCompile Include="GuiGenre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RenduEssai.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RenduEssai.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="RenduEssai.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -140,6 +149,9 @@
     </CustomBuild>
     <CustomBuild Include="GuiGenre.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RenduEssai.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

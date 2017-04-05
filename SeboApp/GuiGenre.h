@@ -5,6 +5,8 @@
 #include <qsqlrelationaltablemodel.h>
 #include <qsqldatabase.h>
 #include <qsqlrelationaldelegate.h>
+#include <qdatawidgetmapper.h>
+#include "RenduEssai.h"
 
 
 namespace Ui { class GuiGenre; };

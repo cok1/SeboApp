@@ -106,4 +106,10 @@ void GuiGenre::majTable()
 	// affichage de la table
 	ui->view2->show();
 
+	// création d'une comboBox représentant les libellés des catégories
+	ui->comboBox->setModel(model->relationModel(2));
+	ui->comboBox->setModelColumn(model->relationModel(2)->fieldIndex("LibelleCategorie"));
+
+	ui->view->setStyleSheet("QHeaderView::section {background-color:green}");
+	ui->view->setItemDelegate(new RenduEssai);
 }

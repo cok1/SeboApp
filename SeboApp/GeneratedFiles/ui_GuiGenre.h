@@ -13,9 +13,11 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTableView>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +25,8 @@ QT_BEGIN_NAMESPACE
 class Ui_GuiGenre
 {
 public:
+    QVBoxLayout *verticalLayout;
+    QComboBox *comboBox;
     QHBoxLayout *horizontalLayout;
     QTableView *view;
     QTableView *view2;
@@ -32,9 +36,17 @@ public:
         if (GuiGenre->objectName().isEmpty())
             GuiGenre->setObjectName(QStringLiteral("GuiGenre"));
         GuiGenre->resize(630, 300);
-        horizontalLayout = new QHBoxLayout(GuiGenre);
+        verticalLayout = new QVBoxLayout(GuiGenre);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        comboBox = new QComboBox(GuiGenre);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+
+        verticalLayout->addWidget(comboBox);
+
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         view = new QTableView(GuiGenre);
         view->setObjectName(QStringLiteral("view"));
@@ -45,6 +57,9 @@ public:
         view2->setObjectName(QStringLiteral("view2"));
 
         horizontalLayout->addWidget(view2);
+
+
+        verticalLayout->addLayout(horizontalLayout);
 
 
         retranslateUi(GuiGenre);
