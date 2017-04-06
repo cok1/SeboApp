@@ -20,6 +20,12 @@ public:
 	/// <returns>un vecteur contenant l'ensemble des fournisseurs</returns>
 	static vector<shared_ptr<Fournisseur>> getListeFournisseur();
 
+	/// <summary>
+	/// Cette fonction permet de récupérer le fournisseur ayant le libellé donné en paramètre
+	/// </summary>
+	/// <param name="libelle">libellé du fournisseur que l'on souhaite récupéré</param>
+	/// <returns>Fournisseur correspondant au libellé fourni.</returns>
+	static shared_ptr<Fournisseur> getFournisseurWithName(QString libelle);
 
 	/// <summary>
 	/// Cette fonction permet d'ajouter un fournisseur dans la base de données

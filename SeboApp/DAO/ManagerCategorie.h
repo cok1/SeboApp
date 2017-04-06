@@ -21,6 +21,13 @@ public:
 	static vector<shared_ptr<Categorie>> getListCategorie();
 
 	/// <summary>
+	/// Cette fonction permet de récupérer la catégorie correspondante au libelle fourni en paramètre
+	/// </summary>
+	/// <param name="libelle">libelle de la catégorie que l'on souhaite récupérer</param>
+	/// <returns>la catégorie correspondante au libellé fourni</returns>
+	static shared_ptr<Categorie> getCategorieWithLibelle(QString libelle);
+
+	/// <summary>
 	/// Cette Méthode permet de supprimer une catégorie de la base de données
 	/// </summary>
 	/// <param name="catASupprimer">Catégorie à supprimer</param>

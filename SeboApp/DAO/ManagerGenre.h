@@ -22,6 +22,13 @@ public:
 	static vector<shared_ptr<Genre>> getListeGenre();
 
 	/// <summary>
+	/// Cette fonction permet de récupérer le genre avec le libellé fourni en paramètre
+	/// </summary>
+	/// <param name="libelle">libellé du genre que l'on souhaite récupérer</param>
+	/// <returns>le genre correspondant au libellé fourni</returns>
+	static shared_ptr<Genre> getGenreWithLibelle(QString libelle);
+
+	/// <summary>
 	/// Cette fonction permet d'ajouter un genre dans la base de données
 	/// </summary>
 	/// <param name="genreAAjouter">Genre que l'on souhaite ajouté dans la base de données</param>

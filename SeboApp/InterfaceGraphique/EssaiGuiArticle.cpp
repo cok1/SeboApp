@@ -96,6 +96,7 @@ void EssaiGuiArticle::initTable()
 
 void EssaiGuiArticle::creerArticle()
 {
+	ui.lblGenre->setText(ui.cbFournisseur->currentText());
 	Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), 1, (float) ui.spPrixFournisseur->value(), 1, ui.ckReapprovisionnable->isChecked());
 	ManagerArticle::addArticle(nouvelArticle);
 	majAffichage();

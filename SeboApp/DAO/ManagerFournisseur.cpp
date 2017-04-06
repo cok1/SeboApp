@@ -50,6 +50,11 @@ vector<shared_ptr<Fournisseur>> ManagerFournisseur::getListeFournisseur()
 	return listeFournisseur;
 }
 
+shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString libelle)
+{
+	return shared_ptr<Fournisseur>();
+}
+
 bool ManagerFournisseur::addFournisseur(Fournisseur fournisseurAAJouter)
 {
 	return addFournisseur(fournisseurAAJouter.getNomFournisseur());
