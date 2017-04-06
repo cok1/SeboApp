@@ -28,6 +28,13 @@ public:
 	static shared_ptr<Fournisseur> getFournisseurWithName(QString nom);
 
 	/// <summary>
+	/// Cette fonction permet de récupérer l'identifiant du fournisseur ayant le libellé donné en paramètre
+	/// </summary>
+	/// <param name="libelle">libellé du fournisseur que l'on souhaite récupéré</param>
+	/// <returns>L'identifiant du fournisseur correspondant au libellé fourni.</returns>
+	static int getIdFournisseur(QString nom);
+
+	/// <summary>
 	/// Cette fonction permet d'ajouter un fournisseur dans la base de données
 	/// </summary>
 	/// <param name="fournisseurAAJouter">fournisseur que l'on souhaite ajouter</param>

@@ -6,8 +6,8 @@ Article::Article()
 {
 }
 
-Article::Article(QString libelle, float prix, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference)
-	: m_strLibelle(libelle), m_fPrix(prix), m_nIdGenre(idGenre), m_fPrixFournisseur(prixFournisseur), m_nIdFournisseur(idFournisseur), m_isReapprovisionnable(reapprovisionnable), m_nReference(reference)
+Article::Article(QString libelle, float prix, QString photo, QString description, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference)
+	: m_strLibelle(libelle), m_fPrix(prix), m_strPhoto(photo), m_strDescription(description), m_nIdGenre(idGenre), m_fPrixFournisseur(prixFournisseur), m_nIdFournisseur(idFournisseur), m_isReapprovisionnable(reapprovisionnable), m_nReference(reference)
 {
 }
 
@@ -50,6 +50,18 @@ bool Article::setPrix(float prix)
 
 	// retour du résultat de la fonction
 	return resultat;
+}
+
+bool Article::setPhoto(QString photo)
+{
+	m_strPhoto = photo;
+	return true;
+}
+
+bool Article::setDescription(QString description)
+{
+	m_strDescription = description;
+	return true;
 }
 
 bool Article::setIdGenre(int idGenre)
@@ -121,6 +133,16 @@ int Article::getReference()
 QString Article::getLibelle()
 {
 	return QString(m_strLibelle);
+}
+
+QString Article::getPhoto()
+{
+	return QString(m_strPhoto);
+}
+
+QString Article::getDescription()
+{
+	return QString(m_strDescription);
 }
 
 float Article::getPrix()

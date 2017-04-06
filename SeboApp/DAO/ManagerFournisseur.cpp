@@ -71,7 +71,7 @@ shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 		requete.prepare("select * from Fournisseur where NomFournisseur = :nomFournisseur");
 
 		// binding des valeurs
-		requete.bindValue(":nomFournisseur", QString("Glénat"));
+		requete.bindValue(":nomFournisseur", nom);
 
 		// exécution de la requête
 		requete.exec();
@@ -91,6 +91,49 @@ shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 
 	// retour de la catégorie
 	return fournisseur;
+}
+
+int ManagerFournisseur::getIdFournisseur(QString nom)
+{
+	// Declaration
+	int idFournisseur = -1;
+
+	try
+	{
+		// Récupération du pointeur vers l'instance unique de la connexion
+		std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
+
+		// ouverture de la connexion
+		db.open();
+
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("select IdFournisseur from Fournisseur where NomFournisseur = :nomFournisseur");
+
+		// binding des valeurs
+		requete.bindValue(":nomFournisseur", nom);
+
+		// exécution de la requête
+		requete.exec();
+
+		if (requete.next())
+		{
+			idFournisseur = requete.value("IdFournisseur").toInt();
+		}
+
+		// fermeture de la connexion
+		db.close();
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+	}
+
+	// retour de la catégorie
+	return idFournisseur;
 }
 
 bool ManagerFournisseur::addFournisseur(Fournisseur fournisseurAAJouter)

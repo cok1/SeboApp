@@ -37,7 +37,7 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 		while (requete.next())
 		{
 			// Insertion de l'Article dans le vecteur
-			listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("IdGenre").toInt(),
+			listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("PhotoArticle").toString(), requete.value("DescriptionArticle").toString(), requete.value("IdGenre").toInt(),
 				requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reapprovisionnable").toBool(), requete.value("Reference").toInt()));
 		}
 		db.close();
@@ -53,10 +53,10 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 
 bool ManagerArticle::addArticle(Article newArticle)
 {
-	return addArticle(newArticle.getLibelle(), newArticle.getPrix(), newArticle.getIdGenre(), newArticle.getPrixFournisseur(), newArticle.getIdFournisseur(), newArticle.isReapprovisionnable());
+	return addArticle(newArticle.getLibelle(), newArticle.getPrix(), newArticle.getPhoto(), newArticle.getDescription(),newArticle.getIdGenre(), newArticle.getPrixFournisseur(), newArticle.getIdFournisseur(), newArticle.isReapprovisionnable());
 }
 
-bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre, double prixFournisseur, int idFournisseur, bool isReapprovisionnable)
+bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, QString photo, QString description, int idGenre, double prixFournisseur, int idFournisseur, bool isReapprovisionnable)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
@@ -77,11 +77,13 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, IdGenre, PrixFournisseur, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
+		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, PhotoArticle, DescriptionArticle, IdGenre, PrixFournisseur, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
 
 		// binding des valeurs
 		requete.bindValue(":libelleArticle", libelle);
 		requete.bindValue(":prix", prixVenteHT);
+		requete.bindValue(":photo", photo);
+		requete.bindValue(":description", description);
 		requete.bindValue(":idGenre", idGenre);
 		requete.bindValue(":prixFournisseur", prixFournisseur);
 		requete.bindValue(":idFournisseur", idFournisseur);
@@ -123,11 +125,13 @@ bool ManagerArticle::modifArticle(Article articleAModifier)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("UPDATE Article set LibelleArticle=:libelleArticle, Prix = :prix, IdGenre = :idGenre, PrixFournisseur = :prixFournisseur, IdFournisseur = :idFournisseur");
+		requete.prepare("UPDATE Article set LibelleArticle=:libelleArticle, Prix = :prix, PhotoArticle = :photo, DescriptionArticle = :description, IdGenre = :idGenre, PrixFournisseur = :prixFournisseur, IdFournisseur = :idFournisseur");
 
 		// binding des valeurs
 		requete.bindValue(":libelleArticle", articleAModifier.getLibelle());
 		requete.bindValue(":prix", articleAModifier.getPrix());
+		requete.bindValue(":photo", articleAModifier.getPhoto());
+		requete.bindValue(":description", articleAModifier.getDescription());
 		requete.bindValue(":idGenre", articleAModifier.getIdGenre());
 		requete.bindValue(":prixFournisseur", articleAModifier.getPrixFournisseur());
 		requete.bindValue(":idFournisseur", articleAModifier.getIdFournisseur());

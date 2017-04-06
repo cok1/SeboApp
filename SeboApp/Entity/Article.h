@@ -15,11 +15,14 @@ public:
 	/// </summary>
 	/// <param name="libelle">libellé de l'article</param>
 	/// <param name="prix">prix de vente de l'article HT</param>
+	/// <param name="photo">chemin de la photo de l'article</param>
+	/// <param name="description">description de l'article</param>
 	/// <param name="idGenre">genre de l'article</param>
 	/// <param name="prixFournisseur">prix d'achat</param>
 	/// <param name="idFournisseur">identifiant du fournisseur de l'article</param>
+	/// <param name="reapprovisionnable">permet de savoir si l'article est réapprovisionnable</param>
 	/// <param name="reference">référence de l'article (par défaut -1)</param>
-	Article(QString libelle, float prix, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference=-1);
+	Article(QString libelle, float prix, QString photo, QString description, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference=-1);
 
 	/// <summary>
 	/// Destructeur par défaut de l'article
@@ -44,6 +47,20 @@ public:
 	/// <param name="prix">nouveau prix de vente HT</param>
 	/// <returns>true si la modification a été faite, false sinon.</returns>
 	bool setPrix(float prix);
+
+	/// <summary>
+	/// Cette fonction permet de modifier le nom du fichier contenant la photo l'article
+	/// </summary>
+	/// <param name="photo">nom du fichier contenant la photo de l'article</param>
+	/// <returns>true si la modification a été faite, false sinon.</returns>
+	bool setPhoto(QString photo);
+
+	/// <summary>
+	/// Cette fonction permet de modifier la description de l'article
+	/// </summary>
+	/// <param name="description">description de l'article</param>
+	/// <returns>true si la modification a été faite, false sinon.</returns>
+	bool setDescription(QString description);
 
 	/// <summary>
 	/// Cette fonction permet de récupérer l'identifiant du genre de l'article
@@ -91,6 +108,18 @@ public:
 	QString getLibelle();
 
 	/// <summary>
+	/// Cette fonction permet de récupérer le nom de fichier de la photo de l'article avec l'extension
+	/// </summary>
+	/// <returns>le nom de fichier de la photo de l'article avec l'extension</returns>
+	QString getPhoto();
+
+	/// <summary>
+	/// Cette fonction permet de récupérer la description de l'article
+	/// </summary>
+	/// <returns>la description de l'article</returns>
+	QString getDescription();
+
+	/// <summary>
 	/// Cette fonction permet de récupérer le prix de vente HT de l'article
 	/// </summary>
 	/// <returns>le prix de vente HT de l'article</returns>
@@ -130,6 +159,16 @@ private:
 	/// Libellé de l'article
 	/// </summary>
 	QString m_strLibelle;
+
+	/// <summary>
+	/// nom du fichier contenant la photo avec l'extension
+	/// </summary>
+	QString m_strPhoto;
+
+	/// <summary>
+	/// Description complète de l'article
+	/// </summary>
+	QString m_strDescription;
 
 	/// <summary>
 	/// Prix de vente Hors Taxe de l'article

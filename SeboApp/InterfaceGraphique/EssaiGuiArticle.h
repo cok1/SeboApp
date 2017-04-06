@@ -4,6 +4,8 @@
 #include "ui_EssaiGuiArticle.h"
 #include <qsqlrelationaltablemodel.h>
 #include <qsqlrelationaldelegate.h>
+#include <qmessagebox.h>
+
 #include "Tools\Connexion.h"
 #include "Entity\Article.h"
 #include "Entity\Genre.h"

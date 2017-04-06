@@ -95,6 +95,49 @@ shared_ptr<Genre> ManagerGenre::getGenreWithLibelle(QString libelle)
 	return genre;
 }
 
+int ManagerGenre::getIdGenre(QString libelle)
+{
+	// Declaration
+	int idGenre = -1;
+
+	try
+	{
+		// Récupération du pointeur vers l'instance unique de la connexion
+		std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
+
+		// ouverture de la connexion
+		db.open();
+
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("select IdGenre from Genre where LibelleGenre = :libelleGenre");
+
+		// binding des valeurs
+		requete.bindValue(":libelleGenre", libelle);
+
+		// exécution de la requête
+		requete.exec();
+
+		if (requete.next())
+		{
+			idGenre = requete.value("IdGenre").toInt();
+		}
+
+		// fermeture de la connexion
+		db.close();
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+	}
+
+	// retour de la catégorie
+	return idGenre;
+}
+
 bool ManagerGenre::addGenre(Genre genreAAjouter)
 {
 	return addGenre(genreAAjouter.getLibelle(), genreAAjouter.getIdCategorie());

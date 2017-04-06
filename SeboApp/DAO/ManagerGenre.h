@@ -29,6 +29,13 @@ public:
 	static shared_ptr<Genre> getGenreWithLibelle(QString libelle);
 
 	/// <summary>
+	/// Cette fonction permet de récupérer l'identifiant du genre avec le libellé fourni en paramètre
+	/// </summary>
+	/// <param name="libelle">libellé du genre que l'on souhaite récupérer</param>
+	/// <returns>L'identifiant du genre correspondant au libellé fourni</returns>
+	static int getIdGenre(QString libelle);
+
+	/// <summary>
 	/// Cette fonction permet d'ajouter un genre dans la base de données
 	/// </summary>
 	/// <param name="genreAAjouter">Genre que l'on souhaite ajouté dans la base de données</param>

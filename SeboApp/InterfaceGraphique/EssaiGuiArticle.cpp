@@ -40,8 +40,8 @@ void EssaiGuiArticle::initModel()
 	m_mModel->setTable("Article");
 
 	// Récupération des relation
-	m_mModel->setRelation(3, QSqlRelation("Genre", "IdGenre", "LibelleGenre"));
-	m_mModel->setRelation(5, QSqlRelation("Fournisseur", "IdFournisseur", "NomFournisseur"));
+	m_mModel->setRelation(5, QSqlRelation("Genre", "IdGenre", "LibelleGenre"));
+	m_mModel->setRelation(7, QSqlRelation("Fournisseur", "IdFournisseur", "NomFournisseur"));
 
 	// Récupération des données
 	m_mModel->select();
@@ -50,9 +50,11 @@ void EssaiGuiArticle::initModel()
 	m_mModel->setHeaderData(0, Qt::Horizontal, trUtf8("Référence"));
 	m_mModel->setHeaderData(1, Qt::Horizontal, trUtf8("Libellé"));
 	m_mModel->setHeaderData(2, Qt::Horizontal, trUtf8("Prix"));
-	m_mModel->setHeaderData(3, Qt::Horizontal, trUtf8("Genre"));
-	m_mModel->setHeaderData(4, Qt::Horizontal, trUtf8("Prix Achat"));
-	m_mModel->setHeaderData(5, Qt::Horizontal, trUtf8("Fournisseur"));
+	m_mModel->setHeaderData(3, Qt::Horizontal, trUtf8("PhotoArticle"));
+	m_mModel->setHeaderData(4, Qt::Horizontal, trUtf8("DescriptionArticle"));
+	m_mModel->setHeaderData(5, Qt::Horizontal, trUtf8("Genre"));
+	m_mModel->setHeaderData(6, Qt::Horizontal, trUtf8("Prix Achat"));
+	m_mModel->setHeaderData(7, Qt::Horizontal, trUtf8("Fournisseur"));
 }
 
 void EssaiGuiArticle::majAffichage()
@@ -70,8 +72,8 @@ void EssaiGuiArticle::majAffichage()
 void EssaiGuiArticle::initCombo()
 {
 	// initialisation de la comboBox de sélection du genre
-	ui.cbGenre->setModel(m_mModel->relationModel(3));
-	ui.cbGenre->setModelColumn(m_mModel->relationModel(3)->fieldIndex("LibelleGenre"));
+	ui.cbGenre->setModel(m_mModel->relationModel(5));
+	ui.cbGenre->setModelColumn(m_mModel->relationModel(5)->fieldIndex("LibelleGenre"));
 
 	// repositionnement de l'index
 	if (m_nIndexGenre > -1 && m_nIndexGenre < ui.cbGenre->count())
@@ -80,8 +82,8 @@ void EssaiGuiArticle::initCombo()
 	}
 
 	// initialisation de la comboBox de sélection du fournisseur
-	ui.cbFournisseur->setModel(m_mModel->relationModel(5));
-	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(5)->fieldIndex("NomFournisseur"));
+	ui.cbFournisseur->setModel(m_mModel->relationModel(7));
+	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(7)->fieldIndex("NomFournisseur"));
 
 	// repositionnement de l'index
 	if (m_nIndexFournisseur > -1 && m_nIndexFournisseur < ui.cbFournisseur->count())
@@ -114,14 +116,34 @@ void EssaiGuiArticle::initTable()
 
 void EssaiGuiArticle::creerArticle()
 {	
-	// Récupération des index 
-	shared_ptr<Genre> genre = ManagerGenre::getGenreWithLibelle(ui.cbGenre->currentText());
-	shared_ptr<Fournisseur> fournisseur = ManagerFournisseur::getFournisseurWithName(ui.cbFournisseur->currentText());
+	// Récupération des infos
+	QString nomFournisseur = ui.cbFournisseur->currentText();
+	QString libelleGenre = ui.cbGenre->currentText();
 
-	if (fournisseur != nullptr && genre != nullptr)
+	// Récupération des identifiants 
+	int idFournisseur = ManagerFournisseur::getIdFournisseur(nomFournisseur);
+	//int idGenre = ManagerGenre::getIdGenre(libelleGenre);
+	int idGenre = -1;
+
+	if (idFournisseur != -1 && idGenre != -1)
 	{
-		Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), genre->getId(), (float)ui.spPrixFournisseur->value(), fournisseur->getIdFournisseur(), ui.ckReapprovisionnable->isChecked());
+		// Création et ajout de l'article dans la base de données
+		Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), QString(""), QString(""), idGenre, (float)ui.spPrixFournisseur->value(), idFournisseur, ui.ckReapprovisionnable->isChecked());
 		ManagerArticle::addArticle(nouvelArticle);
+	}
+	else
+	{
+		QString messageErreur;
+		if (idFournisseur == -1)
+		{
+			messageErreur = "Le fournisseur fourni n'existe pas dans la base de données!";
+		}
+		else
+		{
+			messageErreur = "Le genre fourni n'existe pas dans la base de données!";
+		}
+		unique_ptr<QMessageBox> erreur = make_unique<QMessageBox>(QMessageBox::Icon::Critical, trUtf8("Création de l'article impossible!"), messageErreur);
+		int reponse = erreur->exec();
 	}
 
 	// mise à jour de l'affichage
