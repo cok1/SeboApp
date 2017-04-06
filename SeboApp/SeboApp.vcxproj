@@ -161,7 +161,20 @@
     <ClInclude Include="DAO\ManagerGenre.h" />
     <ClInclude Include="DAO\ManagerRole.h" />
     <ClInclude Include="Entity\ActeurArticle.h" />
-    <ClInclude Include="Entity\Fournisseur.h" />
+    <CustomBuild Include="Entity\Fournisseur.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+    </CustomBuild>
     <ClInclude Include="Entity\Article.h" />
     <ClInclude Include="Entity\Acteur.h" />
     <ClInclude Include="Entity\ActeurArticleOld.h" />

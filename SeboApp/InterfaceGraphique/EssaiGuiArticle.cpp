@@ -57,8 +57,14 @@ void EssaiGuiArticle::initModel()
 
 void EssaiGuiArticle::majAffichage()
 {
+	// récupération des index des comboBosx pour pouvoir les repositionné
+	m_nIndexGenre = ui.cbGenre->currentIndex();
+	m_nIndexFournisseur = ui.cbFournisseur->currentIndex();
+
+	// Réinitialisation de l'affichage de chaque élément
 	initModel();
 	initTable();
+	initCombo();
 }
 
 void EssaiGuiArticle::initCombo()
@@ -67,9 +73,21 @@ void EssaiGuiArticle::initCombo()
 	ui.cbGenre->setModel(m_mModel->relationModel(3));
 	ui.cbGenre->setModelColumn(m_mModel->relationModel(3)->fieldIndex("LibelleGenre"));
 
+	// repositionnement de l'index
+	if (m_nIndexGenre > -1 && m_nIndexGenre < ui.cbGenre->count())
+	{
+		ui.cbGenre->setCurrentIndex(m_nIndexGenre);
+	}
+
 	// initialisation de la comboBox de sélection du fournisseur
 	ui.cbFournisseur->setModel(m_mModel->relationModel(5));
 	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(5)->fieldIndex("NomFournisseur"));
+
+	// repositionnement de l'index
+	if (m_nIndexFournisseur > -1 && m_nIndexFournisseur < ui.cbFournisseur->count())
+	{
+		ui.cbFournisseur->setCurrentIndex(m_nIndexFournisseur);
+	}
 }
 
 void EssaiGuiArticle::initTable()
@@ -95,9 +113,17 @@ void EssaiGuiArticle::initTable()
 }
 
 void EssaiGuiArticle::creerArticle()
-{
-	ui.lblGenre->setText(ui.cbFournisseur->currentText());
-	Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), 1, (float) ui.spPrixFournisseur->value(), 1, ui.ckReapprovisionnable->isChecked());
-	ManagerArticle::addArticle(nouvelArticle);
+{	
+	// Récupération des index 
+	shared_ptr<Genre> genre = ManagerGenre::getGenreWithLibelle(ui.cbGenre->currentText());
+	shared_ptr<Fournisseur> fournisseur = ManagerFournisseur::getFournisseurWithName(ui.cbFournisseur->currentText());
+
+	if (fournisseur != nullptr && genre != nullptr)
+	{
+		Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), genre->getId(), (float)ui.spPrixFournisseur->value(), fournisseur->getIdFournisseur(), ui.ckReapprovisionnable->isChecked());
+		ManagerArticle::addArticle(nouvelArticle);
+	}
+
+	// mise à jour de l'affichage
 	majAffichage();
 }

@@ -50,9 +50,47 @@ vector<shared_ptr<Fournisseur>> ManagerFournisseur::getListeFournisseur()
 	return listeFournisseur;
 }
 
-shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString libelle)
+shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 {
-	return shared_ptr<Fournisseur>();
+	// Declaration
+	shared_ptr<Fournisseur> fournisseur = nullptr;
+
+	try
+	{
+		// Récupération du pointeur vers l'instance unique de la connexion
+		std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
+
+		// ouverture de la connexion
+		db.open();
+
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("select * from Fournisseur where NomFournisseur = :nomFournisseur");
+
+		// binding des valeurs
+		requete.bindValue(":nomFournisseur", QString("Glénat"));
+
+		// exécution de la requête
+		requete.exec();
+
+		if (requete.next())
+		{
+			fournisseur = make_shared<Fournisseur>(requete.value("NomFournisseur").toString(), requete.value("IdFournisseur").toInt());
+		}
+
+		// fermeture de la connexion
+		db.close();
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+	}
+
+	// retour de la catégorie
+	return fournisseur;
 }
 
 bool ManagerFournisseur::addFournisseur(Fournisseur fournisseurAAJouter)
