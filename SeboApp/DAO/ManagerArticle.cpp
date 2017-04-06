@@ -38,7 +38,7 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 		{
 			// Insertion de l'Article dans le vecteur
 			listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("IdGenre").toInt(),
-				requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reference").toInt()));
+				requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reapprovisionnable").toBool(), requete.value("Reference").toInt()));
 		}
 		db.close();
 	}
@@ -53,10 +53,10 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 
 bool ManagerArticle::addArticle(Article newArticle)
 {
-	return addArticle(newArticle.getLibelle(), newArticle.getPrix(), newArticle.getIdGenre(), newArticle.getPrixFournisseur(), newArticle.getIdFournisseur());
+	return addArticle(newArticle.getLibelle(), newArticle.getPrix(), newArticle.getIdGenre(), newArticle.getPrixFournisseur(), newArticle.getIdFournisseur(), newArticle.isReapprovisionnable());
 }
 
-bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre, double prixFournisseur, int idFournisseur)
+bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre, double prixFournisseur, int idFournisseur, bool isReapprovisionnable)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
@@ -77,7 +77,7 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, IdGenre, PrixFournisseur, IdFournisseur) VALUES (:libelleArticle, :prix, :idGenre, :prixFournisseur, :idFournisseur)");
+		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, IdGenre, PrixFournisseur, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
 
 		// binding des valeurs
 		requete.bindValue(":libelleArticle", libelle);
@@ -85,6 +85,7 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, int idGenre
 		requete.bindValue(":idGenre", idGenre);
 		requete.bindValue(":prixFournisseur", prixFournisseur);
 		requete.bindValue(":idFournisseur", idFournisseur);
+		requete.bindValue(":isReapprovisionnable", isReapprovisionnable);
 
 		// exécution de la requête
 		resultat = requete.exec();

@@ -37,7 +37,7 @@ public:
 	/// <param name="prixFournisseur">prix d'achat fournisseur de l'article</param>
 	/// <param name="idFournisseur">identifiant du fournisseur de l'article</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addArticle(QString libelle, double prixVenteHT, int idGenre, double prixFournisseur, int idFournisseur);
+	static bool addArticle(QString libelle, double prixVenteHT, int idGenre, double prixFournisseur, int idFournisseur, bool isReapprovisionnable);
 
 	/// <summary>
 	/// Cette fonction permet de modifier un article de la base de données

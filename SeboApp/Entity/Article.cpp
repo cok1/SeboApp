@@ -6,8 +6,8 @@ Article::Article()
 {
 }
 
-Article::Article(QString libelle, float prix, int idGenre, float prixFournisseur, int idFournisseur, int reference)
-	: m_strLibelle(libelle), m_fPrix(prix), m_nIdGenre(idGenre), m_fPrixFournisseur(prixFournisseur), m_nIdFournisseur(idFournisseur), m_nReference(reference)
+Article::Article(QString libelle, float prix, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference)
+	: m_strLibelle(libelle), m_fPrix(prix), m_nIdGenre(idGenre), m_fPrixFournisseur(prixFournisseur), m_nIdFournisseur(idFournisseur), m_isReapprovisionnable(reapprovisionnable), m_nReference(reference)
 {
 }
 
@@ -106,6 +106,13 @@ bool Article::setIdFournisseur(int idFournisseur)
 	return resultat;
 }
 
+bool Article::setReapprovissionnable(bool etat)
+{
+	m_isReapprovisionnable = etat;
+
+	return true;
+}
+
 int Article::getReference()
 {
 	return m_nReference;
@@ -134,4 +141,9 @@ float Article::getPrixFournisseur()
 int Article::getIdFournisseur()
 {
 	return m_nIdFournisseur;
+}
+
+bool Article::isReapprovisionnable()
+{
+	return m_isReapprovisionnable;
 }

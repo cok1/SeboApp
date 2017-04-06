@@ -1,4 +1,7 @@
 <RCC>
-    <qresource prefix="SeboApp">
-    </qresource>
+  <qresource prefix="SeboApp">
+    <file>Resources/Ajouter.png</file>
+    <file>Resources/modifier.png</file>
+    <file>Resources/supprimer.png</file>
+  </qresource>
 </RCC>

@@ -127,6 +127,15 @@
     <ClCompile Include="RenduEssai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_EssaiGuiArticle.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_EssaiGuiArticle.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\EssaiGuiArticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -152,6 +161,12 @@
     </CustomBuild>
     <CustomBuild Include="RenduEssai.h">
       <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\EssaiGuiArticle.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\EssaiGuiArticle.ui">
+      <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -212,5 +227,13 @@
     <ClInclude Include="GeneratedFiles\ui_GuiGenre.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_EssaiGuiArticle.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Ajouter.png" />
+    <Image Include="Resources\modifier.png" />
+    <Image Include="Resources\supprimer.png" />
   </ItemGroup>
 </Project>
