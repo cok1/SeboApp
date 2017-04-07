@@ -6,6 +6,7 @@
 #include <qsqlrelationaldelegate.h>
 #include <qsqlrecord.h>
 #include <qmessagebox.h>
+#include <qsortfilterproxymodel.h>
 
 #include "Tools\Connexion.h"
 #include "Entity\Article.h"
@@ -28,6 +29,7 @@ private:
 	QSqlRelationalTableModel *m_mModel;
 	int m_nIndexFournisseur = -1;
 	int m_nIndexGenre = -1;
+	QSortFilterProxyModel *m_pmProxyModel;
 
 	void majAffichage();
 	void initCombo();
@@ -38,4 +40,5 @@ private slots:
 	void initModel();
 	void initTable();
 	void creerArticle();
+	void filtrerFournisseur(QString texte);
 };

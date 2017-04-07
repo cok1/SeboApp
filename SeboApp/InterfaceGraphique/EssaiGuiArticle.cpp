@@ -22,6 +22,7 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 	ui.btnModifier->setVisible(false);
 
 	connect(ui.btnAjouter, SIGNAL(clicked()), SLOT(creerArticle()));
+	connect(ui.cbFournisseur, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerFournisseur(QString)));
 }
 
 EssaiGuiArticle::~EssaiGuiArticle()
@@ -80,7 +81,7 @@ void EssaiGuiArticle::initCombo()
 	ui.cbGenre->setModelColumn(m_mModel->relationModel(5)->fieldIndex("LibelleGenre"));
 
 	// repositionnement de l'index
-	if (m_nIndexGenre > -1 && m_nIndexGenre < ui.cbGenre->count())
+	if (m_nIndexGenre > -2 && m_nIndexGenre < ui.cbGenre->count())
 	{
 		ui.cbGenre->setCurrentIndex(m_nIndexGenre);
 	}
@@ -90,7 +91,7 @@ void EssaiGuiArticle::initCombo()
 	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(7)->fieldIndex("NomFournisseur"));
 
 	// repositionnement de l'index
-	if (m_nIndexFournisseur > -1 && m_nIndexFournisseur < ui.cbFournisseur->count())
+	if (m_nIndexFournisseur > -2 && m_nIndexFournisseur < ui.cbFournisseur->count())
 	{
 		ui.cbFournisseur->setCurrentIndex(m_nIndexFournisseur);
 	}
@@ -131,18 +132,24 @@ void EssaiGuiArticle::essaiRequeteModel()
 	//model.select();
 	//QString libelle = model.record(1).value("LibelleArticle").toString();
 	//m_mModel->setSort(1, Qt::SortOrder::DescendingOrder);
-
+	/*
 	QString libelle = m_mModel->record(0).value("LibelleArticle").toString();
 	
+
 	QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", libelle);
 	int reponse = essai->exec();
+	*/
 	
 }
 
 void EssaiGuiArticle::initTable()
 {
+	m_pmProxyModel = new QSortFilterProxyModel();
+	ui.tvArticles->setModel(m_pmProxyModel);
+	m_pmProxyModel->setSourceModel(m_mModel);
+
 	// Application du modèle à la vue
-	ui.tvArticles->setModel(m_mModel);
+	//ui.tvArticles->setModel(m_mModel);
 
 	// Masquage des nom de ligne
 	ui.tvArticles->verticalHeader()->hide();
@@ -162,6 +169,9 @@ void EssaiGuiArticle::initTable()
 
 	// Triage des données activées
 	ui.tvArticles->setSortingEnabled(true);
+
+	ui.tvArticles->sortByColumn(0, Qt::AscendingOrder);
+
 
 	// Affichage de la table
 	ui.tvArticles->show();
@@ -201,5 +211,15 @@ void EssaiGuiArticle::creerArticle()
 
 	// mise à jour de l'affichage
 	majAffichage();
+}
+
+void EssaiGuiArticle::filtrerFournisseur(QString texte)
+{
+	// Exemple de tri
+	m_pmProxyModel->setFilterKeyColumn(7);
+	m_pmProxyModel->setDynamicSortFilter(true);
+	m_pmProxyModel->setFilterRegExp(texte);
+	//QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", texte);
+	//int reponse = essai->exec();
 }
 
