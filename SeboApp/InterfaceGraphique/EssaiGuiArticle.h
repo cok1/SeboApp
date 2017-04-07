@@ -4,6 +4,7 @@
 #include "ui_EssaiGuiArticle.h"
 #include <qsqlrelationaltablemodel.h>
 #include <qsqlrelationaldelegate.h>
+#include <qsqlrecord.h>
 #include <qmessagebox.h>
 
 #include "Tools\Connexion.h"
@@ -30,6 +31,8 @@ private:
 
 	void majAffichage();
 	void initCombo();
+	void essaiQVariantArticle();
+	void essaiRequeteModel();
 
 private slots:
 	void initModel();

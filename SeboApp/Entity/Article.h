@@ -1,14 +1,25 @@
 #pragma once
+#include <qobject.h>
+#include <qmetatype.h>
 #include <qstring.h>
 #include <ToolBox.h>
 
-class Article
+class Article: public QObject
 {
+	Q_OBJECT
+	Q_CLASSINFO("author", "Corentin Rogeré")
+	
 public:
 	/// <summary>
 	/// Constructeur par défaut
 	/// </summary>
 	Article();
+
+	/// <summary>
+	/// Constructeur de copie de la classe article
+	/// </summary>
+	/// <param name="article">article à partir duquel on souhaite construire le nouvel article</param>
+	Article(const Article &article);
 
 	/// <summary>
 	/// Constructeur paramétré
@@ -28,6 +39,21 @@ public:
 	/// Destructeur par défaut de l'article
 	/// </summary>
 	~Article();
+
+	/// <summary>
+	/// Redéfinition de l'opérateur d'affectation
+	/// </summary>
+	/// <param name="article">article que l'on veut affecter à l'article d'origine</param>
+	/// <returns>la copie de l'article d'origine</returns>
+	Article& operator =(const Article& article);
+
+	/// <summary>
+	/// Cette fonction permet de récupérer les attributs d'un autre article
+	/// </summary>
+	/// <param name="autreArticle">article à partir duquel on souhaite récupérer les attributs</param>
+	/// <returns>l'article avec les attributs récupérés</returns>
+	void swap(Article& autreArticle) throw();
+
 
 
 	//**********************************************************************************************************************************************
@@ -196,3 +222,4 @@ private:
 	bool m_isReapprovisionnable;
 };
 
+Q_DECLARE_METATYPE(Article)

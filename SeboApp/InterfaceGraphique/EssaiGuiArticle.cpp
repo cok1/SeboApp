@@ -10,12 +10,14 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 
 	if (conn != nullptr)
 		conn->etablirConnexion("capelli", "developpeur");
-
+	
 	initModel();
 
 	initTable();
 
 	initCombo();
+
+	essaiRequeteModel();
 
 	ui.btnModifier->setVisible(false);
 
@@ -45,6 +47,8 @@ void EssaiGuiArticle::initModel()
 
 	// Récupération des données
 	m_mModel->select();
+
+	m_mModel->sort(0, Qt::AscendingOrder);
 
 	// Modification des titres des colonnes
 	m_mModel->setHeaderData(0, Qt::Horizontal, trUtf8("Référence"));
@@ -92,6 +96,49 @@ void EssaiGuiArticle::initCombo()
 	}
 }
 
+void EssaiGuiArticle::essaiQVariantArticle()
+{
+	Article article = Article("essai", 12.3f, "", "", 1, 4.3f, 1, false);
+	QVariant var;
+	var.setValue(article);
+
+	Article article2;
+	if (var.canConvert<Article>())
+	{
+		article2 = var.value<Article>();
+	}
+	else
+	{
+		article2 = Article("non", 0.0f, "", "", 0, 0.0f, 0, false);
+	}
+
+	article2.setLibelle("change");
+
+	QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", "article 2 : " + article2.getLibelle() + "  ; article 1 : " + article.getLibelle() + "      " + QString::number(article2.getIdFournisseur()));
+	int reponse = essai->exec();
+}
+
+void EssaiGuiArticle::essaiRequeteModel()
+{
+	//// récupération de la connexion
+	//std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+	////récupération de la base de données
+	//QSqlDatabase db = conn->getConnexion();
+
+	//QSqlTableModel model;
+	//model.setTable("Article");
+	//model.select();
+	//QString libelle = model.record(1).value("LibelleArticle").toString();
+	//m_mModel->setSort(1, Qt::SortOrder::DescendingOrder);
+
+	QString libelle = m_mModel->record(0).value("LibelleArticle").toString();
+	
+	QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", libelle);
+	int reponse = essai->exec();
+	
+}
+
 void EssaiGuiArticle::initTable()
 {
 	// Application du modèle à la vue
@@ -109,6 +156,12 @@ void EssaiGuiArticle::initTable()
 	// sélection ligne unique complète
 	ui.tvArticles->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui.tvArticles->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	// Couleur des lignes alternées
+	ui.tvArticles->setAlternatingRowColors(true);
+
+	// Triage des données activées
+	ui.tvArticles->setSortingEnabled(true);
 
 	// Affichage de la table
 	ui.tvArticles->show();
@@ -149,3 +202,4 @@ void EssaiGuiArticle::creerArticle()
 	// mise à jour de l'affichage
 	majAffichage();
 }
+

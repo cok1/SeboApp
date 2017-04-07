@@ -6,6 +6,10 @@ Acteur::Acteur()
 {
 }
 
+Acteur::Acteur(const Acteur &acteur):m_strNom(acteur.m_strNom), m_nIdRole(acteur.m_nIdRole), m_nId(acteur.m_nId)
+{
+}
+
 Acteur::Acteur(QString nom, int idRole, int id): m_strNom(nom), m_nIdRole(idRole), m_nId(id)
 {
 }
