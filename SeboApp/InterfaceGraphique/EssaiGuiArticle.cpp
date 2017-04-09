@@ -10,7 +10,7 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 
 	if (conn != nullptr)
 		conn->etablirConnexion("capelli", "developpeur");
-	
+
 	initModel();
 
 	initTable();
@@ -23,6 +23,7 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 
 	connect(ui.btnAjouter, SIGNAL(clicked()), SLOT(creerArticle()));
 	connect(ui.cbFournisseur, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerFournisseur(QString)));
+	connect(ui.cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
 }
 
 EssaiGuiArticle::~EssaiGuiArticle()
@@ -134,12 +135,12 @@ void EssaiGuiArticle::essaiRequeteModel()
 	//m_mModel->setSort(1, Qt::SortOrder::DescendingOrder);
 	/*
 	QString libelle = m_mModel->record(0).value("LibelleArticle").toString();
-	
+
 
 	QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", libelle);
 	int reponse = essai->exec();
 	*/
-	
+
 }
 
 void EssaiGuiArticle::initTable()
@@ -178,15 +179,15 @@ void EssaiGuiArticle::initTable()
 }
 
 void EssaiGuiArticle::creerArticle()
-{	
+{
 	// Récupération des infos
 	QString nomFournisseur = ui.cbFournisseur->currentText();
 	QString libelleGenre = ui.cbGenre->currentText();
 
 	// Récupération des identifiants 
 	int idFournisseur = ManagerFournisseur::getIdFournisseur(nomFournisseur);
-	//int idGenre = ManagerGenre::getIdGenre(libelleGenre);
-	int idGenre = -1;
+	int idGenre = ManagerGenre::getIdGenre(libelleGenre);
+	//int idGenre = -1;
 
 	if (idFournisseur != -1 && idGenre != -1)
 	{
@@ -217,6 +218,16 @@ void EssaiGuiArticle::filtrerFournisseur(QString texte)
 {
 	// Exemple de tri
 	m_pmProxyModel->setFilterKeyColumn(7);
+	m_pmProxyModel->setDynamicSortFilter(true);
+	m_pmProxyModel->setFilterRegExp(texte);
+	//QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", texte);
+	//int reponse = essai->exec();
+}
+
+void EssaiGuiArticle::filtrerCategorie(QString texte)
+{
+	// Exemple de tri
+	m_pmProxyModel->setFilterKeyColumn(5);
 	m_pmProxyModel->setDynamicSortFilter(true);
 	m_pmProxyModel->setFilterRegExp(texte);
 	//QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "essai", texte);

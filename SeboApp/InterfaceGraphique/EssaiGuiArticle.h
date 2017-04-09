@@ -41,4 +41,5 @@ private slots:
 	void initTable();
 	void creerArticle();
 	void filtrerFournisseur(QString texte);
+	void filtrerCategorie(QString texte);
 };
