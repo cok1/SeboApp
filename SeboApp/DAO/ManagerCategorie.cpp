@@ -139,12 +139,7 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 	return resultat;
 }
 
-bool ManagerCategorie::addCategorie(Categorie catAAjouter)
-{
-	return addCategorie(catAAjouter.getLibelle(), catAAjouter.getTauxTva());
-}
-
-bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
+bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
@@ -166,29 +161,36 @@ bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
 
 		// Création de la requête
 		QSqlQuery requete;
-		//requete.prepare("INSERT INTO Categorie(LibelleCategorie, Tva) VALUES (:libelle, :tauxTva)");
+
+		//requete.setForwardOnly(true);
 		requete.prepare("EXEC ps_CreationCategorie :libelle, :tauxTva, :id, :message");
 
 		// binding des valeurs
-		requete.bindValue(":libelle", libelle);
-		requete.bindValue(":tauxTva", tauxTva);
+		requete.bindValue(":libelle", catAAjouter->getLibelle());
+		requete.bindValue(":tauxTva", catAAjouter->getTauxTva());
 		requete.bindValue(":id", 0, QSql::InOut);
-		requete.bindValue(":message", "", QSql::InOut);
+		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
 
 		// exécution de la requête
 		resultat = requete.exec();
 
-		QString message;
+		// récupération de l'identifiant de la nouvelle catégorie
+		catAAjouter->setId(requete.boundValue(":id").toInt());
 
-		while (requete.next())
+		// Récupération du message de retour de la procédure stockée
+		QString message = requete.boundValue(":message").toString();
+
+		// on enlève les espaces au début et à la fin
+		message = message.simplified();
+
+		// Test du message de retour
+		resultat = message.length()<4;
+
+		if (!resultat)
 		{
-			message = requete.record().value(":message").toString();
-
+			// Il y a eu un problème
+			m_strLastError = message;
 		}
-
-		
-		m_strLastError = message;
-		
 
 		// fermeture de la connexion
 		db.close();
@@ -200,6 +202,13 @@ bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
 
 	//retour du résultat de la fonction
 	return resultat;
+
+}
+
+bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
+{
+
+	return addCategorie(new Categorie(libelle, tauxTva));
 }
 
 bool ManagerCategorie::modifCategorie(Categorie categorieAModifier)

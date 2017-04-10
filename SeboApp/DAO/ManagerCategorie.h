@@ -5,8 +5,7 @@
 #include <qsqlquery.h>
 #include <qvariant.h>
 #include <memory>
-#include <qsqlerror.h>
-#include <qsqlrecord.h>
+
 
 class ManagerCategorie
 {
@@ -48,7 +47,7 @@ public:
 	/// </summary>
 	/// <param name="catAAjouter">Catégorie que l'on souhaite ajouter</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addCategorie(Categorie catAAjouter);
+	static bool addCategorie(Categorie *catAAjouter);
 
 	/// <summary>
 	/// Cette méthode permet d'ajouter une catégorie à la base de données
