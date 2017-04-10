@@ -55,12 +55,6 @@
     <ClCompile Include="GeneratedFiles\qrc_SeboApp.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GuiCategorie.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GuiCategorie.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Tools\Connexion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -145,11 +139,17 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Article.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="InterfaceGraphique\GuiCategorie.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_Categorie.cpp">
       <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiCategorie.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiCategorie.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\GuiCategorie.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,21 +186,18 @@
     <CustomBuild Include="Entity\Article.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Entity\Categorie.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
     <CustomBuild Include="InterfaceGraphique\GuiCategorie.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="InterfaceGraphique\GuiCategorie.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Entity\Categorie.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SeboApp.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_GuiCategorie.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="Tools\Connexion.h">
@@ -243,6 +240,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_EssaiGuiArticle.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiCategorie.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
