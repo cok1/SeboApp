@@ -3,7 +3,7 @@
 #include <ToolBox.h>
 #include <qobject.h>
 
-class Categorie : public QObject
+class Categorie : QObject
 {
 	Q_OBJECT
 

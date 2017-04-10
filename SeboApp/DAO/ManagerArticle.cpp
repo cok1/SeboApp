@@ -77,7 +77,8 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, QString pho
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, PhotoArticle, DescriptionArticle, IdGenre, PrixFournisseur, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
+		//requete.prepare("INSERT INTO Article (LibelleArticle, Prix, PhotoArticle, DescriptionArticle, IdGenre, PrixFournisseur, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
+		requete.prepare("INSERT INTO Article (LibelleArticle, Prix, PhotoArticle, DescriptionArticle, IdGenre, PrixAchat, IdFournisseur, Reapprovisionnable) VALUES (:libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable)");
 
 		// binding des valeurs
 		requete.bindValue(":libelleArticle", libelle);

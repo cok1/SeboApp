@@ -1,6 +1,6 @@
 #include "SeboApp.h"
+#include "GuiGenreNew.h"
 #include "GuiCategorie.h"
-#include "GuiGenre.h"
 #include "EssaiGuiArticle.h"
 #include <QtWidgets/QApplication>
 

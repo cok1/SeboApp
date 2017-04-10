@@ -22,8 +22,8 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 	ui.btnModifier->setVisible(false);
 
 	connect(ui.btnAjouter, SIGNAL(clicked()), SLOT(creerArticle()));
-	connect(ui.cbFournisseur, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerFournisseur(QString)));
-	connect(ui.cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
+	//connect(ui.cbFournisseur, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerFournisseur(QString)));
+	//connect(ui.cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
 }
 
 EssaiGuiArticle::~EssaiGuiArticle()
