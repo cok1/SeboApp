@@ -1,73 +1,83 @@
 #pragma once
 #include <qstring.h>
 #include <ToolBox.h>
+#include <qobject.h>
 
-class Categorie
+class Categorie : public QObject
 {
+	Q_OBJECT
+
 public:
 	/// <summary>
-	/// Constructeur par défaut
+	/// Constructeur par dÃ©faut
 	/// </summary>
 	Categorie();
 
 	/// <summary>
-	/// Constructeur paramétré
+	/// Constructeur paramÃ©trÃ©
 	/// </summary>
-	/// <param name="libelle">libellé de la catégorie</param>
-	/// <param name="tva">taux de TVA associé à la catégorie</param>
-	/// <param name="id">Identifiant de la catégorie (par défaut -1)</param>
+	/// <param name="libelle">libellÃ© de la catÃ©gorie</param>
+	/// <param name="tva">taux de TVA associÃ© Ã  la catÃ©gorie</param>
+	/// <param name="id">Identifiant de la catÃ©gorie (par dÃ©faut -1)</param>
 	Categorie(QString libelle, float tva, int id = -1);
 
 	/// <summary>
-	/// Destructeur par défaut
+	/// Destructeur par dÃ©faut
 	/// </summary>
 	~Categorie();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer l'identifiant de la catégorie
+	/// Cette fonction permet de rÃ©cupÃ©rer l'identifiant de la catÃ©gorie
 	/// </summary>
-	/// <returns>l'identifiant de la catégorie</returns>
+	/// <returns>l'identifiant de la catÃ©gorie</returns>
 	int getId();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer le libellé de la catégorie
+	/// Cette fonction permet de rÃ©cupÃ©rer le libellÃ© de la catÃ©gorie
 	/// </summary>
-	/// <returns>le libellé de la catégorie</returns>
+	/// <returns>le libellÃ© de la catÃ©gorie</returns>
 	QString getLibelle();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer le taux de TVA associé à la catégorie
+	/// Cette fonction permet de rÃ©cupÃ©rer le taux de TVA associÃ© Ã  la catÃ©gorie
 	/// </summary>
-	/// <returns>le taux de TVA associé à la catégorie</returns>
+	/// <returns>le taux de TVA associÃ© Ã  la catÃ©gorie</returns>
 	float getTauxTva();
 
 	/// <summary>
-	/// Cette fonction permet de modifier le libellé de la catégorie
+	/// Cette fonction permet de modifier le libellÃ© de la catÃ©gorie
 	/// </summary>
-	/// <param name="libelle">nouveau libellé de la catégorie</param>
-	/// <returns>true si la modification a été effectuée, false sinon.</returns>
+	/// <param name="libelle">nouveau libellÃ© de la catÃ©gorie</param>
+	/// <returns>true si la modification a Ã©tÃ© effectuÃ©e, false sinon.</returns>
 	bool setLibelle(QString libelle);
 
 	/// <summary>
-	/// Cette fonction permet de modifier le taux de TVA associé à la catégorie
+	/// Cette fonction permet de modifier le taux de TVA associÃ© Ã  la catÃ©gorie
 	/// </summary>
-	/// <param name="tva">nouveau taux de TVA associé à la catégorie</param>
-	/// <returns>true si la modification a été faite, false sinon.</returns>
+	/// <param name="tva">nouveau taux de TVA associÃ© Ã  la catÃ©gorie</param>
+	/// <returns>true si la modification a Ã©tÃ© faite, false sinon.</returns>
 	bool setTauxTva(float tva);
+
+	/// <summary>
+	/// Cette fonction permet de modifier l'identifiant de la catÃ©gorie
+	/// </summary>
+	/// <param name="id">nouvel identifiant de la catÃ©gorie</param>
+	/// <returns>true si la modification a Ã©tÃ© effectuÃ©e, false sinon.</returns>
+	bool setId(int id);
 
 private:
 	/// <summary>
-	/// Identifiant de la catégorie
+	/// Identifiant de la catÃ©gorie
 	/// </summary>
 	int m_nId;
 
 	/// <summary>
-	/// Libellé de la catégorie
+	/// LibellÃ© de la catÃ©gorie
 	/// </summary>
 	QString m_strLibelle;
 
 	/// <summary>
-	/// Taux de TVA associé à la catégorie
+	/// Taux de TVA associÃ© Ã  la catÃ©gorie
 	/// </summary>
 	float m_fTauxTva;
 };

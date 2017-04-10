@@ -17,7 +17,7 @@ EssaiGuiArticle::EssaiGuiArticle(QWidget *parent)
 
 	initCombo();
 
-	essaiRequeteModel();
+	//essaiRequeteModel();
 
 	ui.btnModifier->setVisible(false);
 
@@ -44,8 +44,8 @@ void EssaiGuiArticle::initModel()
 	m_mModel->setTable("Article");
 
 	// Récupération des relation
-	m_mModel->setRelation(5, QSqlRelation("Genre", "IdGenre", "LibelleGenre"));
-	m_mModel->setRelation(7, QSqlRelation("Fournisseur", "IdFournisseur", "NomFournisseur"));
+	m_mModel->setRelation(7, QSqlRelation("Genre", "IdGenre", "LibelleGenre"));
+	m_mModel->setRelation(9, QSqlRelation("Fournisseur", "IdFournisseur", "NomFournisseur"));
 
 	// Récupération des données
 	m_mModel->select();
@@ -58,9 +58,11 @@ void EssaiGuiArticle::initModel()
 	m_mModel->setHeaderData(2, Qt::Horizontal, trUtf8("Prix"));
 	m_mModel->setHeaderData(3, Qt::Horizontal, trUtf8("PhotoArticle"));
 	m_mModel->setHeaderData(4, Qt::Horizontal, trUtf8("DescriptionArticle"));
-	m_mModel->setHeaderData(5, Qt::Horizontal, trUtf8("Genre"));
-	m_mModel->setHeaderData(6, Qt::Horizontal, trUtf8("Prix Achat"));
-	m_mModel->setHeaderData(7, Qt::Horizontal, trUtf8("Fournisseur"));
+	m_mModel->setHeaderData(5, Qt::Horizontal, trUtf8("Reapprovisionnable"));
+	m_mModel->setHeaderData(6, Qt::Horizontal, trUtf8("Ref Stock"));
+	m_mModel->setHeaderData(7, Qt::Horizontal, trUtf8("Genre"));
+	m_mModel->setHeaderData(8, Qt::Horizontal, trUtf8("Prix Achat"));
+	m_mModel->setHeaderData(9, Qt::Horizontal, trUtf8("Fournisseur"));
 }
 
 void EssaiGuiArticle::majAffichage()
@@ -78,8 +80,8 @@ void EssaiGuiArticle::majAffichage()
 void EssaiGuiArticle::initCombo()
 {
 	// initialisation de la comboBox de sélection du genre
-	ui.cbGenre->setModel(m_mModel->relationModel(5));
-	ui.cbGenre->setModelColumn(m_mModel->relationModel(5)->fieldIndex("LibelleGenre"));
+	ui.cbGenre->setModel(m_mModel->relationModel(7));
+	ui.cbGenre->setModelColumn(m_mModel->relationModel(7)->fieldIndex("LibelleGenre"));
 
 	// repositionnement de l'index
 	if (m_nIndexGenre > -2 && m_nIndexGenre < ui.cbGenre->count())
@@ -88,8 +90,8 @@ void EssaiGuiArticle::initCombo()
 	}
 
 	// initialisation de la comboBox de sélection du fournisseur
-	ui.cbFournisseur->setModel(m_mModel->relationModel(7));
-	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(7)->fieldIndex("NomFournisseur"));
+	ui.cbFournisseur->setModel(m_mModel->relationModel(9));
+	ui.cbFournisseur->setModelColumn(m_mModel->relationModel(9)->fieldIndex("NomFournisseur"));
 
 	// repositionnement de l'index
 	if (m_nIndexFournisseur > -2 && m_nIndexFournisseur < ui.cbFournisseur->count())

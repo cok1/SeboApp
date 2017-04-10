@@ -65,3 +65,10 @@ bool Categorie::setTauxTva(float tva)
 	// retour du résultat de la fonction
 	return resultat;
 }
+
+bool Categorie::setId(int id)
+{
+	m_nId = id;
+
+	return true;
+}

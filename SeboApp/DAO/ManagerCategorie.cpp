@@ -139,15 +139,11 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 	return resultat;
 }
 
-bool ManagerCategorie::addCategorie(Categorie catAAjouter)
-{
-	return addCategorie(catAAjouter.getLibelle(), catAAjouter.getTauxTva());
-}
-
-bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
+bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
+	int codeRetour;
 
 	// Initialisation
 	resultat = false;
@@ -165,14 +161,31 @@ bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("INSERT INTO Categorie (LibelleCategorie, Tva) VALUES (:libelle, :tauxTva)");
+		requete.prepare("EXECUTE :codeRetour = ps_CreationCategorie :libelle, :tauxTVA, :id OUTPUT, :message OUTPUT;");
 
 		// binding des valeurs
-		requete.bindValue(":libelle", libelle);
-		requete.bindValue(":tauxTva", tauxTva);
+		requete.bindValue(":codeRetour", 0, QSql::Out);
+		requete.bindValue(":libelle", catAAjouter->getLibelle());
+		requete.bindValue(":tauxTva", catAAjouter->getTauxTva());
+		requete.bindValue(":id", 0, QSql::Out);
+		requete.bindValue(":message", "", QSql::Out);
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		// Récupération du résultat
+		resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+		if (resultat)
+		{
+			// récupération de l'identifiant
+			catAAjouter->setId(requete.boundValue(":id").toInt());
+		}
+		else
+		{
+			// récupération du message d'erreur
+			m_strLastError = requete.boundValue(":message").toString();
+		}
 
 		// fermeture de la connexion
 		db.close();
@@ -184,6 +197,11 @@ bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
 
 	//retour du résultat de la fonction
 	return resultat;
+}
+
+bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
+{
+	return addCategorie(new Categorie(libelle,tauxTva));
 }
 
 bool ManagerCategorie::modifCategorie(Categorie categorieAModifier)

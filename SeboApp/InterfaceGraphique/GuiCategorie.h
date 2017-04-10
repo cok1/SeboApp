@@ -8,6 +8,7 @@
 #include "DAO\ManagerCategorie.h"
 #include "Entity\Categorie.h"
 #include <vector>
+#include <qmessagebox.h>
 
 class GuiCategorie : public QWidget
 {
@@ -23,5 +24,5 @@ public slots:
 	void majTable();
 
 private:
-	Ui::GuiCategorie ui;
+	Ui::GuiCategorie *ui;
 };

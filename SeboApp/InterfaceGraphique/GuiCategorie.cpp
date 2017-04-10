@@ -3,8 +3,9 @@
 GuiCategorie::GuiCategorie(QWidget *parent)
 	: QWidget(parent)
 {
+	ui = new Ui::GuiCategorie();
 	// mise en place des éléments
-	ui.setupUi(this);
+	ui->setupUi(this);
 
 	// Récupération du pointeur vers l'instance unique de la connexion
 	std::shared_ptr<Connexion> conn = Connexion::getInstance();
@@ -16,8 +17,8 @@ GuiCategorie::GuiCategorie(QWidget *parent)
 	majTable();
 
 	// connexion des boutons et des méthodes associées
-	connect(ui.btnValider, SIGNAL(clicked()), SLOT(ajouterArticle()));
-	connect(ui.btnMajAffichage, SIGNAL(clicked()), SLOT(majTable()));
+	connect(ui->btnValider, SIGNAL(clicked()), SLOT(ajouterArticle()));
+	connect(ui->btnMajAffichage, SIGNAL(clicked()), SLOT(majTable()));
 }
 
 
@@ -28,8 +29,19 @@ GuiCategorie::~GuiCategorie()
 
 void GuiCategorie::ajouterArticle()
 {
-	ManagerCategorie::addCategorie(ui.leSaisieLibelle->text(), ui.spTauxTva->value());
-	majTable();
+	Categorie *nouvelleCategorie = new Categorie(ui->leSaisieLibelle->text(), ui->spTauxTva->value());
+
+	if (ManagerCategorie::addCategorie(nouvelleCategorie))
+	{
+		QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Information, "Création de la catégorie réussie", "La création de la catégorie s'est bien passé. voici l'id de la nouvelle catégorie : " + nouvelleCategorie->getId());
+		int reponse = essai->exec();
+		majTable();
+	}
+	else
+	{
+		QMessageBox *essai = new QMessageBox(QMessageBox::Icon::Critical, "Problème lors de la création de la catégorie", ManagerCategorie::getLastError());
+		int reponse = essai->exec();
+	}
 }
 
 void GuiCategorie::majTable()
@@ -56,28 +68,28 @@ void GuiCategorie::majTable()
 	model->setHeaderData(2, Qt::Horizontal, trUtf8("Tva"));
 
 	// Application du modèle à la table View
-	ui.tvCategorie->setModel(model);
+	ui->tvCategorie->setModel(model);
 
 	// Masquage du header vertical(nom des lignes)
-	ui.tvCategorie->verticalHeader()->hide();
+	ui->tvCategorie->verticalHeader()->hide();
 
 	// Masquage de la première colonne
-	ui.tvCategorie->hideColumn(0);
+	ui->tvCategorie->hideColumn(0);
 
 	// Ajustement de la taille des colonnes pour remplir l'espace dispo
-	ui.tvCategorie->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
+	ui->tvCategorie->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
 
 	// La table devient non éditable
-	ui.tvCategorie->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	ui->tvCategorie->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// mode sélection ligne unique complète
-	ui.tvCategorie->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-	ui.tvCategorie->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tvCategorie->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->tvCategorie->setSelectionBehavior(QAbstractItemView::SelectRows);
 
 	// Autorisation du tri
-	ui.tvCategorie->setSortingEnabled(true);
+	ui->tvCategorie->setSortingEnabled(true);
 
 
 	// affichage de la table
-	ui.tvCategorie->show();
+	ui->tvCategorie->show();
 }

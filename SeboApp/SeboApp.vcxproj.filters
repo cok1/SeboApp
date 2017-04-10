@@ -61,9 +61,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_GuiCategorie.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GuiCategorie.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Tools\Connexion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -148,6 +145,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Article.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="InterfaceGraphique\GuiCategorie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Categorie.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -158,12 +161,6 @@
     </CustomBuild>
     <CustomBuild Include="SeboApp.qrc">
       <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GuiCategorie.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GuiCategorie.ui">
-      <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="GuiGenre.h">
       <Filter>Header Files</Filter>
@@ -189,6 +186,15 @@
     <CustomBuild Include="Entity\Article.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\GuiCategorie.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\GuiCategorie.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Entity\Categorie.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SeboApp.h">
@@ -204,9 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DAO\ManagerGenre.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Categorie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Genre.h">

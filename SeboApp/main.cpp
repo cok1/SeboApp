@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	EssaiGuiArticle w;
+	GuiCategorie w;
 	w.show();
 	return a.exec();
 }
