@@ -43,6 +43,13 @@ public:
 	/// <returns>true si la modification a été faite, false sinon.</returns>
 	bool setIdCategorie(int idCategorie);
 
+	/// <summary>
+	/// Cette fonction permet de modifier l'identifiant du genre
+	/// </summary>
+	/// <param name="id">nouvel identifiant du genre</param>
+	/// <returns>true si la modification a été faite, false sinon.</returns>
+	bool setId(int id);
+
 
 	/// <summary>
 	/// Cette fonction permet de récupérer l'identifiant du genre

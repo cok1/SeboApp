@@ -40,7 +40,7 @@ public:
 	/// </summary>
 	/// <param name="genreAAjouter">Genre que l'on souhaite ajouté dans la base de données</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addGenre(Genre genreAAjouter);
+	static bool addGenre(Genre *genreAAjouter);
 
 	/// <summary>
 	/// Cette fonction permet s'ajouter un genre dans la base de données
@@ -55,7 +55,7 @@ public:
 	/// </summary>
 	/// <param name="genreAModifier">catégorie que l'on souhaite modifier</param>
 	/// <returns>true si la modification a été effectuée, false sinon.</returns>
-	static bool modifGenre(Genre genreAModifier);
+	static bool modifGenre(Genre *genreAModifier);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un genre de la base de donnée

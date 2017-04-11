@@ -18,11 +18,15 @@ GuiAjoutModifCategorie::GuiAjoutModifCategorie(Categorie *categorieAModifier, QW
 		leSaisieLibelle->setText(categorieEnCours->getLibelle());
 		spSaisieTaux->setValue(categorieEnCours->getTauxTva());
 
+		setWindowTitle("Modification d'une catégorie");
+
 		// Connexion signal et slot
 		connect(btnValider, SIGNAL(clicked()), SLOT(modifier()));
 	}
 	else
 	{
+		setWindowTitle("Création d'une catégorie");
+
 		// Connexion signal et slot
 		connect(btnValider, SIGNAL(clicked()), SLOT(creer()));
 	}
@@ -38,7 +42,7 @@ void GuiAjoutModifCategorie::modifier()
 	categorieEnCours->setLibelle(leSaisieLibelle->text());
 	categorieEnCours->setTauxTva(spSaisieTaux->value());
 
-	// Essai de création de la catégorie grâce au manager
+	// Essai de modificationCréation de la catégorie grâce au manager
 	if (ManagerCategorie::modifCategorie(categorieEnCours))
 	{
 		// Affichage d'un message d'information
@@ -49,7 +53,7 @@ void GuiAjoutModifCategorie::modifier()
 	else
 	{
 		// Affichage d'un message d'erreur
-		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de la base de données"), ManagerCategorie::getLastError());
+		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la modification de la base de données"), ManagerCategorie::getLastError());
 		int reponse = erreur->exec();
 	}
 
@@ -76,7 +80,7 @@ void GuiAjoutModifCategorie::creer()
 	else
 	{
 		// Affichage d'un message d'erreur
-		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de la base de données"), ManagerCategorie::getLastError());
+		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de la catégorie dans la base de données"), ManagerCategorie::getLastError());
 		int reponse = erreur->exec();
 	}
 

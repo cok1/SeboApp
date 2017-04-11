@@ -51,6 +51,19 @@ bool Genre::setIdCategorie(int idCategorie)
 	return resultat;
 }
 
+bool Genre::setId(int id)
+{
+	// Déclarations
+	bool resultat;
+
+	resultat = id > 0 && m_nId == -1;
+
+	if (resultat)
+		m_nId = id;
+
+	return resultat;
+}
+
 int Genre::getId()
 {
 	return m_nId;

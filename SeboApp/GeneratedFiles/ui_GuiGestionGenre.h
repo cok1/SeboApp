@@ -39,7 +39,7 @@ public:
     {
         if (GuiGestionGenre->objectName().isEmpty())
             GuiGestionGenre->setObjectName(QStringLiteral("GuiGestionGenre"));
-        GuiGestionGenre->resize(400, 320);
+        GuiGestionGenre->resize(430, 320);
         QFont font;
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);

@@ -214,6 +214,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Genre.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiAjoutModifierGenre.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiAjoutModifierGenre.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Genres\GuiAjoutModifierGenre.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -291,6 +300,12 @@
     <CustomBuild Include="InterfaceGraphique\Genres\GuiGestionGenre.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Genres\GuiAjoutModifierGenre.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Genres\GuiAjoutModifierGenre.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SeboApp.h">
@@ -342,6 +357,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiGestionGenre.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiAjoutModifierGenre.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -157,15 +157,15 @@ void GuiGestionCategorie::supprimerCategorie()
 	QString nomCategorie = var.toString();
 
 	// Affichage d'une boîte de dialoque de confirmation
-	QMessageBox confirmation;// = new QMessageBox(QMessageBox::Information, "Veuillez confirmer.", "Êtes-vous sûr de vouloir supprimer la catégorie " + nomCategorie + "?", QMessageBox::Yes | QMessageBox::No);
-	confirmation.setIcon(QMessageBox::Question);
-	confirmation.setWindowTitle(trUtf8("Confirmation de la suppression"));
-	confirmation.setText(trUtf8("Suppression Catégorie"));
-	confirmation.setInformativeText(trUtf8("Êtes-vous sûr de vouloir supprimer la catégorie ") + nomCategorie + " ?");
-	confirmation.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-	confirmation.setDefaultButton(QMessageBox::No);
+	QMessageBox *confirmation = new QMessageBox();// = new QMessageBox(QMessageBox::Information, "Veuillez confirmer.", "Êtes-vous sûr de vouloir supprimer la catégorie " + nomCategorie + "?", QMessageBox::Yes | QMessageBox::No);
+	confirmation->setIcon(QMessageBox::Question);
+	confirmation->setWindowTitle(trUtf8("Confirmation de la suppression"));
+	confirmation->setText(trUtf8("Suppression Catégorie"));
+	confirmation->setInformativeText(trUtf8("Êtes-vous sûr de vouloir supprimer la catégorie ") + nomCategorie + " ?");
+	confirmation->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+	confirmation->setDefaultButton(QMessageBox::No);
 
-	int reponse = confirmation.exec();
+	int reponse = confirmation->exec();
 	
 	// Traitement de la réponse
 	if (reponse == QMessageBox::Yes)

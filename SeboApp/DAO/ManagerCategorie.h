@@ -29,6 +29,13 @@ public:
 	static shared_ptr<Categorie> getCategorieWithLibelle(QString libelle);
 
 	/// <summary>
+	/// Cette fonction permet de récupérer la catégorie correspondante à l'identifiant fourni en paramètre
+	/// </summary>
+	/// <param name="idCategorie">identifiant de la catégorie</param>
+	/// <returns>la catégorie correspondante à l'identifiant fourni en paramètre</returns>
+	static shared_ptr<Categorie> getCategorieWithId(int idCategorie);
+
+	/// <summary>
 	/// Cette Méthode permet de supprimer une catégorie de la base de données
 	/// </summary>
 	/// <param name="catASupprimer">Catégorie à supprimer</param>

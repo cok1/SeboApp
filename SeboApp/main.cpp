@@ -5,6 +5,7 @@
 #include "GuiCategorie.h"
 #include "EssaiGuiArticle.h"
 #include "GuiGestionCategorie.h"
+#include "GuiGestionGenre.h"
 #include <QtWidgets/QApplication>
 #include "Tools\Connexion.h"
 
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
 		conn->etablirConnexion("capelli", "developpeur");
 
 	QApplication a(argc, argv);
-	GuiGestionCategorie w;
+	GuiGestionGenre w;
 	w.show();
 	return a.exec();
 }

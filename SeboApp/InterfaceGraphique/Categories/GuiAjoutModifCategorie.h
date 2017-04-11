@@ -22,7 +22,7 @@ public:
 
 signals:
 	/// <summary>
-	/// Signal émit lorsque l'édition est termine
+	/// Signal émit lorsque l'édition est terminée
 	/// </summary>
 	void editionTerminee();
 

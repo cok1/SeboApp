@@ -138,12 +138,7 @@ int ManagerGenre::getIdGenre(QString libelle)
 	return idGenre;
 }
 
-bool ManagerGenre::addGenre(Genre genreAAjouter)
-{
-	return addGenre(genreAAjouter.getLibelle(), genreAAjouter.getIdCategorie());
-}
-
-bool ManagerGenre::addGenre(QString libelle, int idCategorie)
+bool ManagerGenre::addGenre(Genre *genreAAjouter)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la requête
@@ -164,14 +159,35 @@ bool ManagerGenre::addGenre(QString libelle, int idCategorie)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("INSERT INTO Genre (LibelleGenre, idCategorie) VALUES (:libelle, :idCategorie)");
+		requete.prepare("EXEC ps_CreationGenre :libelle, :idCategorie, :id, :message");
 
 		// binding des valeurs
-		requete.bindValue(":libelle", libelle);
-		requete.bindValue(":idCategorie", idCategorie);
+		requete.bindValue(":libelle", genreAAjouter->getLibelle());
+		requete.bindValue(":idCategorie", genreAAjouter->getIdCategorie());
+		requete.bindValue(":id", 0, QSql::InOut);
+		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		// récupération de l'identifiant du nouveau genre
+		genreAAjouter->setId(requete.boundValue(":id").toInt());
+
+		// Récupération du message de retour de la procédure stockée
+		QString message = requete.boundValue(":message").toString();
+
+		// on enlève les espaces au début et à la fin
+		message = message.simplified();
+
+		// Test du message de retour
+		resultat = message.length()<4;
+
+		if (!resultat)
+		{
+			// Il y a eu un problème
+			m_strLastError = message;
+		}
+
 
 		// fermeture de la connexion
 		db.close();
@@ -185,7 +201,12 @@ bool ManagerGenre::addGenre(QString libelle, int idCategorie)
 	return resultat;
 }
 
-bool ManagerGenre::modifGenre(Genre genreAModifier)
+bool ManagerGenre::addGenre(QString libelle, int idCategorie)
+{
+	return addGenre(new Genre(libelle, idCategorie));
+}
+
+bool ManagerGenre::modifGenre(Genre *genreAModifier)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
@@ -209,9 +230,9 @@ bool ManagerGenre::modifGenre(Genre genreAModifier)
 		requete.prepare("UPDATE Genre set LibelleGenre=:libelle, IdCategorie=:idCategorie where idGenre=:id");
 
 		// binding des valeurs
-		requete.bindValue(":libelle", genreAModifier.getLibelle());
-		requete.bindValue(":idCategorie", genreAModifier.getIdCategorie());
-		requete.bindValue(":id", genreAModifier.getId());
+		requete.bindValue(":libelle", genreAModifier->getLibelle());
+		requete.bindValue(":idCategorie", genreAModifier->getIdCategorie());
+		requete.bindValue(":id", genreAModifier->getId());
 
 		// exécution de la requête
 		resultat = requete.exec();

@@ -93,6 +93,51 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithLibelle(QString libelle)
 	return categorie;
 }
 
+shared_ptr<Categorie> ManagerCategorie::getCategorieWithId(int idCategorie)
+{
+	// Déclaration
+	shared_ptr<Categorie> categorie = nullptr;
+
+	try
+	{
+		//// Récupération du pointeur vers l'instance unique de la connexion
+		//std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		//// récupération de la connexion
+		//QSqlDatabase db = conn->getConnexion();
+
+		//// ouverture de la connexion
+		//db.open();
+
+		//// Création de la requête
+		//QSqlQuery requete;
+		//requete.prepare("select * from Categorie where IdCategorie = :idCategorie");
+
+		//// binding des valeurs
+		//requete.bindValue(":idCategorie", 1);
+
+		//// exécution de la requête
+		//requete.exec();
+
+		//if (requete.next())
+		//{
+		//	categorie = make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toDouble(), requete.value("IdCategorie").toInt());
+		//}
+
+		//// fermeture de la connexion
+		//db.close();
+		categorie = make_shared<Categorie>("CD", 5.5, 1);
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+		//Connexion::getInstance()->getConnexion().close();
+	}
+
+	// retour de la catégorie
+	return categorie;
+}
+
 bool ManagerCategorie::supCategorie(Categorie catASupprimer)
 {
 	return supCategorie(catASupprimer.getId());
