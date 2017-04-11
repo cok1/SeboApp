@@ -119,13 +119,30 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("delete from categorie where idCategorie = :idCategorie");
+		requete.prepare("EXEC ps_SuppressionCategorie :idCategorie, :message");
 
 		// binding des valeurs
 		requete.bindValue(":idCategorie", idCategorie);
+		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
+
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		// Récupération du message de retour de la procédure stockée
+		QString message = requete.boundValue(":message").toString();
+
+		// on enlève les espaces au début et à la fin
+		message = message.simplified();
+
+		// Test du message de retour
+		resultat = message.length()<4;
+
+		if (!resultat)
+		{
+			// Il y a eu un problème
+			m_strLastError = message;
+		}
 
 		// fermeture de la connexion
 		db.close();
@@ -211,7 +228,7 @@ bool ManagerCategorie::addCategorie(QString libelle, double tauxTva)
 	return addCategorie(new Categorie(libelle, tauxTva));
 }
 
-bool ManagerCategorie::modifCategorie(Categorie categorieAModifier)
+bool ManagerCategorie::modifCategorie(Categorie *categorieAModifier)
 {
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
@@ -235,9 +252,10 @@ bool ManagerCategorie::modifCategorie(Categorie categorieAModifier)
 		requete.prepare("UPDATE Categorie set libelleCategorie = :libelle, Tva = :tauxTva where idCategorie=:id");
 
 		// binding des valeurs
-		requete.bindValue(":libelle", categorieAModifier.getLibelle());
-		requete.bindValue(":tauxTva", categorieAModifier.getTauxTva());
-		requete.bindValue(":id", categorieAModifier.getId());
+		requete.bindValue(":libelle", categorieAModifier->getLibelle());
+		//requete.bindValue(":tauxTva", 17.0);
+		requete.bindValue(":tauxTva", categorieAModifier->getTauxTva());
+		requete.bindValue(":id", categorieAModifier->getId());
 
 		// exécution de la requête
 		resultat = requete.exec();

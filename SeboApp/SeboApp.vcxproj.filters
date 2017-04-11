@@ -163,6 +163,24 @@
     <ClCompile Include="GeneratedFiles\Release\moc_GuiCategorie.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiGestionCategorie.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiGestionCategorie.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiAjoutModifCategorie.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiAjoutModifCategorie.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Categories\GuiAjoutModifCategorie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Categories\GuiGestionCategorie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -211,6 +229,18 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="InterfaceGraphique\GuiCategorie.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Categories\GuiAjoutModifCategorie.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Categories\GuiAjoutModifCategorie.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Categories\GuiGestionCategorie.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Categories\GuiGestionCategorie.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -264,6 +294,12 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiCategorie.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiGestionCategorie.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiAjoutModifCategorie.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

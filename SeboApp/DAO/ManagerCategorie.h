@@ -62,7 +62,7 @@ public:
 	/// </summary>
 	/// <param name="categorieAModifier">catégorie que l'on souhaite modifier</param>
 	/// <returns>true si la modification a été effectuée, false sinon.</returns>
-	static bool modifCategorie(Categorie categorieAModifier);
+	static bool modifCategorie(Categorie *categorieAModifier);
 
 	/// <summary>
 	/// cette fonction permet de récupérer le dernier message d'erreur

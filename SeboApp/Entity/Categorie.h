@@ -54,7 +54,7 @@ public:
 	/// <summary>
 	/// Cette fonction permet de modifier le taux de TVA associé à la catégorie
 	/// </summary>
-	/// <param name="tva">nouveau taux de TVA associé à la catégorie</param>
+	/// <param name="tva">nouveau taux de TVA associé à la catégorie doit être compris entre 0.0 et 50.0%</param>
 	/// <returns>true si la modification a été faite, false sinon.</returns>
 	bool setTauxTva(double tva);
 

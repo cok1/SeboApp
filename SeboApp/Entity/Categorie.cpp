@@ -53,8 +53,8 @@ bool Categorie::setTauxTva(double tva)
 	// Déclaration
 	bool resultat;		// va contenir le résultat de la fonction
 
-						// Test du paramètre en entrée
-	resultat = tva < 1.0f && tva >= 0.0f;
+	// Test du paramètre en entrée
+	resultat = tva <= 50.0 && tva >= 0.0;
 
 	// modification de l'attribut
 	if (resultat)
