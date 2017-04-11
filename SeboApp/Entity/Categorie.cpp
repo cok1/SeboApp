@@ -6,7 +6,7 @@ Categorie::Categorie()
 {
 }
 
-Categorie::Categorie(QString libelle, float tva, int id): m_strLibelle(libelle), m_fTauxTva(tva), m_nId(id)
+Categorie::Categorie(QString libelle, double tva, int id): m_strLibelle(libelle), m_fTauxTva(tva), m_nId(id)
 {
 }
 
@@ -25,7 +25,7 @@ QString Categorie::getLibelle()
 	return QString(m_strLibelle);
 }
 
-float Categorie::getTauxTva()
+double Categorie::getTauxTva()
 {
 	return m_fTauxTva;
 }
@@ -48,7 +48,7 @@ bool Categorie::setLibelle(QString libelle)
 	return resultat;
 }
 
-bool Categorie::setTauxTva(float tva)
+bool Categorie::setTauxTva(double tva)
 {
 	// Déclaration
 	bool resultat;		// va contenir le résultat de la fonction

@@ -19,7 +19,7 @@ public:
 	/// <param name="libelle">libellé de la catégorie</param>
 	/// <param name="tva">taux de TVA associé à la catégorie</param>
 	/// <param name="id">Identifiant de la catégorie (par défaut -1)</param>
-	Categorie(QString libelle, float tva, int id = -1);
+	Categorie(QString libelle, double tva, int id = -1);
 
 	/// <summary>
 	/// Destructeur par défaut
@@ -42,7 +42,7 @@ public:
 	/// Cette fonction permet de récupérer le taux de TVA associé à la catégorie
 	/// </summary>
 	/// <returns>le taux de TVA associé à la catégorie</returns>
-	float getTauxTva();
+	double getTauxTva();
 
 	/// <summary>
 	/// Cette fonction permet de modifier le libellé de la catégorie
@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	/// <param name="tva">nouveau taux de TVA associé à la catégorie</param>
 	/// <returns>true si la modification a été faite, false sinon.</returns>
-	bool setTauxTva(float tva);
+	bool setTauxTva(double tva);
 
 	/// <summary>
 	/// Cette fonction permet de modifier l'identifiant de la catégorie
@@ -79,6 +79,6 @@ private:
 	/// <summary>
 	/// Taux de TVA associé à la catégorie
 	/// </summary>
-	float m_fTauxTva;
+	double m_fTauxTva;
 };
 

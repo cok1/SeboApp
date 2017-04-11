@@ -38,6 +38,8 @@ public:
     QDoubleSpinBox *spTauxTva;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *btnMajAffichage;
+    QSpacerItem *horizontalSpacer_4;
+    QPushButton *btnAfficheId;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *btnValider;
     QLabel *lblTitreListeCategorie;
@@ -99,6 +101,15 @@ public:
 
         horizontalLayout_4->addWidget(btnMajAffichage);
 
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_4);
+
+        btnAfficheId = new QPushButton(GuiCategorie);
+        btnAfficheId->setObjectName(QStringLiteral("btnAfficheId"));
+
+        horizontalLayout_4->addWidget(btnAfficheId);
+
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_3);
@@ -158,6 +169,7 @@ public:
         lblLibelle->setText(QApplication::translate("GuiCategorie", "Libell\303\251 de la cat\303\251gorie :", Q_NULLPTR));
         lblTauxTva->setText(QApplication::translate("GuiCategorie", "Taux de tva :", Q_NULLPTR));
         btnMajAffichage->setText(QApplication::translate("GuiCategorie", "Refresh", Q_NULLPTR));
+        btnAfficheId->setText(QApplication::translate("GuiCategorie", "Affiche", Q_NULLPTR));
         btnValider->setText(QApplication::translate("GuiCategorie", "Valider", Q_NULLPTR));
         lblTitreListeCategorie->setText(QApplication::translate("GuiCategorie", "Liste des cat\303\251gories :", Q_NULLPTR));
     } // retranslateUi

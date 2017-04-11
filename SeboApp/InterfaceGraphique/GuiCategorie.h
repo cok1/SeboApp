@@ -9,6 +9,7 @@
 #include "Entity\Categorie.h"
 #include <vector>
 #include <qmessagebox.h>
+#include <qabstractitemmodel.h>
 
 class GuiCategorie : public QWidget
 {
@@ -22,6 +23,7 @@ public:
 public slots:
 	void ajouterArticle();
 	void majTable();
+	void afficheId();
 
 private:
 	Ui::GuiCategorie *ui;

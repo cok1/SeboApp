@@ -19,6 +19,8 @@ GuiCategorie::GuiCategorie(QWidget *parent)
 	// connexion des boutons et des méthodes associées
 	connect(ui->btnValider, SIGNAL(clicked()), SLOT(ajouterArticle()));
 	connect(ui->btnMajAffichage, SIGNAL(clicked()), SLOT(majTable()));
+	connect(ui->btnAfficheId, SIGNAL(clicked()), SLOT(afficheId()));
+	connect(ui->tvCategorie->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(afficheId()));
 }
 
 
@@ -29,22 +31,24 @@ GuiCategorie::~GuiCategorie()
 
 void GuiCategorie::ajouterArticle()
 {
-	if (ManagerCategorie::addCategorie(ui->leSaisieLibelle->text(), ui->spTauxTva->value()))
+	Categorie *nouvelleCategorie = new Categorie(ui->leSaisieLibelle->text(), ui->spTauxTva->value());
+
+	if (ManagerCategorie::addCategorie(nouvelleCategorie))
 	{
-		majTable();
-	//}
-	//else
-	//{
+		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Information, "Création achevée", "L'identifiant de la nouvelle catégorie est : " + QString::number(nouvelleCategorie->getId()));
+		int reponse = erreur->exec();
+	}
+	else
+	{
 		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, "Problème lors de la création de la base de données", ManagerCategorie::getLastError());
 		int reponse = erreur->exec();
 	}
+	majTable();
 }
 
 void GuiCategorie::majTable()
 {
 	std::shared_ptr<Connexion> conn = Connexion::getInstance();
-	/*if (conn != nullptr)
-		conn->etablirConnexion("capelli", "developpeur");*/
 
 	QSqlDatabase db = conn->getConnexion();
 
@@ -52,7 +56,7 @@ void GuiCategorie::majTable()
 	QSqlTableModel *model = new QSqlTableModel();
 
 	// sélection de la table à afficher
-	model->setTable("Categorie");
+	model->setTable("DetailCategorie");
 	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 	// Récupération des données
@@ -71,6 +75,7 @@ void GuiCategorie::majTable()
 
 	// Masquage de la première colonne
 	ui->tvCategorie->hideColumn(0);
+	ui->tvCategorie->hideColumn(3);
 
 	// Ajustement de la taille des colonnes pour remplir l'espace dispo
 	ui->tvCategorie->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
@@ -82,10 +87,27 @@ void GuiCategorie::majTable()
 	ui->tvCategorie->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->tvCategorie->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+	ui->tvCategorie->setAlternatingRowColors(true);
+
 	// Autorisation du tri
 	ui->tvCategorie->setSortingEnabled(true);
 
-
 	// affichage de la table
 	ui->tvCategorie->show();
+}
+
+void GuiCategorie::afficheId()
+{
+	QItemSelectionModel *select = ui->tvCategorie->selectionModel();
+
+	QVariant var = select->selectedRows(3).first().data(); // sélection de la valeur de la première ligne 3ème colonne
+
+	if (var.toInt() == 0)
+	{
+		ui->btnMajAffichage->setEnabled(true);
+	}
+	else
+	{
+		ui->btnMajAffichage->setEnabled(false);
+	}
 }
