@@ -143,6 +143,9 @@
      </item>
     </layout>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
