@@ -1,0 +1,1 @@
+select * from Categorie where IdCategorie = 1 
