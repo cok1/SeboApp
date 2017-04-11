@@ -22,14 +22,14 @@ GuiAjoutModifierGenre::GuiAjoutModifierGenre(Genre *genreAModifier, QWidget *par
 		leLibelle->setText(genreEnCours->getLibelle());
 
 		// récupération de la catégorie
-		shared_ptr<Categorie> categorie = ManagerCategorie::getCategorieWithId(2);
-		
+		shared_ptr<Categorie> categorie = ManagerCategorie::getCategorieWithId(genreEnCours->getIdCategorie());
+
 		if (categorie != nullptr)
 		{
-			QString libelleCat = categorie->getLibelle();
+			cbCategorie->setCurrentText(categorie->getLibelle());
 		}
-		initCombo();
 
+		// Connexion su click sur le bouton valider à la modification d'un genre
 		connect(btnValider, SIGNAL(clicked()), SLOT(modificationGenre()));
 	}
 	else

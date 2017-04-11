@@ -27,8 +27,13 @@ vector<shared_ptr<ActeurArticle>> ManagerActeurArticle::getListeActeurArticle()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from ActeurArticle order by Reference");
@@ -39,7 +44,10 @@ vector<shared_ptr<ActeurArticle>> ManagerActeurArticle::getListeActeurArticle()
 			// Insertion de la relation acteur/article dans le vecteur
 			listeActeurArticle.push_back(make_shared<ActeurArticle>(requete.value("Reference").toInt(), requete.value("IdActeur").toInt()));
 		}
-		db.close();
+		
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -71,8 +79,13 @@ bool ManagerActeurArticle::addActeurArticle(int idActeur, int refArticle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -86,7 +99,8 @@ bool ManagerActeurArticle::addActeurArticle(int idActeur, int refArticle)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -119,8 +133,13 @@ bool ManagerActeurArticle::supActeurArticle(int idActeur, int refArticle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -134,7 +153,8 @@ bool ManagerActeurArticle::supActeurArticle(int idActeur, int refArticle)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{

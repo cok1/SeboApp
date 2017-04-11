@@ -27,8 +27,13 @@ vector<shared_ptr<Acteur>> ManagerActeur::getListeActeur()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from Acteur order by nomActeur");
@@ -39,7 +44,10 @@ vector<shared_ptr<Acteur>> ManagerActeur::getListeActeur()
 			// Insertion de l'acteur dans le vecteur
 			listeActeur.push_back(make_shared<Acteur>(requete.value("NomActeur").toString(), requete.value("IdRole").toFloat(), requete.value("IdActeur").toInt()));
 		}
-		db.close();
+		
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -71,8 +79,13 @@ bool ManagerActeur::addActeur(QString nomActeur, int idRole)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -86,7 +99,8 @@ bool ManagerActeur::addActeur(QString nomActeur, int idRole)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -113,8 +127,13 @@ bool ManagerActeur::modifActeur(Acteur acteurAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -129,7 +148,8 @@ bool ManagerActeur::modifActeur(Acteur acteurAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -161,8 +181,13 @@ bool ManagerActeur::supActeur(int idActeurASupprimer)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -175,7 +200,8 @@ bool ManagerActeur::supActeur(int idActeurASupprimer)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception&)
 	{

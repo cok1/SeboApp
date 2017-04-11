@@ -27,8 +27,13 @@ vector<shared_ptr<Categorie>> ManagerCategorie::getListCategorie()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from categorie order by idCategorie");
@@ -63,8 +68,13 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithLibelle(QString libelle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -100,33 +110,43 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithId(int idCategorie)
 
 	try
 	{
-		//// Récupération du pointeur vers l'instance unique de la connexion
-		//std::shared_ptr<Connexion> conn = Connexion::getInstance();
+		// Récupération du pointeur vers l'instance unique de la connexion
+		std::shared_ptr<Connexion> conn = Connexion::getInstance();
 
-		//// récupération de la connexion
-		//QSqlDatabase db = conn->getConnexion();
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
 
-		//// ouverture de la connexion
-		//db.open();
+		bool fermerConnexion = !db.isOpen();
 
-		//// Création de la requête
-		//QSqlQuery requete;
-		//requete.prepare("select * from Categorie where IdCategorie = :idCategorie");
+		// ouverture de la connexion
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
-		//// binding des valeurs
-		//requete.bindValue(":idCategorie", 1);
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("select * from Categorie where IdCategorie = :idCategorie");
 
-		//// exécution de la requête
-		//requete.exec();
+		// binding des valeurs
+		requete.bindValue(":idCategorie", idCategorie);
 
-		//if (requete.next())
-		//{
-		//	categorie = make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toDouble(), requete.value("IdCategorie").toInt());
-		//}
+		// exécution de la requête
+		requete.exec();
 
-		//// fermeture de la connexion
-		//db.close();
-		categorie = make_shared<Categorie>("CD", 5.5, 1);
+		if (requete.next())
+		{
+			categorie = make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toDouble(), requete.value("IdCategorie").toInt());
+		}
+
+		// fermeture de la connexion
+		if (fermerConnexion)
+		{
+			db.close();
+		}
+
+		if (categorie == nullptr)
+			categorie = make_shared<Categorie>("CD", 5.5, 1);
 	}
 	catch (const std::exception& e)
 	{
@@ -159,8 +179,13 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -181,7 +206,7 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 		message = message.simplified();
 
 		// Test du message de retour
-		resultat = message.length()<4;
+		resultat = message.length() < 4;
 
 		if (!resultat)
 		{
@@ -190,7 +215,10 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+		{
+			db.close();
+		}
 	}
 	catch (const std::exception& e)
 	{
@@ -218,8 +246,13 @@ bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -246,7 +279,7 @@ bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 		message = message.simplified();
 
 		// Test du message de retour
-		resultat = message.length()<4;
+		resultat = message.length() < 4;
 
 		if (!resultat)
 		{
@@ -289,8 +322,11 @@ bool ManagerCategorie::modifCategorie(Categorie *categorieAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+			db.open();
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -306,7 +342,8 @@ bool ManagerCategorie::modifCategorie(Categorie *categorieAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{

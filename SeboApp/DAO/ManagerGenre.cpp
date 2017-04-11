@@ -28,8 +28,13 @@ vector<shared_ptr<Genre>> ManagerGenre::getListeGenre()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from genre order by idCategorie");
@@ -40,7 +45,10 @@ vector<shared_ptr<Genre>> ManagerGenre::getListeGenre()
 			// Insertion du genre dans le vecteur
 			listeGenre.push_back(make_shared<Genre>(requete.value("LibelleGenre").toString(), requete.value("IdCategorie").toInt(), requete.value("idGenre").toInt()));
 		}
-		db.close();
+
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -65,8 +73,13 @@ shared_ptr<Genre> ManagerGenre::getGenreWithLibelle(QString libelle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -84,7 +97,8 @@ shared_ptr<Genre> ManagerGenre::getGenreWithLibelle(QString libelle)
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -108,8 +122,13 @@ int ManagerGenre::getIdGenre(QString libelle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -127,7 +146,8 @@ int ManagerGenre::getIdGenre(QString libelle)
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -154,8 +174,13 @@ bool ManagerGenre::addGenre(Genre *genreAAjouter)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -188,9 +213,9 @@ bool ManagerGenre::addGenre(Genre *genreAAjouter)
 			m_strLastError = message;
 		}
 
-
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -222,8 +247,13 @@ bool ManagerGenre::modifGenre(Genre *genreAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -238,7 +268,8 @@ bool ManagerGenre::modifGenre(Genre *genreAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -270,8 +301,13 @@ bool ManagerGenre::supGenre(int idGenreASupprimer)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -284,7 +320,8 @@ bool ManagerGenre::supGenre(int idGenreASupprimer)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{

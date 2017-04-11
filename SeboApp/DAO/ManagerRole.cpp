@@ -28,8 +28,13 @@ vector<shared_ptr<Role>> ManagerRole::getListeRole()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from Role order by idRole");
@@ -40,7 +45,9 @@ vector<shared_ptr<Role>> ManagerRole::getListeRole()
 			// Insertion du rôle dans le vecteur
 			listeRole.push_back(make_shared<Role>(requete.value("LibelleRole").toString(), requete.value("IdRole").toInt()));
 		}
-		db.close();
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -72,8 +79,13 @@ bool ManagerRole::addRole(QString libelleRole)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -86,7 +98,8 @@ bool ManagerRole::addRole(QString libelleRole)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -113,8 +126,13 @@ bool ManagerRole::modifRole(Role roleAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -128,7 +146,8 @@ bool ManagerRole::modifRole(Role roleAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -161,8 +180,13 @@ bool ManagerRole::supRole(int idRoleASupprimer)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -175,7 +199,8 @@ bool ManagerRole::supRole(int idRoleASupprimer)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{

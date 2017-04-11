@@ -27,8 +27,13 @@ vector<shared_ptr<Fournisseur>> ManagerFournisseur::getListeFournisseur()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from Fournisseur order by idFournisseur");
@@ -39,7 +44,10 @@ vector<shared_ptr<Fournisseur>> ManagerFournisseur::getListeFournisseur()
 			// Insertion du fournisseur dans le vecteur
 			listeFournisseur.push_back(make_shared<Fournisseur>(requete.value("NomFournisseur").toString(), requete.value("IdFournisseur").toInt()));
 		}
-		db.close();
+		
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -63,8 +71,13 @@ shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -82,7 +95,8 @@ shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -106,8 +120,13 @@ int ManagerFournisseur::getIdFournisseur(QString nom)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -125,7 +144,8 @@ int ManagerFournisseur::getIdFournisseur(QString nom)
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -157,8 +177,13 @@ bool ManagerFournisseur::addFournisseur(QString NomFournisseur)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -171,7 +196,8 @@ bool ManagerFournisseur::addFournisseur(QString NomFournisseur)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -198,8 +224,13 @@ bool ManagerFournisseur::modifFournisseur(Fournisseur fournisseurAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -213,7 +244,8 @@ bool ManagerFournisseur::modifFournisseur(Fournisseur fournisseurAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -245,8 +277,13 @@ bool ManagerFournisseur::supFournisseur(int idFournisseurASupprimer)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -259,7 +296,8 @@ bool ManagerFournisseur::supFournisseur(int idFournisseurASupprimer)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{

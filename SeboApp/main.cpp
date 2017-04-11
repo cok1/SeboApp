@@ -8,7 +8,7 @@
 #include "GuiGestionGenre.h"
 #include <QtWidgets/QApplication>
 #include "Tools\Connexion.h"
-
+#include "GuiGestionArticle.h"
 
 
 int main(int argc, char *argv[])
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 		conn->etablirConnexion("capelli", "developpeur");
 
 	QApplication a(argc, argv);
-	GuiGestionGenre w;
+	GuiGestionArticle w;
 	w.show();
 	return a.exec();
 }

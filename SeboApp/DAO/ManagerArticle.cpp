@@ -27,8 +27,13 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete("Select * from Article order by Reference");
@@ -40,7 +45,10 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 			listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("PhotoArticle").toString(), requete.value("DescriptionArticle").toString(), requete.value("IdGenre").toInt(),
 				requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reapprovisionnable").toBool(), requete.value("Reference").toInt()));
 		}
-		db.close();
+		
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -72,8 +80,13 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, QString pho
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -94,7 +107,8 @@ bool ManagerArticle::addArticle(QString libelle, double prixVenteHT, QString pho
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -121,8 +135,13 @@ bool ManagerArticle::modifArticle(Article articleAModifier)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -141,7 +160,8 @@ bool ManagerArticle::modifArticle(Article articleAModifier)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -173,8 +193,13 @@ bool ManagerArticle::supArticle(int refArticle)
 		// récupération de la connexion
 		QSqlDatabase db = conn->getConnexion();
 
+		bool fermerConnexion = !db.isOpen();
+
 		// ouverture de la connexion
-		db.open();
+		if (fermerConnexion)
+		{
+			db.open();
+		}
 
 		// Création de la requête
 		QSqlQuery requete;
@@ -187,7 +212,8 @@ bool ManagerArticle::supArticle(int refArticle)
 		resultat = requete.exec();
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
