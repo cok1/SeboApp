@@ -1,9 +1,12 @@
 #pragma once
+#include <qobject.h>
 #include <qstring.h>
 #include <ToolBox.h>
 
-class ActeurArticle
+class ActeurArticle : public QObject 
 {
+	Q_OBJECT
+
 public:
 	/// <summary>
 	/// Constructeur par défaut

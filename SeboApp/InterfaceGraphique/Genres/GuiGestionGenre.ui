@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GuiGestionCategorie</class>
- <widget class="QWidget" name="GuiGestionCategorie">
+ <class>GuiGestionGenre</class>
+ <widget class="QWidget" name="GuiGestionGenre">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>317</height>
+    <width>400</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="font">
@@ -17,11 +17,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Gestion des catégories</string>
+   <string>Gestion des genres</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="lblTitre">
+    <widget class="QLabel" name="lblTitreGenre">
      <property name="font">
       <font>
        <family>Calibri</family>
@@ -32,7 +32,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Liste des catégories :</string>
+      <string>Liste des genres :</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -45,7 +45,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTableView" name="tvCategories"/>
+      <widget class="QTableView" name="tvGenre"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">

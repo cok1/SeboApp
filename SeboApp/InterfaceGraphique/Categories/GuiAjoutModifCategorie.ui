@@ -126,7 +126,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../SeboApp.qrc">
-         <normaloff>:/SeboApp/valider.png</normaloff>:/SeboApp/valider.png</iconset>
+         <normaloff>:/SeboApp/Resources/valider.png</normaloff>:/SeboApp/Resources/valider.png</iconset>
        </property>
       </widget>
      </item>
@@ -137,7 +137,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../SeboApp.qrc">
-         <normaloff>:/SeboApp/Annuler.png</normaloff>:/SeboApp/Annuler.png</iconset>
+         <normaloff>:/SeboApp/Resources/Annuler.png</normaloff>:/SeboApp/Resources/Annuler.png</iconset>
        </property>
       </widget>
      </item>

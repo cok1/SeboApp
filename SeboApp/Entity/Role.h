@@ -1,54 +1,58 @@
 #pragma once
+#include <qobject.h>
 #include <qstring.h>
 #include <ToolBox.h>
 
-class Role
+class Role : public QObject
 {
+	Q_OBJECT
+	Q_CLASSINFO("author", "Corentin RogerÃ©")
+
 public:
 	/// <summary>
-	/// Constructeur par défaut
+	/// Constructeur par dÃ©faut
 	/// </summary>
 	Role();
 
 	/// <summary>
-	/// Constructeur paramétré
+	/// Constructeur paramÃ©trÃ©
 	/// </summary>
-	/// <param name="libelle">libellé du rôle</param>
-	/// <param name="id">id du rôle (par défaut -1)</param>
+	/// <param name="libelle">libellÃ© du rÃ´le</param>
+	/// <param name="id">id du rÃ´le (par dÃ©faut -1)</param>
 	Role(QString libelle, int id = -1);
 
 	/// <summary>
-	/// Destructeur par défaut
+	/// Destructeur par dÃ©faut
 	/// </summary>
 	~Role();
 
 	/// <summary>
-	/// Cette méthode permet de modifier le libellé du rôle 
+	/// Cette mÃ©thode permet de modifier le libellÃ© du rÃ´le 
 	/// </summary>
 	/// <param name="libelle"></param>
 	/// <returns></returns>
 	bool setLibelle(QString libelle);
 
 	/// <summary>
-	/// Cette fonction permet de récupérer le libellé du rôle
+	/// Cette fonction permet de rÃ©cupÃ©rer le libellÃ© du rÃ´le
 	/// </summary>
-	/// <returns>le libellé du rôle</returns>
+	/// <returns>le libellÃ© du rÃ´le</returns>
 	QString getLibelle();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer l'id du rôle
+	/// Cette fonction permet de rÃ©cupÃ©rer l'id du rÃ´le
 	/// </summary>
-	/// <returns>l'id du rôle</returns>
+	/// <returns>l'id du rÃ´le</returns>
 	int getId();
 
 private:
 	/// <summary>
-	/// Id du rôle
+	/// Id du rÃ´le
 	/// </summary>
 	int m_nId;
 
 	/// <summary>
-	/// Libellé du rôle
+	/// LibellÃ© du rÃ´le
 	/// </summary>
 	QString m_strLibelle;
 };

@@ -6,6 +6,7 @@
 class Categorie : QObject
 {
 	Q_OBJECT
+	Q_CLASSINFO("author", "Corentin Rogeré")
 
 public:
 	/// <summary>

@@ -112,7 +112,7 @@ public:
         btnValider = new QPushButton(GuiAjoutModifCategorie);
         btnValider->setObjectName(QStringLiteral("btnValider"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnValider->setIcon(icon);
 
         horizontalLayout->addWidget(btnValider);
@@ -120,7 +120,7 @@ public:
         btnAnnuler = new QPushButton(GuiAjoutModifCategorie);
         btnAnnuler->setObjectName(QStringLiteral("btnAnnuler"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnAnnuler->setIcon(icon1);
 
         horizontalLayout->addWidget(btnAnnuler);

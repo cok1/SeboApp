@@ -47,6 +47,7 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QTableView *tvCategorie;
     QSpacerItem *horizontalSpacer;
+    QHBoxLayout *horizontalLayout_5;
 
     void setupUi(QWidget *GuiCategorie)
     {
@@ -156,6 +157,12 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+
+        verticalLayout->addLayout(horizontalLayout_5);
 
 
         retranslateUi(GuiCategorie);

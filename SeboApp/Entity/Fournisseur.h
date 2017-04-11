@@ -1,9 +1,13 @@
 #pragma once
+#include <qobject.h>
 #include <qstring.h>
 #include <ToolBox.h>
 
-class Fournisseur
+class Fournisseur : public QObject
 {
+	Q_OBJECT
+	Q_CLASSINFO("author", "Corentin Rogeré")
+
 public:
 	/// <summary>
 	/// Constructeur par défaut

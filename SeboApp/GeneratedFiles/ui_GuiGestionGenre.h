@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'GuiGestionCategorie.ui'
+** Form generated from reading UI file 'GuiGestionGenre.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_GUIGESTIONCATEGORIE_H
-#define UI_GUIGESTIONCATEGORIE_H
+#ifndef UI_GUIGESTIONGENRE_H
+#define UI_GUIGESTIONGENRE_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -23,57 +23,57 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_GuiGestionCategorie
+class Ui_GuiGestionGenre
 {
 public:
     QVBoxLayout *verticalLayout;
-    QLabel *lblTitre;
+    QLabel *lblTitreGenre;
     QHBoxLayout *horizontalLayout;
-    QTableView *tvCategories;
+    QTableView *tvGenre;
     QVBoxLayout *verticalLayout_2;
     QPushButton *btnAjouter;
     QPushButton *btnModifier;
     QPushButton *btnSupprimer;
 
-    void setupUi(QWidget *GuiGestionCategorie)
+    void setupUi(QWidget *GuiGestionGenre)
     {
-        if (GuiGestionCategorie->objectName().isEmpty())
-            GuiGestionCategorie->setObjectName(QStringLiteral("GuiGestionCategorie"));
-        GuiGestionCategorie->resize(321, 317);
+        if (GuiGestionGenre->objectName().isEmpty())
+            GuiGestionGenre->setObjectName(QStringLiteral("GuiGestionGenre"));
+        GuiGestionGenre->resize(400, 320);
         QFont font;
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
-        GuiGestionCategorie->setFont(font);
-        verticalLayout = new QVBoxLayout(GuiGestionCategorie);
+        GuiGestionGenre->setFont(font);
+        verticalLayout = new QVBoxLayout(GuiGestionGenre);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        lblTitre = new QLabel(GuiGestionCategorie);
-        lblTitre->setObjectName(QStringLiteral("lblTitre"));
+        lblTitreGenre = new QLabel(GuiGestionGenre);
+        lblTitreGenre->setObjectName(QStringLiteral("lblTitreGenre"));
         QFont font1;
         font1.setFamily(QStringLiteral("Calibri"));
         font1.setPointSize(14);
         font1.setBold(true);
         font1.setItalic(true);
         font1.setWeight(75);
-        lblTitre->setFont(font1);
-        lblTitre->setAlignment(Qt::AlignCenter);
-        lblTitre->setMargin(10);
+        lblTitreGenre->setFont(font1);
+        lblTitreGenre->setAlignment(Qt::AlignCenter);
+        lblTitreGenre->setMargin(10);
 
-        verticalLayout->addWidget(lblTitre);
+        verticalLayout->addWidget(lblTitreGenre);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        tvCategories = new QTableView(GuiGestionCategorie);
-        tvCategories->setObjectName(QStringLiteral("tvCategories"));
+        tvGenre = new QTableView(GuiGestionGenre);
+        tvGenre->setObjectName(QStringLiteral("tvGenre"));
 
-        horizontalLayout->addWidget(tvCategories);
+        horizontalLayout->addWidget(tvGenre);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        btnAjouter = new QPushButton(GuiGestionCategorie);
+        btnAjouter = new QPushButton(GuiGestionGenre);
         btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
         QIcon icon;
         icon.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -81,7 +81,7 @@ public:
 
         verticalLayout_2->addWidget(btnAjouter);
 
-        btnModifier = new QPushButton(GuiGestionCategorie);
+        btnModifier = new QPushButton(GuiGestionGenre);
         btnModifier->setObjectName(QStringLiteral("btnModifier"));
         QIcon icon1;
         icon1.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -89,7 +89,7 @@ public:
 
         verticalLayout_2->addWidget(btnModifier);
 
-        btnSupprimer = new QPushButton(GuiGestionCategorie);
+        btnSupprimer = new QPushButton(GuiGestionGenre);
         btnSupprimer->setObjectName(QStringLiteral("btnSupprimer"));
         QIcon icon2;
         icon2.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -104,26 +104,26 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
 
-        retranslateUi(GuiGestionCategorie);
+        retranslateUi(GuiGestionGenre);
 
-        QMetaObject::connectSlotsByName(GuiGestionCategorie);
+        QMetaObject::connectSlotsByName(GuiGestionGenre);
     } // setupUi
 
-    void retranslateUi(QWidget *GuiGestionCategorie)
+    void retranslateUi(QWidget *GuiGestionGenre)
     {
-        GuiGestionCategorie->setWindowTitle(QApplication::translate("GuiGestionCategorie", "Gestion des cat\303\251gories", Q_NULLPTR));
-        lblTitre->setText(QApplication::translate("GuiGestionCategorie", "Liste des cat\303\251gories :", Q_NULLPTR));
-        btnAjouter->setText(QApplication::translate("GuiGestionCategorie", "Ajouter", Q_NULLPTR));
-        btnModifier->setText(QApplication::translate("GuiGestionCategorie", "Modifier", Q_NULLPTR));
-        btnSupprimer->setText(QApplication::translate("GuiGestionCategorie", "Supprimer", Q_NULLPTR));
+        GuiGestionGenre->setWindowTitle(QApplication::translate("GuiGestionGenre", "Gestion des genres", Q_NULLPTR));
+        lblTitreGenre->setText(QApplication::translate("GuiGestionGenre", "Liste des genres :", Q_NULLPTR));
+        btnAjouter->setText(QApplication::translate("GuiGestionGenre", "Ajouter", Q_NULLPTR));
+        btnModifier->setText(QApplication::translate("GuiGestionGenre", "Modifier", Q_NULLPTR));
+        btnSupprimer->setText(QApplication::translate("GuiGestionGenre", "Supprimer", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class GuiGestionCategorie: public Ui_GuiGestionCategorie {};
+    class GuiGestionGenre: public Ui_GuiGestionGenre {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_GUIGESTIONCATEGORIE_H
+#endif // UI_GUIGESTIONGENRE_H

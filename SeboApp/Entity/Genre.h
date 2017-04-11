@@ -1,60 +1,65 @@
 #pragma once
+#include <qobject.h>
 #include <qstring.h>
 #include <ToolBox.h>
 
-class Genre
+class Genre : public QObject 
 {
+	
+	Q_OBJECT
+	//Q_CLASSINFO("author", "Corentin RogerÃ©")
+
 public:
 	/// <summary>
-	/// Constructeur par défaut
+	/// Constructeur par dÃ©faut
 	/// </summary>
 	Genre();
 
 	/// <summary>
-	/// Constructeur paramétré
+	/// Constructeur paramÃ©trÃ©
 	/// </summary>
-	/// <param name="libelle">libellé du genre</param>
-	/// <param name="idCategorie">identifiant de la catégorie associée au genre</param>
-	/// <param name="id">identifiant du genre (par défaut -1)</param>
+	/// <param name="libelle">libellÃ© du genre</param>
+	/// <param name="idCategorie">identifiant de la catÃ©gorie associÃ©e au genre</param>
+	/// <param name="id">identifiant du genre (par dÃ©faut -1)</param>
 	Genre(QString libelle, int idCategorie, int id = -1);
 
 	/// <summary>
-	/// Destructeur par défaut
+	/// Destructeur par dÃ©faut
 	/// </summary>
 	~Genre();
 
 
 	/// <summary>
-	/// Cette fonction permet de modifier le libellé du genre
+	/// Cette fonction permet de modifier le libellÃ© du genre
 	/// </summary>
-	/// <param name="libelle">nouveau libellé du genre</param>
-	/// <returns>true si la modification a été faite, false sinon.</returns>
+	/// <param name="libelle">nouveau libellÃ© du genre</param>
+	/// <returns>true si la modification a Ã©tÃ© faite, false sinon.</returns>
 	bool setLibelle(QString libelle);
 
 	/// <summary>
-	/// Cette fonction permet de modifier l'identifiant de la catégorie associée au genre
+	/// Cette fonction permet de modifier l'identifiant de la catÃ©gorie associÃ©e au genre
 	/// </summary>
-	/// <param name="idCategorie">nouvel identifiant de la catégorie associée au genre</param>
-	/// <returns>true si la modification a été faite, false sinon.</returns>
+	/// <param name="idCategorie">nouvel identifiant de la catÃ©gorie associÃ©e au genre</param>
+	/// <returns>true si la modification a Ã©tÃ© faite, false sinon.</returns>
 	bool setIdCategorie(int idCategorie);
 
 
 	/// <summary>
-	/// Cette fonction permet de récupérer l'identifiant du genre
+	/// Cette fonction permet de rÃ©cupÃ©rer l'identifiant du genre
 	/// </summary>
 	/// <returns>l'identifiant du genre</returns>
 	int getId();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer le libellé du genre
+	/// Cette fonction permet de rÃ©cupÃ©rer le libellÃ© du genre
 	/// </summary>
-	/// <returns>libellé du genre</returns>
+	/// <returns>libellÃ© du genre</returns>
 	QString getLibelle();
 
 	/// <summary>
-	/// Cette fonction permet de récupérer l'identifiant de la catégorie associée au genre
+	/// Cette fonction permet de rÃ©cupÃ©rer l'identifiant de la catÃ©gorie associÃ©e au genre
 	/// </summary>
-	/// <returns>l'identifiant de la catégorie associée au genre</returns>
+	/// <returns>l'identifiant de la catÃ©gorie associÃ©e au genre</returns>
 	int getIdCategorie();
 
 private:
@@ -64,12 +69,12 @@ private:
 	int m_nId;
 
 	/// <summary>
-	/// Libellé du genre
+	/// LibellÃ© du genre
 	/// </summary>
 	QString m_stLibelle;
 
 	/// <summary>
-	/// Identifiant de la catégorie associée au genre
+	/// Identifiant de la catÃ©gorie associÃ©e au genre
 	/// </summary>
 	int m_nIdCategorie;
 };
