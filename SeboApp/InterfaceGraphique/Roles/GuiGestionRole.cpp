@@ -10,5 +10,6 @@ GuiGestionRole::GuiGestionRole(QWidget *parent)
 
 GuiGestionRole::~GuiGestionRole()
 {
+
 	delete ui;
 }

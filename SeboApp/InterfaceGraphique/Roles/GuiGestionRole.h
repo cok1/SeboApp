@@ -7,6 +7,7 @@ class GuiGestionRole : public QWidget
 {
 	Q_OBJECT
 
+
 public:
 	GuiGestionRole(QWidget *parent = Q_NULLPTR);
 	~GuiGestionRole();
