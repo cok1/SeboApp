@@ -38,13 +38,19 @@ vector<shared_ptr<Acteur>> ManagerActeur::getListeActeur()
 		// Création de la requête
 		QSqlQuery requete("Select * from Acteur order by nomActeur");
 
-		// Enregistrement des Acteurs dans le vecteur
-		while (requete.next())
+		if (!requete.exec())
 		{
-			// Insertion de l'acteur dans le vecteur
-			listeActeur.push_back(make_shared<Acteur>(requete.value("NomActeur").toString(), requete.value("IdRole").toFloat(), requete.value("IdActeur").toInt()));
+			m_strLastError = requete.lastError().text();
 		}
-		
+		else
+		{
+			// Enregistrement des Acteurs dans le vecteur
+			while (requete.next())
+			{
+				// Insertion de l'acteur dans le vecteur
+				listeActeur.push_back(make_shared<Acteur>(requete.value("NomActeur").toString(), requete.value("IdRole").toFloat(), requete.value("IdActeur").toInt()));
+			}
+		}
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();
@@ -98,6 +104,11 @@ bool ManagerActeur::addActeur(QString nomActeur, int idRole)
 		// exécution de la requête
 		resultat = requete.exec();
 
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
+
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();
@@ -146,6 +157,11 @@ bool ManagerActeur::modifActeur(Acteur acteurAModifier)
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		// fermeture de la connexion
 		if (fermerConnexion)
@@ -198,6 +214,11 @@ bool ManagerActeur::supActeur(int idActeurASupprimer)
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		// fermeture de la connexion
 		if (fermerConnexion)

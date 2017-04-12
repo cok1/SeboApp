@@ -4,6 +4,7 @@
 #include "Tools\Connexion.h"
 #include <qsqlquery.h>
 #include <qvariant.h>
+#include <qsqlerror.h>
 #include <memory>
 
 class ManagerActeur

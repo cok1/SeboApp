@@ -111,7 +111,7 @@ public:
     {
         if (GuiGestionArticle->objectName().isEmpty())
             GuiGestionArticle->setObjectName(QStringLiteral("GuiGestionArticle"));
-        GuiGestionArticle->resize(943, 910);
+        GuiGestionArticle->resize(943, 930);
         QFont font;
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
@@ -386,13 +386,16 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         lblPhoto = new QLabel(gbPhoto);
         lblPhoto->setObjectName(QStringLiteral("lblPhoto"));
-        sizePolicy1.setHeightForWidth(lblPhoto->sizePolicy().hasHeightForWidth());
-        lblPhoto->setSizePolicy(sizePolicy1);
-        lblPhoto->setMinimumSize(QSize(150, 150));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(lblPhoto->sizePolicy().hasHeightForWidth());
+        lblPhoto->setSizePolicy(sizePolicy2);
+        lblPhoto->setMinimumSize(QSize(0, 0));
         lblPhoto->setMaximumSize(QSize(250, 250));
         lblPhoto->setSizeIncrement(QSize(0, 0));
         lblPhoto->setBaseSize(QSize(0, 0));
-        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Y:/____ CARYS-SEBO/kaaris.png")));
+        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Resources/kaaris.png")));
         lblPhoto->setScaledContents(true);
         lblPhoto->setAlignment(Qt::AlignCenter);
         lblPhoto->setMargin(2);

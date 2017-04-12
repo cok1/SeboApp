@@ -9,6 +9,7 @@
 #include <QtWidgets/QApplication>
 #include "Tools\Connexion.h"
 #include "GuiGestionArticle.h"
+#include "GuiGestionRole.h"
 
 
 int main(int argc, char *argv[])

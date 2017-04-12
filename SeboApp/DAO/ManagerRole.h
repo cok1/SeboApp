@@ -4,6 +4,7 @@
 #include "Tools\Connexion.h"
 #include <qsqlquery.h>
 #include <qvariant.h>
+#include <qsqlerror.h>
 
 class ManagerRole
 {
@@ -24,7 +25,7 @@ public:
 	/// </summary>
 	/// <param name="roleAAjouter">rôle que l'on souhaite ajouter dans la base de données</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addRole(Role roleAAjouter);
+	static bool addRole(Role *roleAAjouter);
 	
 	/// <summary>
 	/// Cette fonction permet d'ajouter un rôle dans la base de données
@@ -38,14 +39,14 @@ public:
 	/// </summary>
 	/// <param name="roleAModifier">rôle que l'on souhaite modifier</param>
 	/// <returns>true si la modification a été réalisée, false sinon.</returns>
-	static bool modifRole(Role roleAModifier);
+	static bool modifRole(Role *roleAModifier);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un rôle dans la base de données
 	/// </summary>
 	/// <param name="roleASupprimer">rôle que l'on souhaite supprimer</param>
 	/// <returns>true si la suppression a été réalisée, false sinon.</returns>
-	static bool supRole(Role roleASupprimer);
+	static bool supRole(Role *roleASupprimer);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un rôle dans la base de données

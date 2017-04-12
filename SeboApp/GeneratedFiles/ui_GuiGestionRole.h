@@ -27,53 +27,81 @@ class Ui_GuiGestionRole
 {
 public:
     QVBoxLayout *verticalLayout;
-    QLabel *label;
+    QLabel *lbltitre;
     QHBoxLayout *horizontalLayout;
-    QTableView *tableView;
+    QTableView *tvRoles;
     QVBoxLayout *verticalLayout_2;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton;
+    QPushButton *btnAjouter;
+    QPushButton *btnModifier;
+    QPushButton *btnSupprimer;
 
     void setupUi(QWidget *GuiGestionRole)
     {
         if (GuiGestionRole->objectName().isEmpty())
             GuiGestionRole->setObjectName(QStringLiteral("GuiGestionRole"));
-        GuiGestionRole->resize(263, 300);
+        GuiGestionRole->resize(313, 300);
+        QFont font;
+        font.setFamily(QStringLiteral("Calibri"));
+        font.setPointSize(12);
+        GuiGestionRole->setFont(font);
         verticalLayout = new QVBoxLayout(GuiGestionRole);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        label = new QLabel(GuiGestionRole);
-        label->setObjectName(QStringLiteral("label"));
+        lbltitre = new QLabel(GuiGestionRole);
+        lbltitre->setObjectName(QStringLiteral("lbltitre"));
+        QFont font1;
+        font1.setPointSize(14);
+        font1.setBold(true);
+        font1.setItalic(true);
+        font1.setWeight(75);
+        lbltitre->setFont(font1);
+        lbltitre->setAlignment(Qt::AlignCenter);
+        lbltitre->setMargin(10);
 
-        verticalLayout->addWidget(label);
+        verticalLayout->addWidget(lbltitre);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        tableView = new QTableView(GuiGestionRole);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        tvRoles = new QTableView(GuiGestionRole);
+        tvRoles->setObjectName(QStringLiteral("tvRoles"));
+        tvRoles->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tvRoles->setAlternatingRowColors(true);
+        tvRoles->setSelectionMode(QAbstractItemView::SingleSelection);
+        tvRoles->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tvRoles->setSortingEnabled(true);
+        tvRoles->horizontalHeader()->setStretchLastSection(true);
+        tvRoles->verticalHeader()->setVisible(false);
 
-        horizontalLayout->addWidget(tableView);
+        horizontalLayout->addWidget(tvRoles);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        pushButton_3 = new QPushButton(GuiGestionRole);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        btnAjouter = new QPushButton(GuiGestionRole);
+        btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAjouter->setIcon(icon);
 
-        verticalLayout_2->addWidget(pushButton_3);
+        verticalLayout_2->addWidget(btnAjouter);
 
-        pushButton_2 = new QPushButton(GuiGestionRole);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        btnModifier = new QPushButton(GuiGestionRole);
+        btnModifier->setObjectName(QStringLiteral("btnModifier"));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnModifier->setIcon(icon1);
 
-        verticalLayout_2->addWidget(pushButton_2);
+        verticalLayout_2->addWidget(btnModifier);
 
-        pushButton = new QPushButton(GuiGestionRole);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        btnSupprimer = new QPushButton(GuiGestionRole);
+        btnSupprimer->setObjectName(QStringLiteral("btnSupprimer"));
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnSupprimer->setIcon(icon2);
 
-        verticalLayout_2->addWidget(pushButton);
+        verticalLayout_2->addWidget(btnSupprimer);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -89,11 +117,11 @@ public:
 
     void retranslateUi(QWidget *GuiGestionRole)
     {
-        GuiGestionRole->setWindowTitle(QApplication::translate("GuiGestionRole", "GuiGestionRole", Q_NULLPTR));
-        label->setText(QApplication::translate("GuiGestionRole", "TextLabel", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("GuiGestionRole", "PushButton", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("GuiGestionRole", "PushButton", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("GuiGestionRole", "PushButton", Q_NULLPTR));
+        GuiGestionRole->setWindowTitle(QApplication::translate("GuiGestionRole", "Gestion des r\303\264les", Q_NULLPTR));
+        lbltitre->setText(QApplication::translate("GuiGestionRole", "Liste des r\303\264les :", Q_NULLPTR));
+        btnAjouter->setText(QApplication::translate("GuiGestionRole", "Ajouter", Q_NULLPTR));
+        btnModifier->setText(QApplication::translate("GuiGestionRole", "Modifier", Q_NULLPTR));
+        btnSupprimer->setText(QApplication::translate("GuiGestionRole", "Supprimer", Q_NULLPTR));
     } // retranslateUi
 
 };

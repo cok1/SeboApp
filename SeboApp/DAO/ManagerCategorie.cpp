@@ -38,13 +38,21 @@ vector<shared_ptr<Categorie>> ManagerCategorie::getListCategorie()
 		// Création de la requête
 		QSqlQuery requete("Select * from categorie order by idCategorie");
 
-		// Enregistrement des Catégorie dans le vecteur
-		while (requete.next())
+		if (!requete.exec())
 		{
-			// Insertion de la catégorie dans le vecteur
-			listeCategorie.push_back(make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toFloat(), requete.value("IdCategorie").toInt()));
+			m_strLastError = requete.lastError().text();
 		}
-		db.close();
+		else
+		{
+			// Enregistrement des Catégorie dans le vecteur
+			while (requete.next())
+			{
+				// Insertion de la catégorie dans le vecteur
+				listeCategorie.push_back(make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toFloat(), requete.value("IdCategorie").toInt()));
+			}
+		}
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -84,15 +92,18 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithLibelle(QString libelle)
 		requete.bindValue(":libelleCategorie", libelle);
 
 		// exécution de la requête
-		requete.exec();
-
-		if (requete.next())
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
+		while (requete.next())
 		{
 			categorie = make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toFloat(), requete.value("IdCategorie").toInt());
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -132,9 +143,12 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithId(int idCategorie)
 		requete.bindValue(":idCategorie", idCategorie);
 
 		// exécution de la requête
-		requete.exec();
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
-		if (requete.next())
+		while (requete.next())
 		{
 			categorie = make_shared<Categorie>(requete.value("LibelleCategorie").toString(), requete.value("Tva").toDouble(), requete.value("IdCategorie").toInt());
 		}
@@ -144,14 +158,10 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithId(int idCategorie)
 		{
 			db.close();
 		}
-
-		if (categorie == nullptr)
-			categorie = make_shared<Categorie>("CD", 5.5, 1);
 	}
 	catch (const std::exception& e)
 	{
 		m_strLastError = e.what();
-		//Connexion::getInstance()->getConnexion().close();
 	}
 
 	// retour de la catégorie
@@ -189,9 +199,10 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("EXEC ps_SuppressionCategorie :idCategorie, :message");
+		requete.prepare("EXEC :codeRetour = ps_SuppressionCategorie :idCategorie, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":idCategorie", idCategorie);
 		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
 
@@ -199,19 +210,25 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 		// exécution de la requête
 		resultat = requete.exec();
 
-		// Récupération du message de retour de la procédure stockée
-		QString message = requete.boundValue(":message").toString();
-
-		// on enlève les espaces au début et à la fin
-		message = message.simplified();
-
-		// Test du message de retour
-		resultat = message.length() < 4;
-
 		if (!resultat)
 		{
-			// Il y a eu un problème
-			m_strLastError = message;
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
 		}
 
 		// fermeture de la connexion
@@ -258,9 +275,10 @@ bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 		QSqlQuery requete;
 
 		//requete.setForwardOnly(true);
-		requete.prepare("EXEC ps_CreationCategorie :libelle, :tauxTva, :id, :message");
+		requete.prepare("EXEC :codeRetour = ps_CreationCategorie :libelle, :tauxTva, :id, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":libelle", catAAjouter->getLibelle());
 		requete.bindValue(":tauxTva", catAAjouter->getTauxTva());
 		requete.bindValue(":id", 0, QSql::InOut);
@@ -269,26 +287,33 @@ bool ManagerCategorie::addCategorie(Categorie *catAAjouter)
 		// exécution de la requête
 		resultat = requete.exec();
 
-		// récupération de l'identifiant de la nouvelle catégorie
-		catAAjouter->setId(requete.boundValue(":id").toInt());
-
-		// Récupération du message de retour de la procédure stockée
-		QString message = requete.boundValue(":message").toString();
-
-		// on enlève les espaces au début et à la fin
-		message = message.simplified();
-
-		// Test du message de retour
-		resultat = message.length() < 4;
-
 		if (!resultat)
 		{
-			// Il y a eu un problème
-			m_strLastError = message;
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			// récupération de l'identifiant de la nouvelle catégorie
+			catAAjouter->setId(requete.boundValue(":id").toInt());
+
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
 		}
 
 		// fermeture de la connexion
-		db.close();
+		if (fermerConnexion)
+			db.close();
 	}
 	catch (const std::exception& e)
 	{
@@ -340,6 +365,11 @@ bool ManagerCategorie::modifCategorie(Categorie *categorieAModifier)
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		// fermeture de la connexion
 		if (fermerConnexion)

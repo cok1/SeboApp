@@ -38,14 +38,20 @@ vector<shared_ptr<Article>> ManagerArticle::getListeArticle()
 		// Création de la requête
 		QSqlQuery requete("Select * from Article order by Reference");
 
-		// Enregistrement des Articles dans le vecteur
-		while (requete.next())
+		if (!requete.exec())
 		{
-			// Insertion de l'Article dans le vecteur
-			listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("PhotoArticle").toString(), requete.value("DescriptionArticle").toString(), requete.value("IdGenre").toInt(),
-				requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reapprovisionnable").toBool(), requete.value("Reference").toInt()));
+			m_strLastError = requete.lastError().text();
 		}
-		
+		else
+		{
+			// Enregistrement des Articles dans le vecteur
+			while (requete.next())
+			{
+				// Insertion de l'Article dans le vecteur
+				listeArticle.push_back(make_shared<Article>(requete.value("LibelleArticle").toString(), requete.value("Prix").toFloat(), requete.value("PhotoArticle").toString(), requete.value("DescriptionArticle").toString(), requete.value("IdGenre").toInt(),
+					requete.value("PrixFournisseur").toFloat(), requete.value("IdFournisseur").toInt(), requete.value("Reapprovisionnable").toBool(), requete.value("Reference").toInt()));
+			}
+		}
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();
@@ -85,9 +91,10 @@ bool ManagerArticle::addArticle(Article *newArticle)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("EXEC ps_CreationArticle :libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable, :reference, :message");
+		requete.prepare("EXEC :codeRetour = ps_CreationArticle :libelleArticle, :prix, :photo, :description, :idGenre, :prixFournisseur, :idFournisseur, :isReapprovisionnable, :reference, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":libelleArticle", newArticle->getLibelle());
 		requete.bindValue(":prix", newArticle->getPrix());
 		requete.bindValue(":photo", newArticle->getPhoto());
@@ -101,23 +108,28 @@ bool ManagerArticle::addArticle(Article *newArticle)
 
 		// exécution de la requête
 		resultat = requete.exec();
-
-		// récupération de l'identifiant du nouveau genre
-		newArticle->setReference(requete.boundValue(":reference").toInt());
-
-		// Récupération du message de retour de la procédure stockée
-		QString message = requete.boundValue(":message").toString();
-
-		// on enlève les espaces au début et à la fin
-		message = message.simplified();
-
-		// Test du message de retour
-		resultat = message.length()<4;
-
 		if (!resultat)
 		{
-			// Il y a eu un problème
-			m_strLastError = message;
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			// récupération de l'identifiant du nouveau genre
+			newArticle->setReference(requete.boundValue(":reference").toInt());
+
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
 		}
 
 		// fermeture de la connexion
@@ -181,7 +193,7 @@ bool ManagerArticle::modifArticle(Article *articleAModifier)
 
 		if (!resultat)
 		{
-			m_strLastError = db.lastError().text() + "erreur";
+			m_strLastError = requete.lastError().text();
 		}
 
 		// fermeture de la connexion
@@ -229,28 +241,35 @@ bool ManagerArticle::supArticle(int refArticle)
 		// Création de la requête
 		QSqlQuery requete;
 		//requete.prepare("delete from Article where Reference = :refArticle");
-		requete.prepare("EXEC ps_SuppressionArticle :refArticle, :message");
+		requete.prepare("EXEC :codeRetour = ps_SuppressionArticle :refArticle, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":refArticle", refArticle);
 		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
 
 		// exécution de la requête
 		resultat = requete.exec();
 
-		// Récupération du message de retour de la procédure stockée
-		QString message = requete.boundValue(":message").toString();
-
-		// on enlève les espaces au début et à la fin
-		message = message.simplified();
-
-		// Test du message de retour
-		resultat = message.length()<4;
-
 		if (!resultat)
 		{
-			// Il y a eu un problème
-			m_strLastError = message;
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
 		}
 
 		// fermeture de la connexion

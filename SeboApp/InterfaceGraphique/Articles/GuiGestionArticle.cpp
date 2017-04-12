@@ -368,7 +368,7 @@ void GuiGestionArticle::valider()
 		else
 		{
 			// Affichage d'un message d'erreur
-			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de l'article dans la base de données"), ManagerCategorie::getLastError());
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de l'article dans la base de données"), ManagerArticle::getLastError());
 			int reponse = erreur->exec();
 		}
 	}
@@ -394,7 +394,7 @@ void GuiGestionArticle::valider()
 		else
 		{
 			// Affichage d'un message d'erreur
-			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la modification de l'article dans la base de données"), ManagerCategorie::getLastError());
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la modification de l'article dans la base de données"), ManagerArticle::getLastError());
 			int reponse = erreur->exec();
 		}
 	}

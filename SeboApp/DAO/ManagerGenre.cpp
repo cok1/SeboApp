@@ -17,7 +17,7 @@ vector<shared_ptr<Genre>> ManagerGenre::getListeGenre()
 {
 	// Définitions
 	vector<shared_ptr<Genre>> listeGenre;		// va contenir les genres récupérées de la base de données
-								
+
 	listeGenre = vector<shared_ptr<Genre>>();	// Initialisation
 
 	try
@@ -38,6 +38,11 @@ vector<shared_ptr<Genre>> ManagerGenre::getListeGenre()
 
 		// Création de la requête
 		QSqlQuery requete("Select * from genre order by idCategorie");
+
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		// Enregistrement des genres dans le vecteur
 		while (requete.next())
@@ -89,9 +94,12 @@ shared_ptr<Genre> ManagerGenre::getGenreWithLibelle(QString libelle)
 		requete.bindValue(":libelleGenre", libelle);
 
 		// exécution de la requête
-		requete.exec();
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
-		if (requete.next())
+		while (requete.next())
 		{
 			genre = make_shared<Genre>(requete.value("LibelleGenre").toString(), requete.value("IdCategorie").toInt(), requete.value("IdGenre").toInt());
 		}
@@ -138,7 +146,10 @@ int ManagerGenre::getIdGenre(QString libelle)
 		requete.bindValue(":libelleGenre", libelle);
 
 		// exécution de la requête
-		requete.exec();
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		if (requete.next())
 		{
@@ -184,9 +195,10 @@ bool ManagerGenre::addGenre(Genre *genreAAjouter)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("EXEC ps_CreationGenre :libelle, :idCategorie, :id, :message");
+		requete.prepare("EXEC :codeRetour = ps_CreationGenre :libelle, :idCategorie, :id, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":libelle", genreAAjouter->getLibelle());
 		requete.bindValue(":idCategorie", genreAAjouter->getIdCategorie());
 		requete.bindValue(":id", 0, QSql::InOut);
@@ -195,22 +207,28 @@ bool ManagerGenre::addGenre(Genre *genreAAjouter)
 		// exécution de la requête
 		resultat = requete.exec();
 
-		// récupération de l'identifiant du nouveau genre
-		genreAAjouter->setId(requete.boundValue(":id").toInt());
-
-		// Récupération du message de retour de la procédure stockée
-		QString message = requete.boundValue(":message").toString();
-
-		// on enlève les espaces au début et à la fin
-		message = message.simplified();
-
-		// Test du message de retour
-		resultat = message.length()<4;
-
 		if (!resultat)
 		{
-			// Il y a eu un problème
-			m_strLastError = message;
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			// récupération de l'identifiant du nouveau genre
+			genreAAjouter->setId(requete.boundValue(":id").toInt());
+
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
 		}
 
 		// fermeture de la connexion
@@ -267,6 +285,11 @@ bool ManagerGenre::modifGenre(Genre *genreAModifier)
 		// exécution de la requête
 		resultat = requete.exec();
 
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
+
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();
@@ -311,13 +334,35 @@ bool ManagerGenre::supGenre(int idGenreASupprimer)
 
 		// Création de la requête
 		QSqlQuery requete;
-		requete.prepare("delete from genre where idGenre = :idGenre");
+		requete.prepare("EXEC :codeRetour = ps_SuppressionGenre :idGenre, :message");
 
 		// binding des valeurs
+		requete.bindValue(":codeRetour", -1, QSql::InOut);
 		requete.bindValue(":idGenre", idGenreASupprimer);
+		requete.bindValue(":message", QString(127, ' '), QSql::InOut);
 
 		// exécution de la requête
 		resultat = requete.exec();
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			resultat = requete.boundValue(":codeRetour").toInt() == 0;
+
+			if (!resultat)
+			{
+				// récupération du message d'erreur
+				QString message = requete.boundValue(":message").toString();
+
+				// on enlève les espaces au début et à la fin
+				message = message.simplified();
+
+				// Il y a eu un problème
+				m_strLastError = message;
+			}
+		}
 
 		// fermeture de la connexion
 		if (fermerConnexion)

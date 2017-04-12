@@ -38,6 +38,11 @@ vector<shared_ptr<Fournisseur>> ManagerFournisseur::getListeFournisseur()
 		// Création de la requête
 		QSqlQuery requete("Select * from Fournisseur order by idFournisseur");
 
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
+
 		// Enregistrement des fournisseurs dans le vecteur
 		while (requete.next())
 		{
@@ -87,7 +92,10 @@ shared_ptr<Fournisseur> ManagerFournisseur::getFournisseurWithName(QString nom)
 		requete.bindValue(":nomFournisseur", nom);
 
 		// exécution de la requête
-		requete.exec();
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		if (requete.next())
 		{
@@ -136,7 +144,10 @@ int ManagerFournisseur::getIdFournisseur(QString nom)
 		requete.bindValue(":nomFournisseur", nom);
 
 		// exécution de la requête
-		requete.exec();
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		if (requete.next())
 		{
@@ -195,6 +206,11 @@ bool ManagerFournisseur::addFournisseur(QString NomFournisseur)
 		// exécution de la requête
 		resultat = requete.exec();
 
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
+
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();
@@ -242,6 +258,11 @@ bool ManagerFournisseur::modifFournisseur(Fournisseur fournisseurAModifier)
 
 		// exécution de la requête
 		resultat = requete.exec();
+
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
 
 		// fermeture de la connexion
 		if (fermerConnexion)
@@ -295,6 +316,11 @@ bool ManagerFournisseur::supFournisseur(int idFournisseurASupprimer)
 		// exécution de la requête
 		resultat = requete.exec();
 
+		if (!resultat)
+		{
+			m_strLastError = requete.lastError().text();
+		}
+		
 		// fermeture de la connexion
 		if (fermerConnexion)
 			db.close();

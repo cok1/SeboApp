@@ -27,10 +27,17 @@ public:
 	~Role();
 
 	/// <summary>
+	/// Cette fonction permet de modifier l'identifiant du rôle
+	/// </summary>
+	/// <param name="nouvelId">nouvel identifiant du rôle</param>
+	/// <returns>true si la modification a été réalisé, false sinon.</returns>
+	bool setId(int nouvelId);
+
+	/// <summary>
 	/// Cette méthode permet de modifier le libellé du rôle 
 	/// </summary>
-	/// <param name="libelle"></param>
-	/// <returns></returns>
+	/// <param name="libelle">nouveau libellé du rôle</param>
+	/// <returns>true si la modification a été réalisé, false sinon.</returns>
 	bool setLibelle(QString libelle);
 
 	/// <summary>

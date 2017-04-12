@@ -15,6 +15,23 @@ Role::~Role()
 {
 }
 
+bool Role::setId(int nouvelId)
+{
+	// Déclaration
+	bool resultat;
+
+	// Test paramètre
+	resultat = nouvelId > 0 && m_nId == -1;
+
+	if (resultat)
+	{
+		m_nId = nouvelId;
+	}
+
+	// retour du résultat
+	return resultat;
+}
+
 bool Role::setLibelle(QString libelle)
 {
 	// Déclarations
