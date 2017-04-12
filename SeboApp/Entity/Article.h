@@ -33,7 +33,7 @@ public:
 	/// <param name="idFournisseur">identifiant du fournisseur de l'article</param>
 	/// <param name="reapprovisionnable">permet de savoir si l'article est réapprovisionnable</param>
 	/// <param name="reference">référence de l'article (par défaut -1)</param>
-	Article(QString libelle, float prix, QString photo, QString description, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference=-1);
+	Article(QString libelle, double prix, QString photo, QString description, int idGenre, double prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference=-1);
 
 	/// <summary>
 	/// Destructeur par défaut de l'article
@@ -61,6 +61,13 @@ public:
 	//**********************************************************************************************************************************************
 	
 	/// <summary>
+	/// Cette fonction permet de modifier la référence de l'article
+	/// </summary>
+	/// <param name="reference">nouvelle référence</param>
+	/// <returns>true si la modification a été faite, false sinon.</returns>
+	bool setReference(int reference);
+
+	/// <summary>
 	/// Cette fonction permet de modifier le libellé de l'article
 	/// </summary>
 	/// <param name="libelle">nouveau libellé de l'article</param>
@@ -72,7 +79,7 @@ public:
 	/// </summary>
 	/// <param name="prix">nouveau prix de vente HT</param>
 	/// <returns>true si la modification a été faite, false sinon.</returns>
-	bool setPrix(float prix);
+	bool setPrix(double prix);
 
 	/// <summary>
 	/// Cette fonction permet de modifier le nom du fichier contenant la photo l'article
@@ -100,7 +107,7 @@ public:
 	/// </summary>
 	/// <param name="prixFournisseur">nouveau prix d'achat</param>
 	/// <returns>true si la modification a été faite, false sinon.</returns>
-	bool setPrixFournisseur(float prixFournisseur);
+	bool setPrixFournisseur(double prixFournisseur);
 
 	/// <summary>
 	/// Cette fonction permet de modifier l'identifiant du fournisseur
@@ -149,7 +156,7 @@ public:
 	/// Cette fonction permet de récupérer le prix de vente HT de l'article
 	/// </summary>
 	/// <returns>le prix de vente HT de l'article</returns>
-	float getPrix();
+	double getPrix();
 
 	/// <summary>
 	/// Cette fonction permet de récupérer l'identifiant du genre de l'article
@@ -161,7 +168,7 @@ public:
 	/// Cette fonction permet de récupérer le prix d'achat de l'article
 	/// </summary>
 	/// <returns>le prix d'achat de l'article</returns>
-	float getPrixFournisseur();
+	double getPrixFournisseur();
 
 	/// <summary>
 	/// Cette fonction permet de récupérer l'identifiant du fournisseur de l'article
@@ -199,7 +206,7 @@ private:
 	/// <summary>
 	/// Prix de vente Hors Taxe de l'article
 	/// </summary>
-	float m_fPrix;
+	double m_fPrix;
 
 	/// <summary>
 	/// Identifiant du genre de l'article
@@ -209,7 +216,7 @@ private:
 	/// <summary>
 	/// Prix d'achat de l'article
 	/// </summary>
-	float m_fPrixFournisseur;
+	double m_fPrixFournisseur;
 
 	/// <summary>
 	/// Identifiant du fournisseur de l'article

@@ -19,7 +19,7 @@ Article::Article(const Article &article)
 	m_strPhoto = article.m_strPhoto;
 }
 
-Article::Article(QString libelle, float prix, QString photo, QString description, int idGenre, float prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference)
+Article::Article(QString libelle, double prix, QString photo, QString description, int idGenre, double prixFournisseur, int idFournisseur, bool reapprovisionnable, int reference)
 	: m_strLibelle(libelle), m_fPrix(prix), m_strPhoto(photo), m_strDescription(description), m_nIdGenre(idGenre), m_fPrixFournisseur(prixFournisseur), m_nIdFournisseur(idFournisseur), m_isReapprovisionnable(reapprovisionnable), m_nReference(reference)
 {
 }
@@ -53,6 +53,23 @@ void Article::swap(Article & autreArticle) throw()
 	swap(m_strPhoto, autreArticle.m_strPhoto);
 }
 
+bool Article::setReference(int reference)
+{
+	// Déclarations
+	bool resultat;
+
+	// Test du paramètres en entrée
+	resultat = reference > 0 && m_nReference == -1;
+
+	if (resultat)
+	{
+		// modification de l'attribut
+		m_nReference = reference;
+	}
+
+	return resultat;
+}
+
 bool Article::setLibelle(QString libelle)
 {
 	// Déclaration
@@ -71,7 +88,7 @@ bool Article::setLibelle(QString libelle)
 	return resultat;
 }
 
-bool Article::setPrix(float prix)
+bool Article::setPrix(double prix)
 {
 	// Déclaration
 	bool resultat;		// va contenir le résultat de la fonction
@@ -119,7 +136,7 @@ bool Article::setIdGenre(int idGenre)
 	return resultat;
 }
 
-bool Article::setPrixFournisseur(float prixFournisseur)
+bool Article::setPrixFournisseur(double prixFournisseur)
 {
 	// Déclaration
 	bool resultat;		// va contenir le résultat de la fonction
@@ -182,7 +199,7 @@ QString Article::getDescription()
 	return QString(m_strDescription);
 }
 
-float Article::getPrix()
+double Article::getPrix()
 {
 	return m_fPrix;
 }
@@ -192,7 +209,7 @@ int Article::getIdGenre()
 	return m_nIdGenre;
 }
 
-float Article::getPrixFournisseur()
+double Article::getPrixFournisseur()
 {
 	return m_fPrixFournisseur;
 }

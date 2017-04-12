@@ -22,12 +22,8 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	cbFournisseur->setCurrentIndex(-1);
 
 	majCbGenre();
-	cbGenre->setCurrentIndex(-1);
-	cbFiltreGenre->setCurrentIndex(-1);
 
 	majCbCategorie();
-	cbCategorie->setCurrentIndex(-1);
-	cbFiltreCategorie->setCurrentIndex(-1);
 
 	// désactivation de la groupBox d'affichage des détails de l'article
 	gbDetail->setEnabled(false);
@@ -54,6 +50,16 @@ void GuiGestionArticle::majTable()
 	// récupération du modèle
 	tvArticle->setModel(proxyModel);
 
+	// Gestion des largeur de colonnes
+	tvArticle->setColumnWidth(0, 60);
+	tvArticle->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+	tvArticle->setColumnWidth(5, 120);
+	tvArticle->setColumnWidth(7, 120);
+	tvArticle->setColumnWidth(9, 120);
+	tvArticle->setColumnWidth(10, 80);
+	tvArticle->horizontalHeader()->setStretchLastSection(false);
+
+	// Masquage des colonnes non utilisées
 	tvArticle->hideColumn(2);
 	tvArticle->hideColumn(3);
 	tvArticle->hideColumn(4);
@@ -62,6 +68,14 @@ void GuiGestionArticle::majTable()
 	tvArticle->hideColumn(11);
 	tvArticle->hideColumn(12);
 	tvArticle->hideColumn(13);
+
+
+
+	// écoute du changement de sélection sur la table article
+	connect(tvArticle->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(majDetailArticle()));
+
+	btnSupprimer->setEnabled(false);
+	btnModifier->setEnabled(false);
 }
 
 void GuiGestionArticle::majModel()
@@ -131,15 +145,15 @@ void GuiGestionArticle::recupElements()
 
 void GuiGestionArticle::connectionSignaux()
 {
-	// écoute du changement de sélection sur la table article
-	connect(tvArticle->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(majDetailArticle()));
-
 	// écoute des divers boutons
 	connect(btnGererCategorie, SIGNAL(clicked()), SLOT(gererCategorie()));
 	connect(btnGererGenre, SIGNAL(clicked()), SLOT(gererGenre()));
 	connect(btnModifier, SIGNAL(clicked()), SLOT(modifierArticle()));
 	connect(btnAnnuler, SIGNAL(clicked()), SLOT(annuler()));
 	connect(btnToutAfficher, SIGNAL(clicked()), SLOT(toutAfficher()));
+	connect(btnValider, SIGNAL(clicked()), SLOT(valider()));
+	connect(btnAjouter, SIGNAL(clicked()), SLOT(ajoutArticle()));
+	connect(btnSupprimer, SIGNAL(clicked()), SLOT(supprimerArticle()));
 
 	// Écoute des changement de sélection sur les comboBox de filtre
 	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
@@ -151,55 +165,63 @@ void GuiGestionArticle::connectionSignaux()
 
 void GuiGestionArticle::majDetailArticle()
 {
-	// Récupération de la sélection
-	QItemSelectionModel *select = tvArticle->selectionModel();
+	if (tvArticle->currentIndex().row() != -1)
+	{
+		// Récupération de la sélection
+		QItemSelectionModel *select = tvArticle->selectionModel();
 
-	// Récupération de la référence
-	QVariant var = select->selectedRows(0).first().data();
-	leReference->setText(var.toString());
+		// Récupération de la référence
+		QVariant var = select->selectedRows(0).first().data();
+		leReference->setText(var.toString());
 
-	// Récupération du libellé
-	var = select->selectedRows(1).first().data();
-	leSaisieLibelle->setText(var.toString());
+		// Récupération du libellé
+		var = select->selectedRows(1).first().data();
+		leSaisieLibelle->setText(var.toString());
 
-	// Récupération de la description
-	var = select->selectedRows(2).first().data();
-	teDescription->setText(var.toString());
+		// Récupération de la description
+		var = select->selectedRows(2).first().data();
+		teDescription->setText(var.toString());
 
-	// Récupération du nom de la photo
-	//var = select->selectedRows(3).first().data();
-	//QString nomPhoto = var.toString();
+		// Récupération du nom de la photo
+		//var = select->selectedRows(3).first().data();
+		//QString nomPhoto = var.toString();
 
-	// Récupération de la catégorie
-	var = select->selectedRows(5).first().data();
-	cbCategorie->setCurrentText(var.toString());
+		// Récupération de la catégorie
+		var = select->selectedRows(5).first().data();
+		cbCategorie->setCurrentText(var.toString());
 
-	// Récupération du genre
-	var = select->selectedRows(7).first().data();
-	cbGenre->setCurrentText(var.toString());
+		// Récupération du genre
+		var = select->selectedRows(7).first().data();
+		cbGenre->setCurrentText(var.toString());
 
-	// Récupération du fournisseur
-	var = select->selectedRows(9).first().data();
-	cbFournisseur->setCurrentText(var.toString());
+		// Récupération du fournisseur
+		var = select->selectedRows(9).first().data();
+		cbFournisseur->setCurrentText(var.toString());
 
-	// Récupération du prix de vente
-	var = select->selectedRows(10).first().data();
-	dspPrixVente->setValue(var.toDouble());
+		// Récupération du prix de vente
+		var = select->selectedRows(10).first().data();
+		dspPrixVente->setValue(var.toDouble());
 
-	// Récupération du prix d'achat
-	var = select->selectedRows(11).first().data();
-	dspPrixAchat->setValue(var.toDouble());
+		// Récupération du prix d'achat
+		var = select->selectedRows(11).first().data();
+		dspPrixAchat->setValue(var.toDouble());
 
-	// Récupération du statut de réapprovisionnement
-	var = select->selectedRows(12).first().data();
-	ckReapprovisionnable->setChecked(var.toBool());
+		// Récupération du statut de réapprovisionnement
+		var = select->selectedRows(12).first().data();
+		ckReapprovisionnable->setChecked(var.toBool());
 
-	// Récupération du nombre d'utilisation
-	var = select->selectedRows(13).first().data();
-	btnSupprimer->setEnabled(var.toInt() == 0);
+		// Récupération du nombre d'utilisation
+		var = select->selectedRows(13).first().data();
+		btnSupprimer->setEnabled(var.toInt() == 0);
 
-	// Activation du bouton de modification
-	btnModifier->setEnabled(true);
+		// Activation du bouton de modification
+		btnModifier->setEnabled(true);
+	}
+	else
+	{
+		// réinitialisation champs
+		reinitChamps();
+	}
 }
 
 void GuiGestionArticle::suppFiltre()
@@ -208,15 +230,28 @@ void GuiGestionArticle::suppFiltre()
 
 void GuiGestionArticle::ajoutArticle()
 {
+	tvArticle->selectRow(-1);
+
+	// Désactivation de la sélection sur la table
+	tvArticle->setSelectionMode(QAbstractItemView::NoSelection);
+
+	// réinitialisation des champs
+	reinitChamps();
+
+	// activation de la zone d'édition
+	gbDetail->setEnabled(true);
+
+	frEdition->setVisible(true);
+	frGestion->setVisible(false);
 }
 
 void GuiGestionArticle::modifierArticle()
 {
-	// Désactivation de la sélection sur la table
-	tvArticle->setSelectionMode(QAbstractItemView::NoSelection);
-
 	if (tvArticle->currentIndex().row() != -1)
 	{
+		// Désactivation de la sélection sur la table
+		tvArticle->setSelectionMode(QAbstractItemView::NoSelection);
+
 		// activation de l'édition
 		gbDetail->setEnabled(true);
 		frEdition->setVisible(true);
@@ -228,7 +263,48 @@ void GuiGestionArticle::modifierArticle()
 
 void GuiGestionArticle::supprimerArticle()
 {
-	// Appel de la procédure stockée de suppression
+	// Récupération de la sélection
+	QItemSelectionModel *select = tvArticle->selectionModel();
+	QVariant var = select->selectedRows(1).first().data();
+
+	// récupération du nom de la catégorie
+	QString libelleArticle = var.toString();
+
+	// Affichage d'une boîte de dialoque de confirmation
+	QMessageBox *confirmation = new QMessageBox();
+	confirmation->setIcon(QMessageBox::Question);
+	confirmation->setWindowTitle(trUtf8("Confirmation de la suppression"));
+	confirmation->setText(trUtf8("Suppression Article"));
+	confirmation->setInformativeText(trUtf8("Êtes-vous sûr de vouloir supprimer l'article ") + libelleArticle + " ?");
+	confirmation->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+	confirmation->setDefaultButton(QMessageBox::No);
+
+	int reponse = confirmation->exec();
+
+	// Traitement de la réponse
+	if (reponse == QMessageBox::Yes)
+	{
+		// Récupération de a référence de l'article à supprimer
+		QVariant var = select->selectedRows(0).first().data();
+		int reference = var.toInt();
+
+		// Affichage du résultat de la suppression
+		if (ManagerArticle::supArticle(reference))
+		{
+			QMessageBox *info = new QMessageBox(QMessageBox::Information, trUtf8("Suppression effectuée"), trUtf8("L'article ") + libelleArticle + trUtf8(" a été supprimée!"));
+			int rep = info->exec();
+		}
+		else
+		{
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Information, trUtf8("Problème lors de la suppression"), trUtf8("L'article ") + libelleArticle + trUtf8(" n'a été supprimée!") + ManagerArticle::getLastError());
+			int rep = erreur->exec();
+		}
+
+		// Mise à jour de la table
+		majModel();
+		majTable();
+		annuler();
+	}
 }
 
 void GuiGestionArticle::annuler()
@@ -268,23 +344,60 @@ void GuiGestionArticle::valider()
 	photo = "";	// TODO à modifier par la suite
 	description = teDescription->toPlainText();
 	reapprovisionnable = ckReapprovisionnable->isChecked();
-	
-	idGenre = 1;
-
-
-	// Création d'un article à partir des infos saisies
-	
+	idGenre = ManagerGenre::getIdGenre(cbGenre->currentText());
+	prixAchat = dspPrixAchat->value();
+	idFournisseur = ManagerFournisseur::getIdFournisseur(cbFournisseur->currentText());
 
 	if (leReference->text().isEmpty())
 	{
+		// création de l'article
+		article = new Article(libelle, prixVente, photo, description, idGenre, prixAchat, idFournisseur, reapprovisionnable);
+
 		// Appel ps_creation
+		if (ManagerArticle::addArticle(article))
+		{
+			// Affichage d'un message d'information
+			QMessageBox *info;
+
+			info = new QMessageBox(QMessageBox::Icon::Information, trUtf8("Création achevée"), trUtf8("La référence du nouvel article est : ") + QString::number(article->getReference()));
+			int reponse = info->exec();
+			majModel();
+			majTable();
+			annuler();
+		}
+		else
+		{
+			// Affichage d'un message d'erreur
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création de l'article dans la base de données"), ManagerCategorie::getLastError());
+			int reponse = erreur->exec();
+		}
 	}
 	else
 	{
-		// Appel modifier Article
-	}
+		int reference = leReference->text().toInt();
 
-	// Appel des procédure stockées
+		// modification de l'article
+		article = new Article(libelle, prixVente, photo, description, idGenre, prixAchat, idFournisseur, reapprovisionnable, reference);
+
+		// Appel modifier Article
+		if (ManagerArticle::modifArticle(article))
+		{
+			// Affichage d'un message d'information
+			QMessageBox *info;
+			info = new QMessageBox(QMessageBox::Icon::Information, trUtf8("Modification terminée"), trUtf8("La modification s'est bien passée."));
+			int reponse = info->exec();
+
+			majModel();
+			majTable();
+			annuler();
+		}
+		else
+		{
+			// Affichage d'un message d'erreur
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la modification de l'article dans la base de données"), ManagerCategorie::getLastError());
+			int reponse = erreur->exec();
+		}
+	}
 }
 
 void GuiGestionArticle::gererCategorie()
@@ -292,6 +405,7 @@ void GuiGestionArticle::gererCategorie()
 	GuiGestionCategorie *gererCat = new GuiGestionCategorie();
 	gererCat->setWindowModality(Qt::ApplicationModal);
 	gererCat->show();
+	majCbCategorie();
 }
 
 void GuiGestionArticle::gererGenre()
@@ -299,6 +413,7 @@ void GuiGestionArticle::gererGenre()
 	GuiGestionGenre *gererGen = new GuiGestionGenre();
 	gererGen->setWindowModality(Qt::ApplicationModal);
 	gererGen->show();
+	majCbGenre();
 }
 
 void GuiGestionArticle::majCbCategorie()
@@ -324,6 +439,10 @@ void GuiGestionArticle::majCbCategorie()
 	// Remplissage de la comboBox filtre catégorie
 	cbFiltreCategorie->setModel(modelCb);
 	cbFiltreCategorie->setModelColumn(1);
+
+	// aucune sélection par défaut
+	cbCategorie->setCurrentIndex(-1);
+	cbFiltreCategorie->setCurrentIndex(-1);
 }
 
 void GuiGestionArticle::majCbGenre()
@@ -349,6 +468,10 @@ void GuiGestionArticle::majCbGenre()
 	// Remplissage de la comboBox de filtre du genre
 	cbFiltreGenre->setModel(modelCb);
 	cbFiltreGenre->setModelColumn(1);
+
+	// aucune sélection par défaut
+	cbGenre->setCurrentIndex(-1);
+	cbFiltreGenre->setCurrentIndex(-1);
 }
 
 void GuiGestionArticle::majCbFournisseur()
@@ -403,5 +526,35 @@ void GuiGestionArticle::toutAfficher()
 	leFiltreLibelle->clear();
 	cbFiltreCategorie->setCurrentIndex(-1);
 	cbFiltreGenre->setCurrentIndex(-1);
+}
+
+void GuiGestionArticle::reinitChamps()
+{
+	leReference->clear();
+
+	leSaisieLibelle->clear();
+
+	teDescription->clear();
+
+	// Récupération du nom de la photo
+	//var = select->selectedRows(3).first().data();
+	//QString nomPhoto = var.toString();
+
+	cbCategorie->setCurrentIndex(-1);
+
+	cbGenre->setCurrentIndex(-1);
+
+	cbFournisseur->setCurrentIndex(-1);
+
+	dspPrixVente->setValue(0);
+
+	dspPrixAchat->setValue(0);
+
+	ckReapprovisionnable->setChecked(true);
+
+	btnSupprimer->setEnabled(false);
+
+	// Activation du bouton de modification
+	btnModifier->setEnabled(false);
 }
 

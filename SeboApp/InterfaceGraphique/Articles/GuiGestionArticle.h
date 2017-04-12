@@ -106,4 +106,5 @@ private slots:
 	void filtrerGenre(QString texte);
 	void filtrerLibelle(QString texte);
 	void toutAfficher();
+	void reinitChamps();
 };

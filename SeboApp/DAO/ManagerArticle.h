@@ -6,6 +6,7 @@
 #include <qsqlquery.h>
 #include <qvariant.h>
 #include <qstring.h>
+#include <qsqlerror.h>
 
 class ManagerArticle
 {
@@ -26,7 +27,7 @@ public:
 	/// </summary>
 	/// <param name="newArticle">Article à ajouter</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addArticle(Article newArticle);
+	static bool addArticle(Article *newArticle);
 
 	/// <summary>
 	/// Cette fonction permet d'ajouter un article dans la base de données
@@ -44,14 +45,14 @@ public:
 	/// </summary>
 	/// <param name="articleAModifier">article que l'on souhaite modifier</param>
 	/// <returns>true si la modification a été réalisée, false sinon.</returns>
-	static bool modifArticle(Article articleAModifier);
+	static bool modifArticle(Article *articleAModifier);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un article de la base de données
 	/// </summary>
 	/// <param name="articleASup">article à supprimer de la base de données</param>
 	/// <returns>true si la suppression a été réalisée, false sinon.</returns>
-	static bool supArticle(Article articleASup);
+	static bool supArticle(Article *articleASup);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un article de la base de données

@@ -195,7 +195,7 @@ void EssaiGuiArticle::creerArticle()
 	{
 		// Création et ajout de l'article dans la base de données
 		Article nouvelArticle = Article(ui.leSaisieLibelle->text(), (float)ui.spPrixVente->value(), QString(""), QString(""), idGenre, (float)ui.spPrixFournisseur->value(), idFournisseur, ui.ckReapprovisionnable->isChecked());
-		ManagerArticle::addArticle(nouvelArticle);
+		ManagerArticle::addArticle(&nouvelArticle);
 	}
 	else
 	{
