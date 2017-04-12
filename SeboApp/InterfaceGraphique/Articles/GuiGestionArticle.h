@@ -11,8 +11,14 @@
 #include <qcheckbox.h>
 #include <qsqltablemodel.h>
 #include <qgroupbox.h>
+#include <qlabel.h>
+#include <qpixmap.h>
+#include <QModelIndex>
+#include <qframe.h>
 
 #include "Tools\Connexion.h"
+#include "GuiGestionGenre.h"
+#include "GuiGestionCategorie.h"
 
 namespace Ui { class GuiGestionArticle; };
 
@@ -47,7 +53,7 @@ private:
 	QDoubleSpinBox *dspPrixVente;
 	QDoubleSpinBox *dspPrixAchat;
 	QTextEdit *teDescription;
-	QGraphicsView *gvPhoto;
+	QLabel *lblPhoto;
 
 	// Boutons
 	QPushButton *btnAjouter;
@@ -55,11 +61,26 @@ private:
 	QPushButton *btnValider;
 	QPushButton *btnAnnuler;
 	QPushButton *btnSupprimer;
+	QPushButton *btnGererCategorie;
+	QPushButton *btnGererGenre;
+	QPushButton *btnAjouterPhoto;
+	QPushButton *btnModifierPhoto;
+	QPushButton *btnSupprimerPhoto;
+	QPushButton *btnAjouterRole;
+	QPushButton *btnModifierRole;
+	QPushButton *btnSupprimerRole;
 
-	// modèle
+	// modÃ¨le
 	QSqlTableModel *model;
 
+	// QFrame
+	QFrame *frGestion;
+	QFrame *frEdition;
+
+	// Fonctions
 	void majModel();
+	void recupElements();
+	void connectionSignaux();
 
 private slots:
 	void majTable();
@@ -70,4 +91,9 @@ private slots:
 	void supprimerArticle();
 	void annuler();
 	void valider();
+	void gererCategorie();
+	void gererGenre();
+	void majCbCategorie();
+	void majCbGenre();
+	void majCbFournisseur();
 };

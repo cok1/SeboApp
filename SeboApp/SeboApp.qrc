@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="SeboApp">
+    <file>Y:/____ CARYS-SEBO/kaaris.png</file>
+    <file>Resources/toutAfficher.png</file>
     <file>Resources/add2.png</file>
     <file>Resources/Annuler.png</file>
     <file>Resources/delete2.png</file>
