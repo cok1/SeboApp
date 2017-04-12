@@ -23,9 +23,11 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 
 	majCbGenre();
 	cbGenre->setCurrentIndex(-1);
+	cbFiltreGenre->setCurrentIndex(-1);
 
 	majCbCategorie();
 	cbCategorie->setCurrentIndex(-1);
+	cbFiltreCategorie->setCurrentIndex(-1);
 
 	// désactivation de la groupBox d'affichage des détails de l'article
 	gbDetail->setEnabled(false);
@@ -45,8 +47,12 @@ GuiGestionArticle::~GuiGestionArticle()
 
 void GuiGestionArticle::majTable()
 {
+	// Création d'un moèle de filtre
+	proxyModel = new QSortFilterProxyModel();
+	proxyModel->setSourceModel(model);
+
 	// récupération du modèle
-	tvArticle->setModel(model);
+	tvArticle->setModel(proxyModel);
 
 	tvArticle->hideColumn(2);
 	tvArticle->hideColumn(3);
@@ -125,11 +131,22 @@ void GuiGestionArticle::recupElements()
 
 void GuiGestionArticle::connectionSignaux()
 {
+	// écoute du changement de sélection sur la table article
 	connect(tvArticle->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(majDetailArticle()));
+
+	// écoute des divers boutons
 	connect(btnGererCategorie, SIGNAL(clicked()), SLOT(gererCategorie()));
 	connect(btnGererGenre, SIGNAL(clicked()), SLOT(gererGenre()));
 	connect(btnModifier, SIGNAL(clicked()), SLOT(modifierArticle()));
 	connect(btnAnnuler, SIGNAL(clicked()), SLOT(annuler()));
+	connect(btnToutAfficher, SIGNAL(clicked()), SLOT(toutAfficher()));
+
+	// Écoute des changement de sélection sur les comboBox de filtre
+	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
+	connect(cbFiltreGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerGenre(QString)));
+
+	// Écoute de l'édition de la ligne de libellé
+	connect(leFiltreLibelle, SIGNAL(textChanged(const QString &)), SLOT(filtrerLibelle(QString)));
 }
 
 void GuiGestionArticle::majDetailArticle()
@@ -234,6 +251,39 @@ void GuiGestionArticle::annuler()
 
 void GuiGestionArticle::valider()
 {
+	// Déclarations
+	Article *article;		// va contenir le nouvel article ou l'article à mettre à jour
+	QString libelle;		// va contenir le libellé de l'article
+	double prixVente;		// va contenir le prix de vente
+	QString photo;			// va contenir le nom du fichier de la photo
+	QString description;	// va contenir la description de l'article
+	bool reapprovisionnable;// va contenir l'info sur le réapprovisionnement
+	int idGenre;			// va contenir l'identifiant du genre de l'article
+	double prixAchat;		// va contenir le prix d'achat de l'article
+	int idFournisseur;		// va contenir l'identifiant du fournisseur
+
+	// Récupération des infos
+	libelle = leSaisieLibelle->text();
+	prixVente = dspPrixVente->value();
+	photo = "";	// TODO à modifier par la suite
+	description = teDescription->toPlainText();
+	reapprovisionnable = ckReapprovisionnable->isChecked();
+	
+	idGenre = 1;
+
+
+	// Création d'un article à partir des infos saisies
+	
+
+	if (leReference->text().isEmpty())
+	{
+		// Appel ps_creation
+	}
+	else
+	{
+		// Appel modifier Article
+	}
+
 	// Appel des procédure stockées
 }
 
@@ -259,17 +309,21 @@ void GuiGestionArticle::majCbCategorie()
 	QSqlDatabase db = conn->getConnexion();
 
 	// création du modèle à partir de la base de donnée
-	QSqlTableModel *model = new QSqlTableModel();
+	QSqlTableModel *modelCb = new QSqlTableModel();
 
-	model->setTable("Categorie");
-	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+	modelCb->setTable("Categorie");
+	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 	// Récupération des données
-	model->select();
+	modelCb->select();
 
-	// Remplissage de la comboBox fournisseur
-	cbCategorie->setModel(model);
+	// Remplissage de la comboBox catégorie
+	cbCategorie->setModel(modelCb);
 	cbCategorie->setModelColumn(1);
+
+	// Remplissage de la comboBox filtre catégorie
+	cbFiltreCategorie->setModel(modelCb);
+	cbFiltreCategorie->setModelColumn(1);
 }
 
 void GuiGestionArticle::majCbGenre()
@@ -280,17 +334,21 @@ void GuiGestionArticle::majCbGenre()
 	QSqlDatabase db = conn->getConnexion();
 
 	// création du modèle à partir de la base de donnée
-	QSqlTableModel *model = new QSqlTableModel();
+	QSqlTableModel *modelCb = new QSqlTableModel();
 
-	model->setTable("Genre");
-	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+	modelCb->setTable("Genre");
+	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 	// Récupération des données
-	model->select();
+	modelCb->select();
 
-	// Remplissage de la comboBox fournisseur
-	cbGenre->setModel(model);
+	// Remplissage de la comboBox genre
+	cbGenre->setModel(modelCb);
 	cbGenre->setModelColumn(1);
+
+	// Remplissage de la comboBox de filtre du genre
+	cbFiltreGenre->setModel(modelCb);
+	cbFiltreGenre->setModelColumn(1);
 }
 
 void GuiGestionArticle::majCbFournisseur()
@@ -301,16 +359,49 @@ void GuiGestionArticle::majCbFournisseur()
 	QSqlDatabase db = conn->getConnexion();
 
 	// création du modèle à partir de la base de donnée
-	QSqlTableModel *model = new QSqlTableModel();
+	QSqlTableModel *modelCb = new QSqlTableModel();
 
-	model->setTable("Fournisseur");
-	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+	modelCb->setTable("Fournisseur");
+	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 	// Récupération des données
-	model->select();
+	modelCb->select();
 
 	// Remplissage de la comboBox fournisseur
-	cbFournisseur->setModel(model);
+	cbFournisseur->setModel(modelCb);
 	cbFournisseur->setModelColumn(1);
+}
+
+void GuiGestionArticle::filtrerCategorie(QString texte)
+{
+	// filtrage catégorie
+	proxyModel->setFilterKeyColumn(5);
+	proxyModel->setDynamicSortFilter(true);
+	proxyModel->setFilterRegExp(texte);
+}
+
+void GuiGestionArticle::filtrerGenre(QString texte)
+{
+	// filtrage genre
+	proxyModel->setFilterKeyColumn(7);
+	proxyModel->setDynamicSortFilter(true);
+	proxyModel->setFilterRegExp(texte);
+}
+
+void GuiGestionArticle::filtrerLibelle(QString texte)
+{
+	// filtrage libellé
+	proxyModel->setFilterKeyColumn(1);
+	proxyModel->setDynamicSortFilter(true);
+	proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+	proxyModel->setFilterRegExp(texte);
+}
+
+void GuiGestionArticle::toutAfficher()
+{
+	proxyModel->invalidate();
+	leFiltreLibelle->clear();
+	cbFiltreCategorie->setCurrentIndex(-1);
+	cbFiltreGenre->setCurrentIndex(-1);
 }
 

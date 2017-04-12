@@ -15,10 +15,15 @@
 #include <qpixmap.h>
 #include <QModelIndex>
 #include <qframe.h>
+#include <qsortfilterproxymodel.h>
 
 #include "Tools\Connexion.h"
 #include "GuiGestionGenre.h"
 #include "GuiGestionCategorie.h"
+#include "Entity\Article.h"
+#include "DAO\ManagerArticle.h"
+#include "DAO\ManagerGenre.h"
+#include "DAO\ManagerFournisseur.h"
 
 namespace Ui { class GuiGestionArticle; };
 
@@ -72,6 +77,7 @@ private:
 
 	// modèle
 	QSqlTableModel *model;
+	QSortFilterProxyModel *proxyModel;
 
 	// QFrame
 	QFrame *frGestion;
@@ -96,4 +102,8 @@ private slots:
 	void majCbCategorie();
 	void majCbGenre();
 	void majCbFournisseur();
+	void filtrerCategorie(QString texte);
+	void filtrerGenre(QString texte);
+	void filtrerLibelle(QString texte);
+	void toutAfficher();
 };
