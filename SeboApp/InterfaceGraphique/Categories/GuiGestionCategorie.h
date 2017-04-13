@@ -20,6 +20,11 @@ public:
 	GuiGestionCategorie(QWidget *parent = Q_NULLPTR);
 	~GuiGestionCategorie();
 
+signals:
+	void editionTerminee();
+
+	//virtual bool close();
+
 public slots:
 	void majTable();
 

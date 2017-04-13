@@ -155,9 +155,7 @@ shared_ptr<Categorie> ManagerCategorie::getCategorieWithId(int idCategorie)
 
 		// fermeture de la connexion
 		if (fermerConnexion)
-		{
 			db.close();
-		}
 	}
 	catch (const std::exception& e)
 	{
@@ -233,9 +231,7 @@ bool ManagerCategorie::supCategorie(int idCategorie)
 
 		// fermeture de la connexion
 		if (fermerConnexion)
-		{
 			db.close();
-		}
 	}
 	catch (const std::exception& e)
 	{

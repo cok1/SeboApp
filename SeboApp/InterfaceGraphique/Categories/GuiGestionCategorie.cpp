@@ -29,6 +29,13 @@ GuiGestionCategorie::~GuiGestionCategorie()
 	delete ui;
 }
 
+//bool GuiGestionCategorie::close()
+//{
+//	bool resultat = QWidget::close();
+//	emit(editionTerminee());
+//	return resultat;
+//}
+
 void GuiGestionCategorie::majTable()
 {
 	// Récupération de la connexion

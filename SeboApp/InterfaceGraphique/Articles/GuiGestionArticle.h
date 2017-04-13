@@ -46,6 +46,7 @@ private:
 
 	//Partie affichage
 	QTableView *tvArticle;
+	QTableView *tvRole;
 
 	// Partie Modification Ajout
 	QGroupBox *gbDetail;
@@ -89,7 +90,8 @@ private:
 	void connectionSignaux();
 
 private slots:
-	void majTable();
+	void majTableArticle();
+	void majTableRole();
 	void majDetailArticle();
 	void suppFiltre();
 	void ajoutArticle();
@@ -99,12 +101,14 @@ private slots:
 	void valider();
 	void gererCategorie();
 	void gererGenre();
-	void majCbCategorie();
-	void majCbGenre();
+	void majCbCategorie(int idCategorie = -1);
+	void majCbGenre(int idCategorie = -1);
 	void majCbFournisseur();
 	void filtrerCategorie(QString texte);
 	void filtrerGenre(QString texte);
 	void filtrerLibelle(QString texte);
 	void toutAfficher();
 	void reinitChamps();
+	void filtrerSaisieGenre(QString texte);
+	void filtrerSaisieCategorie(QString texte);
 };

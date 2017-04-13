@@ -15,7 +15,8 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	majModel();
 
 	// mise à jour de la table
-	majTable();
+	majTableArticle();
+	//majTableRole();
 
 	// Initialisation des comboBox
 	majCbFournisseur();
@@ -32,7 +33,7 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	btnModifier->setEnabled(false);
 
 
-	// connection des signaux
+	// connexion des signaux
 	connectionSignaux();
 }
 
@@ -41,7 +42,7 @@ GuiGestionArticle::~GuiGestionArticle()
 	delete ui;
 }
 
-void GuiGestionArticle::majTable()
+void GuiGestionArticle::majTableArticle()
 {
 	// Création d'un modèle de filtre
 	proxyModel = new QSortFilterProxyModel();
@@ -109,6 +110,7 @@ void GuiGestionArticle::recupElements()
 
 	//Partie affichage
 	tvArticle = ui->tvArticle;
+	tvRole = ui->tvRoles;
 
 	// Partie Modification Ajout
 	gbDetail = ui->gbDetailArticle;
@@ -159,8 +161,34 @@ void GuiGestionArticle::connectionSignaux()
 	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
 	connect(cbFiltreGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerGenre(QString)));
 
+	connect(cbCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerSaisieGenre(QString)));
+	//connect(cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerSaisieCategorie(QString)));
+
 	// Écoute de l'édition de la ligne de libellé
 	connect(leFiltreLibelle, SIGNAL(textChanged(const QString &)), SLOT(filtrerLibelle(QString)));
+}
+
+void GuiGestionArticle::majTableRole()
+{
+	// récupération de la connexion
+	shared_ptr<Connexion> conn = Connexion::getInstance();
+	QSqlDatabase db = conn->getConnexion();
+
+	//// création de la requête
+	///*QSqlQuery requete;
+	//requete.prepare("select * from Acteur where idRoleActeur = :idRole");
+	//requete.bindValue(":idRole", 1);
+	//requete.exec();*/
+
+	// création du modèle
+	QSqlTableModel *modelActeur = new QSqlTableModel();
+	modelActeur->setTable("Acteur");
+	modelActeur->setEditStrategy(QSqlTableModel::OnManualSubmit);
+	//modelActeur->setFilter("IdRoleActeur = '2'");
+	modelActeur->select();
+
+	//tvRole->setModel(modelActeur);
+	tvRole->show();
 }
 
 void GuiGestionArticle::majDetailArticle()
@@ -302,7 +330,7 @@ void GuiGestionArticle::supprimerArticle()
 
 		// Mise à jour de la table
 		majModel();
-		majTable();
+		majTableArticle();
 		annuler();
 	}
 }
@@ -362,7 +390,7 @@ void GuiGestionArticle::valider()
 			info = new QMessageBox(QMessageBox::Icon::Information, trUtf8("Création achevée"), trUtf8("La référence du nouvel article est : ") + QString::number(article->getReference()));
 			int reponse = info->exec();
 			majModel();
-			majTable();
+			majTableArticle();
 			annuler();
 		}
 		else
@@ -388,7 +416,7 @@ void GuiGestionArticle::valider()
 			int reponse = info->exec();
 
 			majModel();
-			majTable();
+			majTableArticle();
 			annuler();
 		}
 		else
@@ -404,8 +432,9 @@ void GuiGestionArticle::gererCategorie()
 {
 	GuiGestionCategorie *gererCat = new GuiGestionCategorie();
 	gererCat->setWindowModality(Qt::ApplicationModal);
+	connect(gererCat, SIGNAL(editionTerminee()), SLOT(majCbCategorie()));
 	gererCat->show();
-	majCbCategorie();
+	//majCbCategorie();
 }
 
 void GuiGestionArticle::gererGenre()
@@ -413,10 +442,10 @@ void GuiGestionArticle::gererGenre()
 	GuiGestionGenre *gererGen = new GuiGestionGenre();
 	gererGen->setWindowModality(Qt::ApplicationModal);
 	gererGen->show();
-	majCbGenre();
+	//majCbGenre();
 }
 
-void GuiGestionArticle::majCbCategorie()
+void GuiGestionArticle::majCbCategorie(int idCategorie)
 {
 	// Récupération de la connexion
 	std::shared_ptr<Connexion> conn = Connexion::getInstance();
@@ -428,6 +457,11 @@ void GuiGestionArticle::majCbCategorie()
 
 	modelCb->setTable("Categorie");
 	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+	if (idCategorie = !- 1)
+	{
+		modelCb->setFilter(QString("IdCategorie = '%1'").arg(idCategorie));
+	}
 
 	// Récupération des données
 	modelCb->select();
@@ -445,7 +479,7 @@ void GuiGestionArticle::majCbCategorie()
 	cbFiltreCategorie->setCurrentIndex(-1);
 }
 
-void GuiGestionArticle::majCbGenre()
+void GuiGestionArticle::majCbGenre(int idCategorie)
 {
 	// Récupération de la connexion
 	std::shared_ptr<Connexion> conn = Connexion::getInstance();
@@ -457,6 +491,11 @@ void GuiGestionArticle::majCbGenre()
 
 	modelCb->setTable("Genre");
 	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+	if (idCategorie != -1)
+	{
+		modelCb->setFilter(QString("IdCategorie = '%1'").arg(idCategorie));
+	}
 
 	// Récupération des données
 	modelCb->select();
@@ -544,6 +583,7 @@ void GuiGestionArticle::reinitChamps()
 
 	cbGenre->setCurrentIndex(-1);
 
+
 	cbFournisseur->setCurrentIndex(-1);
 
 	dspPrixVente->setValue(0);
@@ -556,5 +596,24 @@ void GuiGestionArticle::reinitChamps()
 
 	// Activation du bouton de modification
 	btnModifier->setEnabled(false);
+}
+
+void GuiGestionArticle::filtrerSaisieGenre(QString texte)
+{
+	if (cbCategorie->currentIndex() != -1)
+	{
+		// récupération de l'identifiant de la catégorie
+		int idCat = ManagerCategorie::getCategorieWithLibelle(texte)->getId();
+
+		majCbGenre(idCat);
+	}
+}
+
+void GuiGestionArticle::filtrerSaisieCategorie(QString texte)
+{
+	// récupération de l'identifiant associé au genre
+	//int idCat = ManagerGenre::getGenreWithLibelle(texte)->getIdCategorie();
+
+	//majCbCategorie(idCat);
 }
 

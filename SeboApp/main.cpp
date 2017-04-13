@@ -11,7 +11,7 @@
 #include "GuiGestionArticle.h"
 #include "GuiGestionRole.h"
 #include "GuiGestionActeur.h"
-
+#include "GuiTest.h"
 
 
 int main(int argc, char *argv[])
