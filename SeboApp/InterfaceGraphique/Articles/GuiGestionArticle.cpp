@@ -43,7 +43,7 @@ GuiGestionArticle::~GuiGestionArticle()
 
 void GuiGestionArticle::majTable()
 {
-	// Création d'un moèle de filtre
+	// Création d'un modèle de filtre
 	proxyModel = new QSortFilterProxyModel();
 	proxyModel->setSourceModel(model);
 

@@ -63,6 +63,61 @@ vector<shared_ptr<Role>> ManagerRole::getListeRole()
 	return listeRole;
 }
 
+shared_ptr<Role> ManagerRole::getRoleWithId(int id)
+{
+	// Définitions
+	shared_ptr<Role> role;	// va contenir le rôle récupéré de la base de données
+
+	// Initialisation
+	role = nullptr;
+
+	try
+	{
+		// Récupération du pointeur vers l'instance unique de la connexion
+		std::shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
+
+		bool fermerConnexion = !db.isOpen();
+
+		// ouverture de la connexion
+		if (fermerConnexion)
+		{
+			db.open();
+		}
+
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("Select * from RoleActeur where idRoleActeur = :idRole");
+
+		// binding des valeurs
+		requete.bindValue(":idRole", id);
+
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
+
+		// Enregistrement du rôle
+		while (requete.next())
+		{
+			// Création du rôle
+			role = make_shared<Role>(requete.value("LibelleRoleActeur").toString(), requete.value("IdRoleActeur").toInt());
+		}
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+	}
+
+	// retour du rôle
+	return role;
+}
+
 bool ManagerRole::addRole(Role *roleAAjouter)
 {
 	// Déclarations

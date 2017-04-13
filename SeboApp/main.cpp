@@ -1,4 +1,4 @@
-#pragma encoding=utf8;
+//#pragma execution_character_set("utf-8")
 
 #include "SeboApp.h"
 #include "GuiGenreNew.h"
@@ -10,6 +10,8 @@
 #include "Tools\Connexion.h"
 #include "GuiGestionArticle.h"
 #include "GuiGestionRole.h"
+#include "GuiGestionActeur.h"
+
 
 
 int main(int argc, char *argv[])
@@ -22,7 +24,7 @@ int main(int argc, char *argv[])
 		conn->etablirConnexion("capelli", "developpeur");
 
 	QApplication a(argc, argv);
-	GuiGestionArticle w;
+	GuiGestionActeur w;
 	w.show();
 	return a.exec();
 }

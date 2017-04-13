@@ -21,6 +21,13 @@ public:
 	static vector<shared_ptr<Role>> getListeRole();
 
 	/// <summary>
+	/// Cette fonction permet de récupérer le rôle associé à l'identifiant fourni
+	/// </summary>
+	/// <param name="id">identifiant du rôle que l'on souhaite récupérer.</param>
+	/// <returns>le rôle associé à l'identifiant.</returns>
+	static shared_ptr<Role> getRoleWithId(int id);
+
+	/// <summary>
 	/// Cette fonction permet d'ajouter un rôle dans la base de données
 	/// </summary>
 	/// <param name="roleAAjouter">rôle que l'on souhaite ajouter dans la base de données</param>

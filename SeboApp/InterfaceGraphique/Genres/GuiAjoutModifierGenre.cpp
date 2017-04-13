@@ -65,7 +65,7 @@ void GuiAjoutModifierGenre::creationGenre()
 	else
 	{
 		// Affichage d'un message d'erreur
-		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la création du nouveau genre dans la base de données"), ManagerGenre::getLastError());
+		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Erreur"), trUtf8("Problème lors de la création du nouveau genre dans la base de données.\n\nDétail erreur:\n") + ManagerGenre::getLastError());
 		int reponse = erreur->exec();
 	}
 
@@ -118,7 +118,7 @@ void GuiAjoutModifierGenre::modificationGenre()
 	else
 	{
 		// Affichage d'un message d'erreur
-		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Problème lors de la modification de la base de données"), ManagerGenre::getLastError());
+		QMessageBox *erreur = new QMessageBox(QMessageBox::Icon::Critical, trUtf8("Erreur"), trUtf8("Problème lors de la modification de la base de données.\n\nDétail erreur :\n") + ManagerGenre::getLastError());
 		int reponse = erreur->exec();
 	}
 

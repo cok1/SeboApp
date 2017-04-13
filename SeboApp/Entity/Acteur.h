@@ -31,6 +31,13 @@ public:
 	~Acteur();
 
 	/// <summary>
+	/// Cette fonction permet de mettre à jour l'identifiant de l'acteur
+	/// </summary>
+	/// <param name="id">nouvel identifiant de l'acteur</param>
+	/// <returns>true si la modification a eu lieu, false sinon.</returns>
+	bool setId(int id);
+
+	/// <summary>
 	/// Cette fonction permet de modifier le nom de l'acteur
 	/// </summary>
 	/// <param name="nom">nouveau nom de l'acteur</param>

@@ -19,6 +19,19 @@ Acteur::~Acteur()
 {
 }
 
+bool Acteur::setId(int id)
+{
+	// déclaration
+	bool resultat;
+
+	resultat = id > 0 && m_nId == -1;
+
+	if (resultat)
+		m_nId = id;
+
+	return resultat;
+}
+
 bool Acteur::setNom(QString nom)
 {
 	// Déclaration
@@ -67,5 +80,5 @@ QString Acteur::getNom()
 
 int Acteur::getIdRole()
 {
-	return m_nId;
+	return m_nIdRole;
 }

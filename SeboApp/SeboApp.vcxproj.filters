@@ -250,6 +250,24 @@
     <ClCompile Include="InterfaceGraphique\Roles\GuiAjoutModifRole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiGestionActeur.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiGestionActeur.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Acteurs\GuiGestionActeur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiAjoutModifierActeur.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiAjoutModifierActeur.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Acteurs\GuiAjoutModifierActeur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -351,6 +369,18 @@
     <CustomBuild Include="InterfaceGraphique\Roles\GuiAjoutModifRole.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Acteurs\GuiGestionActeur.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Acteurs\GuiGestionActeur.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Acteurs\GuiAjoutModifierActeur.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Acteurs\GuiAjoutModifierActeur.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SeboApp.h">
@@ -414,6 +444,12 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiAjoutModifRole.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiGestionActeur.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiAjoutModifierActeur.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

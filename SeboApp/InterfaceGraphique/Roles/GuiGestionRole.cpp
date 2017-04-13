@@ -1,4 +1,3 @@
-#pragma encoding=utf8;
 #include "GuiGestionRole.h"
 #include "ui_GuiGestionRole.h"
 
@@ -8,7 +7,7 @@ GuiGestionRole::GuiGestionRole(QWidget *parent)
 	ui = new Ui::GuiGestionRole();
 	ui->setupUi(this);
 
-	// Récupération des éléments
+	// RÃ©cupÃ©ration des Ã©lÃ©ments
 	tvRole = ui->tvRoles;
 	btnAjouter = ui->btnAjouter;
 	btnModifier = ui->btnModifier;
@@ -29,21 +28,21 @@ GuiGestionRole::~GuiGestionRole()
 
 void GuiGestionRole::majTable()
 {
-	// Récupération de la connexion
+	// RÃ©cupÃ©ration de la connexion
 	shared_ptr<Connexion> conn = Connexion::getInstance();
 	QSqlDatabase db = conn->getConnexion();
 
-	// Création du modèle à partir de la base de données
+	// CrÃ©ation du modÃ¨le Ã  partir de la base de donnÃ©es
 	QSqlTableModel *model = new QSqlTableModel();
 
-	// Sélection de la table
+	// SÃ©lection de la table
 	model->setTable("detailRole");
 	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-	// récupération des données
+	// rÃ©cupÃ©ration des donnÃ©es
 	model->select();
 	model->setHeaderData(0, Qt::Horizontal, trUtf8("Id"));
-	model->setHeaderData(1, Qt::Horizontal, trUtf8("Libellé"));
+	model->setHeaderData(1, Qt::Horizontal, trUtf8("LibellÃ©"));
 
 	// Application du model sur la table
 	tvRole->setModel(model);
@@ -52,10 +51,10 @@ void GuiGestionRole::majTable()
 	tvRole->hideColumn(0);
 	tvRole->hideColumn(2);
 
-	// Connexion des actions aux événements
+	// Connexion des actions aux Ã©vÃ©nements
 	connect(tvRole->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(majAffichage()));
 
-	// Désactivation des boutons de suppression et de modification
+	// DÃ©sactivation des boutons de suppression et de modification
 	btnModifier->setEnabled(false);
 	btnSupprimer->setEnabled(false);
 }
@@ -69,18 +68,18 @@ void GuiGestionRole::ajouterRole()
 
 void GuiGestionRole::modifierRole()
 {
-	// récupération de la sélection
+	// rÃ©cupÃ©ration de la sÃ©lection
 	QItemSelectionModel *select = tvRole->selectionModel();
 	
-	// récupération de l'identifiant du rôle
+	// rÃ©cupÃ©ration de l'identifiant du rÃ´le
 	QVariant var = select->selectedRows(0).first().data();
 	int idRole = var.toInt();
 
-	// récupération du nom du rôle
+	// rÃ©cupÃ©ration du nom du rÃ´le
 	var = select->selectedRows(1).first().data();
 	QString libelleRole = var.toString();
 
-	// affichage de la fenêtre de modification
+	// affichage de la fenÃªtre de modification
 	GuiAjoutModifRole *modif = new GuiAjoutModifRole(new Role(libelleRole, idRole));
 	connect(modif, SIGNAL(editionTerminee()), SLOT(majTable()));
 	modif->show();
@@ -88,44 +87,44 @@ void GuiGestionRole::modifierRole()
 
 void GuiGestionRole::supprimerRole()
 {
-	// récupération de la sélection
+	// rÃ©cupÃ©ration de la sÃ©lection
 	QItemSelectionModel *select = tvRole->selectionModel();
 	QVariant var = select->selectedRows(1).first().data();
 
-	// récupération du nom du rôle
+	// rÃ©cupÃ©ration du nom du rÃ´le
 	QString libelleRole = var.toString();
 
-	// Affichage d'une boîte de dialogue de confirmation
+	// Affichage d'une boÃ®te de dialogue de confirmation
 	QMessageBox *confirmation = new QMessageBox();
 	confirmation->setIcon(QMessageBox::Question);
 	confirmation->setWindowTitle(trUtf8("Confirmation de la suppression"));
-	confirmation->setText(trUtf8("Suppression Rôle"));
-	confirmation->setInformativeText(trUtf8("Êtes-vous sûr de vouloir supprimer le rôle ") + libelleRole + " ?");
+	confirmation->setText(trUtf8("Suppression RÃ´le"));
+	confirmation->setInformativeText(trUtf8("ÃŠtes-vous sÃ»r de vouloir supprimer le rÃ´le ") + libelleRole + " ?");
 	confirmation->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 	confirmation->setDefaultButton(QMessageBox::No);
 
 	int reponse = confirmation->exec();
 
-	// Traitement de la réponse
+	// Traitement de la rÃ©ponse
 	if (reponse == QMessageBox::Yes)
 	{
-		// Récupération de l'identifiant de la catégorie à supprimer
+		// RÃ©cupÃ©ration de l'identifiant de la catÃ©gorie Ã  supprimer
 		QVariant var = select->selectedRows(0).first().data();
 		int idRole = var.toInt();
 
-		// Affichage du résultat de la suppression
+		// Affichage du rÃ©sultat de la suppression
 		if (ManagerRole::supRole(idRole))
 		{
-			QMessageBox *info = new QMessageBox(QMessageBox::Information, trUtf8("Suppression effectuée"), trUtf8("Le rôle ") + libelleRole + trUtf8(" a été supprimé!"));
+			QMessageBox *info = new QMessageBox(QMessageBox::Information, trUtf8("Suppression effectuÃ©e"), trUtf8("Le rÃ´le ") + libelleRole + trUtf8(" a Ã©tÃ© supprimÃ©!"));
 			int rep = info->exec();
 		}
 		else
 		{
-			QMessageBox *erreur = new QMessageBox(QMessageBox::Information, trUtf8("Problème lors de la suppression"), trUtf8("Le rôle ") + libelleRole + trUtf8(" n'a été supprimé!") + ManagerRole::getLastError());
+			QMessageBox *erreur = new QMessageBox(QMessageBox::Information, trUtf8("ProblÃ¨me lors de la suppression"), trUtf8("Le rÃ´le ") + libelleRole + trUtf8(" n'a Ã©tÃ© supprimÃ©!") + ManagerRole::getLastError());
 			int rep = erreur->exec();
 		}
 
-		// Mise à jour de la table
+		// Mise Ã  jour de la table
 		majTable();
 	}
 }
@@ -134,7 +133,7 @@ void GuiGestionRole::majAffichage()
 {
 	if (tvRole->currentIndex().row() != -1)
 	{
-		// Récupération de la sélection
+		// RÃ©cupÃ©ration de la sÃ©lection
 		QItemSelectionModel *select = tvRole->selectionModel();
 		QVariant var = select->selectedRows(2).first().data();
 

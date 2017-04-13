@@ -26,7 +26,7 @@ public:
 	/// </summary>
 	/// <param name="acteurAAjouter">acteur que l'on souhaite ajouter à la base de données</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool addActeur(Acteur acteurAAjouter);
+	static bool addActeur(Acteur *acteurAAjouter);
 
 	/// <summary>
 	/// Cette méthode permet d'ajouter un acteur dans la base de données
@@ -41,14 +41,14 @@ public:
 	/// </summary>
 	/// <param name="acteurAModifier">acteur que l'on souhaite modifier</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool modifActeur(Acteur acteurAModifier);
+	static bool modifActeur(Acteur *acteurAModifier);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un acteur de la base de données
 	/// </summary>
 	/// <param name="acteurASupprimer">acteur que l'on souhaite supprimer</param>
 	/// <returns>true si l'ajout a été réalisé, false sinon.</returns>
-	static bool supActeur(Acteur acteurASupprimer);
+	static bool supActeur(Acteur *acteurASupprimer);
 
 	/// <summary>
 	/// Cette fonction permet de supprimer un acteur de la base de données

@@ -28,8 +28,8 @@ QSqlDatabase Connexion::etablirConnexion(QString login, QString password)
 		QString connectionTemplate = "DRIVER={SQL SERVER};SERVER=%1;DATABASE=%2;";
 
 		// Remplissage des paramètres
-		//QString connectionString = connectionTemplate.arg("serveur-sql2012\\server2012").arg("Sebo_Carys");
-		QString connectionString = connectionTemplate.arg("CORENTIN\\SQLEXPRESS").arg("Sebo_Carys");
+		QString connectionString = connectionTemplate.arg("serveur-sql2012\\server2012").arg("Sebo_Carys");
+		//QString connectionString = connectionTemplate.arg("CORENTIN\\SQLEXPRESS").arg("Sebo_Carys");
 
 		// initialisation de la connexion
 		connexion = std::make_shared<QSqlDatabase>();
