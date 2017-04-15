@@ -86,7 +86,7 @@ void GuiAjoutModifierActeur::creationActeur()
 			int reponse = info->exec();
 
 			// sortie de la fenêtre
-			emit(editionTerminee());
+			emit editionTerminee();
 			close();
 		}
 		else
@@ -120,7 +120,7 @@ void GuiAjoutModifierActeur::modificationActeur()
 			int reponse = info->exec();
 
 			// sortie de la fenêtre
-			emit(editionTerminee());
+			emit editionTerminee();
 			close();
 		}
 		else

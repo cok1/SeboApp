@@ -99,6 +99,7 @@ public:
     QSpacerItem *horizontalSpacer_4;
     QFrame *frGestion;
     QHBoxLayout *horizontalLayout_2;
+    QLabel *lblUrlPhoto;
     QPushButton *btnAjouter;
     QPushButton *btnModifier;
     QPushButton *btnSupprimer;
@@ -378,7 +379,7 @@ public:
 
         gbPhoto = new QGroupBox(gbDetailArticle);
         gbPhoto->setObjectName(QStringLiteral("gbPhoto"));
-        gbPhoto->setMinimumSize(QSize(50, 0));
+        gbPhoto->setMinimumSize(QSize(250, 0));
         gbPhoto->setMaximumSize(QSize(461, 250));
         verticalLayout_2 = new QVBoxLayout(gbPhoto);
         verticalLayout_2->setSpacing(6);
@@ -395,7 +396,7 @@ public:
         lblPhoto->setMaximumSize(QSize(250, 250));
         lblPhoto->setSizeIncrement(QSize(0, 0));
         lblPhoto->setBaseSize(QSize(0, 0));
-        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Resources/kaaris.png")));
+        lblPhoto->setTextFormat(Qt::AutoText);
         lblPhoto->setScaledContents(true);
         lblPhoto->setAlignment(Qt::AlignCenter);
         lblPhoto->setMargin(2);
@@ -506,6 +507,11 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        lblUrlPhoto = new QLabel(frGestion);
+        lblUrlPhoto->setObjectName(QStringLiteral("lblUrlPhoto"));
+
+        horizontalLayout_2->addWidget(lblUrlPhoto);
+
         btnAjouter = new QPushButton(frGestion);
         btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
         btnAjouter->setIcon(icon2);
@@ -623,6 +629,7 @@ public:
         btnSupprimerRole->setToolTip(QApplication::translate("GuiGestionArticle", "Permet de supprrimer un r\303\264le", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         btnSupprimerRole->setText(QString());
+        lblUrlPhoto->setText(QString());
         btnAjouter->setText(QApplication::translate("GuiGestionArticle", "Ajouter", Q_NULLPTR));
         btnModifier->setText(QApplication::translate("GuiGestionArticle", "Modifier", Q_NULLPTR));
         btnSupprimer->setText(QApplication::translate("GuiGestionArticle", "Supprimer", Q_NULLPTR));

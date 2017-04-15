@@ -277,6 +277,15 @@
     <ClCompile Include="InterfaceGraphique\Test\GuiTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiGestionPhoto.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiGestionPhoto.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceGraphique\Photo\GuiGestionPhoto.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SeboApp.h">
@@ -396,6 +405,12 @@
     <CustomBuild Include="InterfaceGraphique\Test\GuiTest.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Photo\GuiGestionPhoto.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InterfaceGraphique\Photo\GuiGestionPhoto.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SeboApp.h">
@@ -468,6 +483,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiTest.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiGestionPhoto.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -67,7 +67,7 @@ void GuiGestionActeur::ajouterActeur()
 {
 	// Ouverture de la fenêtre de saisie des infos
 	GuiAjoutModifierActeur *ajout = new GuiAjoutModifierActeur();
-	connect(ajout, SIGNAL(editionnTerminee()), SLOT(majTable()));
+	connect(ajout, SIGNAL(editionTerminee()), SLOT(majTable()));
 	ajout->show();
 }
 

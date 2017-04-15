@@ -20,6 +20,7 @@
 #include "Tools\Connexion.h"
 #include "GuiGestionGenre.h"
 #include "GuiGestionCategorie.h"
+#include "GuiGestionPhoto.h"
 #include "Entity\Article.h"
 #include "DAO\ManagerArticle.h"
 #include "DAO\ManagerGenre.h"
@@ -84,6 +85,8 @@ private:
 	QFrame *frGestion;
 	QFrame *frEdition;
 
+	QString urlPhoto;
+
 	// Fonctions
 	void majModel();
 	void recupElements();
@@ -111,4 +114,8 @@ private slots:
 	void reinitChamps();
 	void filtrerSaisieGenre(QString texte);
 	void filtrerSaisieCategorie(QString texte);
+	void majBtnPhoto();
+	void ajouterPhoto();
+	void modifierPhoto();
+	void majUrlPhoto(QString url);
 };

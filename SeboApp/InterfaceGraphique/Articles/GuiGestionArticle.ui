@@ -447,7 +447,7 @@
          <widget class="QGroupBox" name="gbPhoto">
           <property name="minimumSize">
            <size>
-            <width>50</width>
+            <width>250</width>
             <height>0</height>
            </size>
           </property>
@@ -496,8 +496,8 @@
              <property name="text">
               <string/>
              </property>
-             <property name="pixmap">
-              <pixmap resource="../../SeboApp.qrc">:/SeboApp/Resources/kaaris.png</pixmap>
+             <property name="textFormat">
+              <enum>Qt::AutoText</enum>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -695,6 +695,13 @@
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="lblUrlPhoto">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QPushButton" name="btnAjouter">
           <property name="text">

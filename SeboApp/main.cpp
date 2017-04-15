@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		conn->etablirConnexion("capelli", "developpeur");
 
 	QApplication a(argc, argv);
-	GuiGestionActeur w;
+	GuiGestionArticle w;
 	w.show();
 	return a.exec();
 }

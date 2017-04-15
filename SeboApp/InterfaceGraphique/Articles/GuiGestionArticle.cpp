@@ -11,6 +11,9 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	// récupération des éléments de l'interface
 	recupElements();
 
+	//***** TODO Modifier
+	urlPhoto = "";
+	
 	// Mise à jour du modèle
 	majModel();
 
@@ -20,10 +23,7 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 
 	// Initialisation des comboBox
 	majCbFournisseur();
-	cbFournisseur->setCurrentIndex(-1);
-
 	majCbGenre();
-
 	majCbCategorie();
 
 	// désactivation de la groupBox d'affichage des détails de l'article
@@ -156,13 +156,15 @@ void GuiGestionArticle::connectionSignaux()
 	connect(btnValider, SIGNAL(clicked()), SLOT(valider()));
 	connect(btnAjouter, SIGNAL(clicked()), SLOT(ajoutArticle()));
 	connect(btnSupprimer, SIGNAL(clicked()), SLOT(supprimerArticle()));
+	connect(btnAjouterPhoto, SIGNAL(clicked()), SLOT(ajouterPhoto()));
+	connect(btnModifierPhoto, SIGNAL(clicked()), SLOT(modifierPhoto()));
 
 	// Écoute des changement de sélection sur les comboBox de filtre
 	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
 	connect(cbFiltreGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerGenre(QString)));
 
-	connect(cbCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerSaisieGenre(QString)));
-	//connect(cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerSaisieCategorie(QString)));
+	connect(cbCategorie, SIGNAL(currentTextChanged(QString)), SLOT(filtrerSaisieGenre(QString)));
+	connect(cbGenre, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerSaisieCategorie(QString)));
 
 	// Écoute de l'édition de la ligne de libellé
 	connect(leFiltreLibelle, SIGNAL(textChanged(const QString &)), SLOT(filtrerLibelle(QString)));
@@ -210,9 +212,10 @@ void GuiGestionArticle::majDetailArticle()
 		var = select->selectedRows(2).first().data();
 		teDescription->setText(var.toString());
 
-		// Récupération du nom de la photo
-		//var = select->selectedRows(3).first().data();
-		//QString nomPhoto = var.toString();
+		// Récupération du nom de la photo // TODO à modifier
+		var = select->selectedRows(3).first().data();
+		urlPhoto = var.toString();
+		lblPhoto->setText(urlPhoto);
 
 		// Récupération de la catégorie
 		var = select->selectedRows(5).first().data();
@@ -244,6 +247,8 @@ void GuiGestionArticle::majDetailArticle()
 
 		// Activation du bouton de modification
 		btnModifier->setEnabled(true);
+
+		majBtnPhoto();
 	}
 	else
 	{
@@ -286,6 +291,9 @@ void GuiGestionArticle::modifierArticle()
 
 		// on masque le frame de gestion
 		frGestion->setVisible(false);
+
+		// filtrage des genres en fonction de la catégorie
+		//filtrerSaisieGenre(cbCategorie->currentText());
 	}
 }
 
@@ -343,14 +351,18 @@ void GuiGestionArticle::annuler()
 	// Désactivation de la description
 	gbDetail->setEnabled(false);
 
-	// masquage du frame d'eddition
+	// masquage du frame d'édition
 	frEdition->setVisible(false);
 
-	// réaffichage du frame de gestion
+	// ré-affichage du frame de gestion
 	frGestion->setVisible(true);
 
 	// réactivation de la sélection sur la table article
 	tvArticle->setSelectionMode(QAbstractItemView::SingleSelection);
+
+	majCbGenre();
+	cbFiltreCategorie->setCurrentIndex(-1);
+	cbCategorie->setCurrentIndex(-1);
 }
 
 void GuiGestionArticle::valider()
@@ -369,7 +381,7 @@ void GuiGestionArticle::valider()
 	// Récupération des infos
 	libelle = leSaisieLibelle->text();
 	prixVente = dspPrixVente->value();
-	photo = "";	// TODO à modifier par la suite
+	photo = urlPhoto;	// TODO à modifier par la suite
 	description = teDescription->toPlainText();
 	reapprovisionnable = ckReapprovisionnable->isChecked();
 	idGenre = ManagerGenre::getIdGenre(cbGenre->currentText());
@@ -458,11 +470,6 @@ void GuiGestionArticle::majCbCategorie(int idCategorie)
 	modelCb->setTable("Categorie");
 	modelCb->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-	if (idCategorie = !- 1)
-	{
-		modelCb->setFilter(QString("IdCategorie = '%1'").arg(idCategorie));
-	}
-
 	// Récupération des données
 	modelCb->select();
 
@@ -532,10 +539,23 @@ void GuiGestionArticle::majCbFournisseur()
 	// Remplissage de la comboBox fournisseur
 	cbFournisseur->setModel(modelCb);
 	cbFournisseur->setModelColumn(1);
+
+	// Pas de sélection par défaut
+	cbFournisseur->setCurrentIndex(-1);
+
 }
 
 void GuiGestionArticle::filtrerCategorie(QString texte)
 {
+	// filtrage de
+	if (cbFiltreCategorie->currentIndex() != -1)
+	{
+		// récupération de l'identifiant de la catégorie
+		int idCat = ManagerCategorie::getCategorieWithLibelle(texte)->getId();
+
+		majCbGenre(idCat);
+	}
+
 	// filtrage catégorie
 	proxyModel->setFilterKeyColumn(5);
 	proxyModel->setDynamicSortFilter(true);
@@ -544,6 +564,14 @@ void GuiGestionArticle::filtrerCategorie(QString texte)
 
 void GuiGestionArticle::filtrerGenre(QString texte)
 {
+	if (cbFiltreGenre->currentIndex() != -1)
+	{
+		// récupération de l'identifiant associé au genre
+		int idCat = ManagerGenre::getGenreWithLibelle(texte)->getIdCategorie();
+		cbFiltreCategorie->setCurrentText(ManagerCategorie::getCategorieWithId(idCat)->getLibelle());
+
+		cbFiltreGenre->setCurrentText(texte);
+	}
 	// filtrage genre
 	proxyModel->setFilterKeyColumn(7);
 	proxyModel->setDynamicSortFilter(true);
@@ -563,8 +591,10 @@ void GuiGestionArticle::toutAfficher()
 {
 	proxyModel->invalidate();
 	leFiltreLibelle->clear();
-	cbFiltreCategorie->setCurrentIndex(-1);
-	cbFiltreGenre->setCurrentIndex(-1);
+	majCbGenre();
+	majCbCategorie();
+	//cbFiltreCategorie->setCurrentIndex(-1);
+	//cbFiltreGenre->setCurrentIndex(-1);
 }
 
 void GuiGestionArticle::reinitChamps()
@@ -575,9 +605,9 @@ void GuiGestionArticle::reinitChamps()
 
 	teDescription->clear();
 
-	// Récupération du nom de la photo
-	//var = select->selectedRows(3).first().data();
-	//QString nomPhoto = var.toString();
+	// TODO à modifier
+	urlPhoto = "";
+	lblPhoto->setText(urlPhoto);
 
 	cbCategorie->setCurrentIndex(-1);
 
@@ -594,13 +624,15 @@ void GuiGestionArticle::reinitChamps()
 
 	btnSupprimer->setEnabled(false);
 
-	// Activation du bouton de modification
+	// Désactivation du bouton de modification
 	btnModifier->setEnabled(false);
+
+	majBtnPhoto();
 }
 
 void GuiGestionArticle::filtrerSaisieGenre(QString texte)
 {
-	if (cbCategorie->currentIndex() != -1)
+	if (cbCategorie->currentIndex() != -1 && gbDetail->isEnabled())
 	{
 		// récupération de l'identifiant de la catégorie
 		int idCat = ManagerCategorie::getCategorieWithLibelle(texte)->getId();
@@ -611,9 +643,45 @@ void GuiGestionArticle::filtrerSaisieGenre(QString texte)
 
 void GuiGestionArticle::filtrerSaisieCategorie(QString texte)
 {
-	// récupération de l'identifiant associé au genre
-	//int idCat = ManagerGenre::getGenreWithLibelle(texte)->getIdCategorie();
+	if (cbGenre->currentIndex() != -1)
+	{
+		// récupération de l'identifiant associé au genre
+		int idCat = ManagerGenre::getGenreWithLibelle(texte)->getIdCategorie();
+		cbCategorie->setCurrentText(ManagerCategorie::getCategorieWithId(idCat)->getLibelle());
 
-	//majCbCategorie(idCat);
+		cbGenre->setCurrentText(texte);
+	}
+}
+
+void GuiGestionArticle::majBtnPhoto()
+{
+	btnAjouterPhoto->setVisible(urlPhoto.isEmpty());
+	btnModifierPhoto->setVisible(!urlPhoto.isEmpty());
+	btnSupprimerPhoto->setVisible(!urlPhoto.isEmpty());
+}
+
+void GuiGestionArticle::ajouterPhoto()
+{
+	GuiGestionPhoto *ajout = new GuiGestionPhoto();
+	connect(ajout, SIGNAL(editionTerminee(QString)), SLOT(majUrlPhoto(QString)));
+	ajout->show();
+}
+
+void GuiGestionArticle::modifierPhoto()
+{
+	GuiGestionPhoto *modif = new GuiGestionPhoto(lblPhoto->text());
+	connect(modif, SIGNAL(editionTerminee(QString)), SLOT(marjUrlPhoto(QString)));
+	modif->show();
+}
+
+void GuiGestionArticle::majUrlPhoto(QString url)
+{
+	if (!url.isEmpty())
+	{
+		urlPhoto = url;
+		lblPhoto->setText(url);
+	}
+	
+	majBtnPhoto();
 }
 
