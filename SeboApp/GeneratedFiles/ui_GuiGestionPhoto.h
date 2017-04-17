@@ -31,6 +31,8 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *lblUrl;
     QLineEdit *leSaisieUrl;
+    QPushButton *btnChargerPhoto;
+    QLabel *lblPhoto;
     QHBoxLayout *horizontalLayout_2;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnValider;
@@ -40,7 +42,7 @@ public:
     {
         if (GuiGestionPhoto->objectName().isEmpty())
             GuiGestionPhoto->setObjectName(QStringLiteral("GuiGestionPhoto"));
-        GuiGestionPhoto->resize(601, 88);
+        GuiGestionPhoto->resize(601, 597);
         QFont font;
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
@@ -62,8 +64,34 @@ public:
 
         horizontalLayout->addWidget(leSaisieUrl);
 
+        btnChargerPhoto = new QPushButton(GuiGestionPhoto);
+        btnChargerPhoto->setObjectName(QStringLiteral("btnChargerPhoto"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/toutAfficher.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnChargerPhoto->setIcon(icon);
+
+        horizontalLayout->addWidget(btnChargerPhoto);
+
 
         verticalLayout->addLayout(horizontalLayout);
+
+        lblPhoto = new QLabel(GuiGestionPhoto);
+        lblPhoto->setObjectName(QStringLiteral("lblPhoto"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(lblPhoto->sizePolicy().hasHeightForWidth());
+        lblPhoto->setSizePolicy(sizePolicy);
+        QFont font1;
+        font1.setPointSize(28);
+        font1.setBold(true);
+        font1.setItalic(true);
+        font1.setWeight(75);
+        lblPhoto->setFont(font1);
+        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Resources/modifier2.png")));
+        lblPhoto->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(lblPhoto);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
@@ -74,17 +102,17 @@ public:
 
         btnValider = new QPushButton(GuiGestionPhoto);
         btnValider->setObjectName(QStringLiteral("btnValider"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnValider->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnValider->setIcon(icon1);
 
         horizontalLayout_2->addWidget(btnValider);
 
         btnAnnuler = new QPushButton(GuiGestionPhoto);
         btnAnnuler->setObjectName(QStringLiteral("btnAnnuler"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAnnuler->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAnnuler->setIcon(icon2);
 
         horizontalLayout_2->addWidget(btnAnnuler);
 
@@ -101,6 +129,7 @@ public:
     {
         GuiGestionPhoto->setWindowTitle(QApplication::translate("GuiGestionPhoto", "Saisie de l'url de la photo", Q_NULLPTR));
         lblUrl->setText(QApplication::translate("GuiGestionPhoto", "Adresse URL :", Q_NULLPTR));
+        lblPhoto->setText(QString());
         btnValider->setText(QApplication::translate("GuiGestionPhoto", "Valider", Q_NULLPTR));
         btnAnnuler->setText(QApplication::translate("GuiGestionPhoto", "Annuler", Q_NULLPTR));
     } // retranslateUi

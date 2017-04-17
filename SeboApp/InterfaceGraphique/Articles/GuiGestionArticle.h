@@ -16,6 +16,8 @@
 #include <QModelIndex>
 #include <qframe.h>
 #include <qsortfilterproxymodel.h>
+#include <qbuffer.h>
+#include <qurl.h>
 
 #include "Tools\Connexion.h"
 #include "GuiGestionGenre.h"
@@ -25,6 +27,7 @@
 #include "DAO\ManagerArticle.h"
 #include "DAO\ManagerGenre.h"
 #include "DAO\ManagerFournisseur.h"
+#include "FileDownloader.h"
 
 namespace Ui { class GuiGestionArticle; };
 
@@ -35,6 +38,7 @@ class GuiGestionArticle : public QWidget
 public:
 	GuiGestionArticle(QWidget *parent = Q_NULLPTR);
 	~GuiGestionArticle();
+
 
 private:
 	Ui::GuiGestionArticle *ui;
@@ -86,11 +90,13 @@ private:
 	QFrame *frEdition;
 
 	QString urlPhoto;
+	FileDownloader *m_pImgCtrl;
 
 	// Fonctions
 	void majModel();
 	void recupElements();
 	void connectionSignaux();
+	void chargerPhoto();
 
 private slots:
 	void majTableArticle();
@@ -117,5 +123,7 @@ private slots:
 	void majBtnPhoto();
 	void ajouterPhoto();
 	void modifierPhoto();
+	void supprimerPhoto();
 	void majUrlPhoto(QString url);
+	void afficherPhoto();
 };

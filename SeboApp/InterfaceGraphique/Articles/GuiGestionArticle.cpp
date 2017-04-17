@@ -158,6 +158,7 @@ void GuiGestionArticle::connectionSignaux()
 	connect(btnSupprimer, SIGNAL(clicked()), SLOT(supprimerArticle()));
 	connect(btnAjouterPhoto, SIGNAL(clicked()), SLOT(ajouterPhoto()));
 	connect(btnModifierPhoto, SIGNAL(clicked()), SLOT(modifierPhoto()));
+	connect(btnSupprimerPhoto, SIGNAL(clicked()), SLOT(supprimerPhoto()));
 
 	// Écoute des changement de sélection sur les comboBox de filtre
 	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
@@ -168,6 +169,19 @@ void GuiGestionArticle::connectionSignaux()
 
 	// Écoute de l'édition de la ligne de libellé
 	connect(leFiltreLibelle, SIGNAL(textChanged(const QString &)), SLOT(filtrerLibelle(QString)));
+}
+
+void GuiGestionArticle::chargerPhoto()
+{
+	// récupération de l'url
+	QUrl imageUrl(urlPhoto);// , QUrl::StrictMode);
+
+	// lancement du téléchargement
+	m_pImgCtrl = new FileDownloader(imageUrl, this);
+	lblPhoto->setText("Chargement de l'image...");
+
+	// connexion au signal de fin de téléchargement
+	connect(m_pImgCtrl, SIGNAL(downloaded()), SLOT(afficherPhoto()));
 }
 
 void GuiGestionArticle::majTableRole()
@@ -215,7 +229,15 @@ void GuiGestionArticle::majDetailArticle()
 		// Récupération du nom de la photo // TODO à modifier
 		var = select->selectedRows(3).first().data();
 		urlPhoto = var.toString();
-		lblPhoto->setText(urlPhoto);
+
+		if (!urlPhoto.isEmpty())
+		{
+			chargerPhoto();
+		}
+		else
+		{
+			lblPhoto->setText(" ");
+		}
 
 		// Récupération de la catégorie
 		var = select->selectedRows(5).first().data();
@@ -363,6 +385,8 @@ void GuiGestionArticle::annuler()
 	majCbGenre();
 	cbFiltreCategorie->setCurrentIndex(-1);
 	cbCategorie->setCurrentIndex(-1);
+
+	reinitChamps();
 }
 
 void GuiGestionArticle::valider()
@@ -512,12 +536,12 @@ void GuiGestionArticle::majCbGenre(int idCategorie)
 	cbGenre->setModelColumn(1);
 
 	// Remplissage de la comboBox de filtre du genre
-	cbFiltreGenre->setModel(modelCb);
-	cbFiltreGenre->setModelColumn(1);
+	//cbFiltreGenre->setModel(modelCb);
+	//cbFiltreGenre->setModelColumn(1);
 
 	// aucune sélection par défaut
 	cbGenre->setCurrentIndex(-1);
-	cbFiltreGenre->setCurrentIndex(-1);
+	//cbFiltreGenre->setCurrentIndex(-1);
 }
 
 void GuiGestionArticle::majCbFournisseur()
@@ -607,7 +631,7 @@ void GuiGestionArticle::reinitChamps()
 
 	// TODO à modifier
 	urlPhoto = "";
-	lblPhoto->setText(urlPhoto);
+	lblPhoto->setText(" ");
 
 	cbCategorie->setCurrentIndex(-1);
 
@@ -669,9 +693,22 @@ void GuiGestionArticle::ajouterPhoto()
 
 void GuiGestionArticle::modifierPhoto()
 {
-	GuiGestionPhoto *modif = new GuiGestionPhoto(lblPhoto->text());
-	connect(modif, SIGNAL(editionTerminee(QString)), SLOT(marjUrlPhoto(QString)));
+	GuiGestionPhoto *modif = new GuiGestionPhoto(urlPhoto);
+	connect(modif, SIGNAL(editionTerminee(QString)), SLOT(majUrlPhoto(QString)));
 	modif->show();
+}
+
+void GuiGestionArticle::supprimerPhoto()
+{
+	QMessageBox *validation = new QMessageBox(QMessageBox::Question, trUtf8("Confirmation"), trUtf8("Êtes-vous sûre de vouloir supprimer la photo associée à cette article ?"), QMessageBox::No|QMessageBox::Yes);
+	validation->setDefaultButton(QMessageBox::No);
+	int reponse = validation->exec();
+
+	if (reponse == QMessageBox::Yes)
+	{
+		urlPhoto = "";
+		lblPhoto->setText(" ");
+	}
 }
 
 void GuiGestionArticle::majUrlPhoto(QString url)
@@ -679,9 +716,26 @@ void GuiGestionArticle::majUrlPhoto(QString url)
 	if (!url.isEmpty())
 	{
 		urlPhoto = url;
-		lblPhoto->setText(url);
+		chargerPhoto();
 	}
 	
 	majBtnPhoto();
+}
+
+void GuiGestionArticle::afficherPhoto()
+{
+	lblPhoto->setText("OK!");
+	// Récupération de l'image à partir du téléchargement
+	QPixmap image;
+	image.loadFromData(m_pImgCtrl->downloadedData());
+
+	// Adaptation de l'image au cadre
+	if (image.height() < image.width())
+		image = image.scaledToWidth(175, Qt::SmoothTransformation);
+	else
+		image = image.scaledToHeight(175, Qt::SmoothTransformation);
+
+	// affichage de l'image
+	lblPhoto->setPixmap(image);
 }
 

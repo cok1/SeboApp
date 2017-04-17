@@ -3,9 +3,14 @@
 #include <QWidget>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <qlabel.h>
+#include <FileDownloader.h>
 
 namespace Ui { class GuiGestionPhoto; };
 
+/// <summary>
+/// Cette classe permet de gérer la photo associée à l'article
+/// </summary>
 class GuiGestionPhoto : public QWidget
 {
 	Q_OBJECT
@@ -22,8 +27,13 @@ private:
 	QLineEdit *leSaisieUrl;
 	QPushButton *btnValider;
 	QPushButton *btnAnnuler;
+	QPushButton *btnCharger;
+	FileDownloader *m_pImgCtrl;
+	QLabel *photo;
 
 private slots:
 	void btnClickValider();
 	void btnClickAnnuler();
+	void btnClickCharger();
+	void chargerPhoto();
 };

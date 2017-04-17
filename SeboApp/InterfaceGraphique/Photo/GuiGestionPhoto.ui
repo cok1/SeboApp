@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>601</width>
-    <height>88</height>
+    <height>597</height>
    </rect>
   </property>
   <property name="font">
@@ -32,7 +32,42 @@
      <item>
       <widget class="QLineEdit" name="leSaisieUrl"/>
      </item>
+     <item>
+      <widget class="QPushButton" name="btnChargerPhoto">
+       <property name="icon">
+        <iconset resource="../../SeboApp.qrc">
+         <normaloff>:/SeboApp/Resources/toutAfficher.png</normaloff>:/SeboApp/Resources/toutAfficher.png</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblPhoto">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+       <weight>75</weight>
+       <italic>true</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../../SeboApp.qrc">:/SeboApp/Resources/modifier2.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">

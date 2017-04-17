@@ -80,6 +80,8 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QGroupBox *gbPhoto;
     QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_4;
+    QSpacerItem *verticalSpacer;
     QLabel *lblPhoto;
     QHBoxLayout *hlBoutonsPhoto;
     QSpacerItem *horizontalSpacer_10;
@@ -112,7 +114,7 @@ public:
     {
         if (GuiGestionArticle->objectName().isEmpty())
             GuiGestionArticle->setObjectName(QStringLiteral("GuiGestionArticle"));
-        GuiGestionArticle->resize(943, 930);
+        GuiGestionArticle->resize(985, 930);
         QFont font;
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
@@ -385,24 +387,31 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        verticalSpacer = new QSpacerItem(0, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        horizontalLayout_4->addItem(verticalSpacer);
+
         lblPhoto = new QLabel(gbPhoto);
         lblPhoto->setObjectName(QStringLiteral("lblPhoto"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(lblPhoto->sizePolicy().hasHeightForWidth());
-        lblPhoto->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(lblPhoto->sizePolicy().hasHeightForWidth());
+        lblPhoto->setSizePolicy(sizePolicy1);
         lblPhoto->setMinimumSize(QSize(0, 0));
         lblPhoto->setMaximumSize(QSize(250, 250));
         lblPhoto->setSizeIncrement(QSize(0, 0));
         lblPhoto->setBaseSize(QSize(0, 0));
         lblPhoto->setTextFormat(Qt::AutoText);
-        lblPhoto->setScaledContents(true);
+        lblPhoto->setScaledContents(false);
         lblPhoto->setAlignment(Qt::AlignCenter);
         lblPhoto->setMargin(2);
         lblPhoto->setIndent(0);
 
-        verticalLayout_2->addWidget(lblPhoto);
+        horizontalLayout_4->addWidget(lblPhoto);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_4);
 
         hlBoutonsPhoto = new QHBoxLayout();
         hlBoutonsPhoto->setSpacing(6);
