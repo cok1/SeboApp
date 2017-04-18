@@ -100,7 +100,7 @@ private:
 
 private slots:
 	void majTableArticle();
-	void majTableRole();
+	void majTableRole(int Reference);
 	void majDetailArticle();
 	void suppFiltre();
 	void ajoutArticle();

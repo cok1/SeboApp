@@ -11,9 +11,10 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	// récupération des éléments de l'interface
 	recupElements();
 
+	// Ajout de l'icône de l'application
 	setWindowIcon(QIcon(":/SeboApp/Resources/favicon.png"));
 
-	//***** TODO Modifier
+	// Initialisation de l'url de la photo
 	urlPhoto = "";
 	
 	// Mise à jour du modèle
@@ -21,7 +22,6 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 
 	// mise à jour de la table
 	majTableArticle();
-	//majTableRole();
 
 	// Initialisation des comboBox
 	majCbFournisseur();
@@ -54,12 +54,12 @@ void GuiGestionArticle::majTableArticle()
 	tvArticle->setModel(proxyModel);
 
 	// Gestion des largeur de colonnes
-	tvArticle->setColumnWidth(0, 60);
+	tvArticle->setColumnWidth(0, 80);
 	tvArticle->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	tvArticle->setColumnWidth(5, 120);
 	tvArticle->setColumnWidth(7, 120);
 	tvArticle->setColumnWidth(9, 120);
-	tvArticle->setColumnWidth(10, 80);
+	tvArticle->setColumnWidth(10, 90);
 	tvArticle->horizontalHeader()->setStretchLastSection(false);
 
 	// Masquage des colonnes non utilisées
@@ -190,27 +190,30 @@ void GuiGestionArticle::chargerPhoto()
 	connect(m_pImgCtrl, SIGNAL(downloaded()), SLOT(afficherPhoto()));
 }
 
-void GuiGestionArticle::majTableRole()
+void GuiGestionArticle::majTableRole(int reference)
 {
 	// récupération de la connexion
 	shared_ptr<Connexion> conn = Connexion::getInstance();
 	QSqlDatabase db = conn->getConnexion();
 
-	//// création de la requête
-	///*QSqlQuery requete;
-	//requete.prepare("select * from Acteur where idRoleActeur = :idRole");
-	//requete.bindValue(":idRole", 1);
-	//requete.exec();*/
-
 	// création du modèle
 	QSqlTableModel *modelActeur = new QSqlTableModel();
-	modelActeur->setTable("Acteur");
+	modelActeur->setTable("DetailActeurArticle");
 	modelActeur->setEditStrategy(QSqlTableModel::OnManualSubmit);
-	//modelActeur->setFilter("IdRoleActeur = '2'");
+	modelActeur->setFilter(QString("Reference = '%1'").arg(reference));
+
+	// récupération des infos
 	modelActeur->select();
 
-	//tvRole->setModel(modelActeur);
-	tvRole->show();
+	// Applications du modèle
+	tvRole->setModel(modelActeur);
+
+	// Masquage des colonnes non utiles
+	tvRole->hideColumn(0);
+	tvRole->hideColumn(1);
+	tvRole->hideColumn(2);
+	tvRole->hideColumn(4);
+	//tvRole->show();
 }
 
 void GuiGestionArticle::majDetailArticle()
@@ -223,6 +226,7 @@ void GuiGestionArticle::majDetailArticle()
 		// Récupération de la référence
 		QVariant var = select->selectedRows(0).first().data();
 		leReference->setText(var.toString());
+		majTableRole(var.toInt());
 
 		// Récupération du libellé
 		var = select->selectedRows(1).first().data();

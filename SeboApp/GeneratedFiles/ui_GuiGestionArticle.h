@@ -25,7 +25,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableView>
-#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -91,7 +90,7 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QGroupBox *gbRoles;
     QVBoxLayout *verticalLayout_4;
-    QTableWidget *tvRoles;
+    QTableView *tvRoles;
     QHBoxLayout *hlBoutonsRoles;
     QSpacerItem *horizontalSpacer_9;
     QPushButton *btnAjouterRole;
@@ -458,9 +457,17 @@ public:
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        tvRoles = new QTableWidget(gbRoles);
+        tvRoles = new QTableView(gbRoles);
         tvRoles->setObjectName(QStringLiteral("tvRoles"));
         tvRoles->setMinimumSize(QSize(175, 0));
+        tvRoles->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tvRoles->setAlternatingRowColors(true);
+        tvRoles->setSelectionMode(QAbstractItemView::SingleSelection);
+        tvRoles->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tvRoles->setShowGrid(false);
+        tvRoles->horizontalHeader()->setVisible(false);
+        tvRoles->horizontalHeader()->setStretchLastSection(true);
+        tvRoles->verticalHeader()->setVisible(false);
 
         verticalLayout_4->addWidget(tvRoles);
 

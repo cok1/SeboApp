@@ -598,7 +598,6 @@
     <Image Include="Resources\Ajouter.png" />
     <Image Include="Resources\modifier.png" />
     <Image Include="Resources\supprimer.png" />
-    <Image Include="Y:\____ CARYS-SEBO\favicon.png" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="InterfaceGraphique\GuiGenreNew.ui">
