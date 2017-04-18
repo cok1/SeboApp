@@ -11,6 +11,8 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 	// récupération des éléments de l'interface
 	recupElements();
 
+	setWindowIcon(QIcon(":/SeboApp/Resources/favicon.png"));
+
 	//***** TODO Modifier
 	urlPhoto = "";
 	
@@ -173,6 +175,10 @@ void GuiGestionArticle::connectionSignaux()
 
 void GuiGestionArticle::chargerPhoto()
 {
+	if (urlPhoto.isEmpty())
+	{
+		afficherPhoto();
+	}
 	// récupération de l'url
 	QUrl imageUrl(urlPhoto);// , QUrl::StrictMode);
 
@@ -226,18 +232,10 @@ void GuiGestionArticle::majDetailArticle()
 		var = select->selectedRows(2).first().data();
 		teDescription->setText(var.toString());
 
-		// Récupération du nom de la photo // TODO à modifier
+		// Récupération du nom de la photo
 		var = select->selectedRows(3).first().data();
 		urlPhoto = var.toString();
-
-		if (!urlPhoto.isEmpty())
-		{
-			chargerPhoto();
-		}
-		else
-		{
-			lblPhoto->setText(" ");
-		}
+		chargerPhoto();
 
 		// Récupération de la catégorie
 		var = select->selectedRows(5).first().data();
@@ -724,10 +722,13 @@ void GuiGestionArticle::majUrlPhoto(QString url)
 
 void GuiGestionArticle::afficherPhoto()
 {
-	lblPhoto->setText("OK!");
 	// Récupération de l'image à partir du téléchargement
 	QPixmap image;
-	image.loadFromData(m_pImgCtrl->downloadedData());
+
+	if (urlPhoto.isEmpty())
+		image.load(":/SeboApp/Resources/pas_image.jpg");
+	else
+		image.loadFromData(m_pImgCtrl->downloadedData());
 
 	// Adaptation de l'image au cadre
 	if (image.height() < image.width())

@@ -22,6 +22,10 @@
   <property name="windowTitle">
    <string>EssaiGuiArticle</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../SeboApp.qrc">
+    <normaloff>:/SeboApp/Resources/favicon.png</normaloff>:/SeboApp/Resources/favicon.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="lblTitreAjoutArticle">

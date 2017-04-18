@@ -68,6 +68,9 @@ public:
         font.setItalic(false);
         font.setWeight(50);
         EssaiGuiArticle->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/favicon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        EssaiGuiArticle->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(EssaiGuiArticle);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -169,17 +172,17 @@ public:
 
         btnModifier = new QPushButton(EssaiGuiArticle);
         btnModifier->setObjectName(QStringLiteral("btnModifier"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/modifier.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnModifier->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/modifier.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnModifier->setIcon(icon1);
 
         layBtn1->addWidget(btnModifier);
 
         btnAjouter = new QPushButton(EssaiGuiArticle);
         btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/Ajouter.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAjouter->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/Ajouter.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAjouter->setIcon(icon2);
 
         layBtn1->addWidget(btnAjouter);
 
@@ -207,9 +210,9 @@ public:
 
         btnSupprimer = new QPushButton(EssaiGuiArticle);
         btnSupprimer->setObjectName(QStringLiteral("btnSupprimer"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/SeboApp/Resources/supprimer.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnSupprimer->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/SeboApp/Resources/supprimer.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnSupprimer->setIcon(icon3);
 
         layBtn2->addWidget(btnSupprimer);
 

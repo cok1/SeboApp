@@ -62,7 +62,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../SeboApp.qrc">:/SeboApp/Resources/modifier2.png</pixmap>
+      <pixmap resource="../../SeboApp.qrc">:/SeboApp/Resources/pas_image_petit.jpg</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

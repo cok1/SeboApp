@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/SeboApp">
+        <file>Resources/pas_image_petit.jpg</file>
         <file>Resources/toutAfficher.png</file>
         <file>Resources/add2.png</file>
         <file>Resources/Annuler.png</file>
@@ -10,5 +11,7 @@
         <file>Resources/modifier.png</file>
         <file>Resources/supprimer.png</file>
         <file>Resources/kaaris.png</file>
+        <file>Resources/pas_image.jpg</file>
+        <file>Resources/favicon.png</file>
     </qresource>
 </RCC>

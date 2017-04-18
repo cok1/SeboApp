@@ -88,7 +88,7 @@ public:
         font1.setItalic(true);
         font1.setWeight(75);
         lblPhoto->setFont(font1);
-        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Resources/modifier2.png")));
+        lblPhoto->setPixmap(QPixmap(QString::fromUtf8(":/SeboApp/Resources/pas_image_petit.jpg")));
         lblPhoto->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(lblPhoto);
