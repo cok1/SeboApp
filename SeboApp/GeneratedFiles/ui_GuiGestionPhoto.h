@@ -47,6 +47,9 @@ public:
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
         GuiGestionPhoto->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/favicon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        GuiGestionPhoto->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(GuiGestionPhoto);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -66,9 +69,9 @@ public:
 
         btnChargerPhoto = new QPushButton(GuiGestionPhoto);
         btnChargerPhoto->setObjectName(QStringLiteral("btnChargerPhoto"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/toutAfficher.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnChargerPhoto->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/toutAfficher.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnChargerPhoto->setIcon(icon1);
 
         horizontalLayout->addWidget(btnChargerPhoto);
 
@@ -102,17 +105,17 @@ public:
 
         btnValider = new QPushButton(GuiGestionPhoto);
         btnValider->setObjectName(QStringLiteral("btnValider"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnValider->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnValider->setIcon(icon2);
 
         horizontalLayout_2->addWidget(btnValider);
 
         btnAnnuler = new QPushButton(GuiGestionPhoto);
         btnAnnuler->setObjectName(QStringLiteral("btnAnnuler"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAnnuler->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAnnuler->setIcon(icon3);
 
         horizontalLayout_2->addWidget(btnAnnuler);
 

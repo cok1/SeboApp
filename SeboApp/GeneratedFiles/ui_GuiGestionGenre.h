@@ -44,6 +44,9 @@ public:
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
         GuiGestionGenre->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/favicon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        GuiGestionGenre->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(GuiGestionGenre);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -75,25 +78,25 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         btnAjouter = new QPushButton(GuiGestionGenre);
         btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAjouter->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAjouter->setIcon(icon1);
 
         verticalLayout_2->addWidget(btnAjouter);
 
         btnModifier = new QPushButton(GuiGestionGenre);
         btnModifier->setObjectName(QStringLiteral("btnModifier"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnModifier->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnModifier->setIcon(icon2);
 
         verticalLayout_2->addWidget(btnModifier);
 
         btnSupprimer = new QPushButton(GuiGestionGenre);
         btnSupprimer->setObjectName(QStringLiteral("btnSupprimer"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnSupprimer->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnSupprimer->setIcon(icon3);
 
         verticalLayout_2->addWidget(btnSupprimer);
 

@@ -52,6 +52,9 @@ public:
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
         GuiAjoutModifierGenre->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/favicon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        GuiAjoutModifierGenre->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(GuiAjoutModifierGenre);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -99,17 +102,17 @@ public:
 
         btnValider = new QPushButton(GuiAjoutModifierGenre);
         btnValider->setObjectName(QStringLiteral("btnValider"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnValider->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/valider.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnValider->setIcon(icon1);
 
         horizontalLayout->addWidget(btnValider);
 
         btnAnnuler = new QPushButton(GuiAjoutModifierGenre);
         btnAnnuler->setObjectName(QStringLiteral("btnAnnuler"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAnnuler->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/Annuler.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAnnuler->setIcon(icon2);
 
         horizontalLayout->addWidget(btnAnnuler);
 

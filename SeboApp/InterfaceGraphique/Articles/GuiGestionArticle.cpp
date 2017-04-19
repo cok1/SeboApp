@@ -16,7 +16,7 @@ GuiGestionArticle::GuiGestionArticle(QWidget *parent)
 
 	// Initialisation de l'url de la photo
 	urlPhoto = "";
-	
+
 	// Mise à jour du modèle
 	majModel();
 
@@ -140,6 +140,7 @@ void GuiGestionArticle::recupElements()
 	btnSupprimerPhoto = ui->btnSupprimerPhoto;
 	btnAjouterRole = ui->btnAjouterRole;
 	btnModifierRole = ui->btnModifierRole;
+	btnModifierRole->setVisible(false);
 	btnSupprimerRole = ui->btnSupprimerRole;
 
 	// Ensemble de boutons
@@ -161,6 +162,8 @@ void GuiGestionArticle::connectionSignaux()
 	connect(btnAjouterPhoto, SIGNAL(clicked()), SLOT(ajouterPhoto()));
 	connect(btnModifierPhoto, SIGNAL(clicked()), SLOT(modifierPhoto()));
 	connect(btnSupprimerPhoto, SIGNAL(clicked()), SLOT(supprimerPhoto()));
+	connect(btnAjouterRole, SIGNAL(clicked()), SLOT(ajouterRole()));
+	connect(btnSupprimerRole, SIGNAL(clicked()), SLOT(supprimerRole()));
 
 	// Écoute des changement de sélection sur les comboBox de filtre
 	connect(cbFiltreCategorie, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerCategorie(QString)));
@@ -197,7 +200,7 @@ void GuiGestionArticle::majTableRole(int reference)
 	QSqlDatabase db = conn->getConnexion();
 
 	// création du modèle
-	QSqlTableModel *modelActeur = new QSqlTableModel();
+	modelActeur = new QSqlTableModel();
 	modelActeur->setTable("DetailActeurArticle");
 	modelActeur->setEditStrategy(QSqlTableModel::OnManualSubmit);
 	modelActeur->setFilter(QString("Reference = '%1'").arg(reference));
@@ -214,6 +217,7 @@ void GuiGestionArticle::majTableRole(int reference)
 	tvRole->hideColumn(2);
 	tvRole->hideColumn(4);
 	//tvRole->show();
+//}
 }
 
 void GuiGestionArticle::majDetailArticle()
@@ -702,7 +706,7 @@ void GuiGestionArticle::modifierPhoto()
 
 void GuiGestionArticle::supprimerPhoto()
 {
-	QMessageBox *validation = new QMessageBox(QMessageBox::Question, trUtf8("Confirmation"), trUtf8("Êtes-vous sûre de vouloir supprimer la photo associée à cette article ?"), QMessageBox::No|QMessageBox::Yes);
+	QMessageBox *validation = new QMessageBox(QMessageBox::Question, trUtf8("Confirmation"), trUtf8("Êtes-vous sûre de vouloir supprimer la photo associée à cette article ?"), QMessageBox::No | QMessageBox::Yes);
 	validation->setDefaultButton(QMessageBox::No);
 	int reponse = validation->exec();
 
@@ -720,7 +724,7 @@ void GuiGestionArticle::majUrlPhoto(QString url)
 		urlPhoto = url;
 		chargerPhoto();
 	}
-	
+
 	majBtnPhoto();
 }
 
@@ -742,5 +746,48 @@ void GuiGestionArticle::afficherPhoto()
 
 	// affichage de l'image
 	lblPhoto->setPixmap(image);
+}
+
+void GuiGestionArticle::ajouterRole()
+{
+	if (leReference->text().isEmpty())
+	{
+		int numLastRow = modelActeur->rowCount();
+
+		modelActeur->insertRow(numLastRow);
+		modelActeur->setData(model->index(numLastRow, 0), QVariant(-1));
+		modelActeur->setData(model->index(numLastRow, 1), QVariant("coucou" + QString::number(numLastRow)));
+		modelActeur->setData(model->index(numLastRow, 2), QVariant(-1));
+		modelActeur->setData(model->index(numLastRow, 3), QVariant(QString("coucou" + QString::number(numLastRow))));
+		modelActeur->setData(model->index(numLastRow, 4), QVariant(-1));
+		modelActeur->setData(model->index(numLastRow, 5), QVariant("coucou" + QString::number(numLastRow)));
+	}
+}
+
+void GuiGestionArticle::supprimerRole()
+{
+	// Déclaration
+	int ligneSelectionnee = tvRole->currentIndex().row();
+	//// Récupération de la sélection
+	//QItemSelectionModel *select = tvRole->selectionModel();
+
+	//// nom acteur
+	//ligneSelectionnee = select->selectedRows(0).first().row();
+
+	if (ligneSelectionnee != -1)
+	{
+		if (leReference->text().isEmpty())
+		{
+			modelActeur->removeRow(ligneSelectionnee);
+
+			QModelIndexList indexs = tvRole->selectionModel()->selectedIndexes();
+
+			foreach(QModelIndex index, indexs)
+			{
+				tvRole->selectionModel()->select(index, QItemSelectionModel::Deselect);
+			}
+
+		}
+	}
 }
 

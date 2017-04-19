@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Saisie de l'url de la photo</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../SeboApp.qrc">
+    <normaloff>:/SeboApp/Resources/favicon.png</normaloff>:/SeboApp/Resources/favicon.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

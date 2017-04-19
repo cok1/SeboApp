@@ -84,6 +84,7 @@ private:
 	// modèle
 	QSqlTableModel *model;
 	QSortFilterProxyModel *proxyModel;
+	QSqlTableModel *modelActeur;
 
 	// QFrame
 	QFrame *frGestion;
@@ -126,4 +127,6 @@ private slots:
 	void supprimerPhoto();
 	void majUrlPhoto(QString url);
 	void afficherPhoto();
+	void ajouterRole();
+	void supprimerRole();
 };

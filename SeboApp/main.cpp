@@ -12,6 +12,8 @@
 #include "GuiGestionRole.h"
 #include "GuiGestionActeur.h"
 #include "GuiTest.h"
+#include "AffichageArticles.h"
+#include "GuiAjoutActeurArticle.h"
 
 
 int main(int argc, char *argv[])
@@ -24,7 +26,7 @@ int main(int argc, char *argv[])
 		conn->etablirConnexion("capelli", "developpeur");
 
 	QApplication a(argc, argv);
-	GuiGestionArticle w;
+	GuiAjoutActeurArticle w(1);
 	w.show();
 	return a.exec();
 }

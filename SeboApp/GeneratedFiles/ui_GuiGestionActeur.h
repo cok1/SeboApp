@@ -53,6 +53,9 @@ public:
         font.setFamily(QStringLiteral("Calibri"));
         font.setPointSize(12);
         GuiGestionActeur->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/SeboApp/Resources/favicon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        GuiGestionActeur->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(GuiGestionActeur);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -94,9 +97,9 @@ public:
 
         btnToutAfficher = new QPushButton(GuiGestionActeur);
         btnToutAfficher->setObjectName(QStringLiteral("btnToutAfficher"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/SeboApp/Resources/toutAfficher.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnToutAfficher->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/SeboApp/Resources/toutAfficher.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnToutAfficher->setIcon(icon1);
 
         horizontalLayout_2->addWidget(btnToutAfficher);
 
@@ -126,25 +129,25 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         btnAjouter = new QPushButton(GuiGestionActeur);
         btnAjouter->setObjectName(QStringLiteral("btnAjouter"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAjouter->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/SeboApp/Resources/add2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAjouter->setIcon(icon2);
 
         verticalLayout_2->addWidget(btnAjouter);
 
         btnModifier = new QPushButton(GuiGestionActeur);
         btnModifier->setObjectName(QStringLiteral("btnModifier"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnModifier->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/SeboApp/Resources/modifier2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnModifier->setIcon(icon3);
 
         verticalLayout_2->addWidget(btnModifier);
 
         btnSupprimer = new QPushButton(GuiGestionActeur);
         btnSupprimer->setObjectName(QStringLiteral("btnSupprimer"));
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnSupprimer->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/SeboApp/Resources/delete2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnSupprimer->setIcon(icon4);
 
         verticalLayout_2->addWidget(btnSupprimer);
 
