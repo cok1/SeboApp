@@ -21,6 +21,10 @@ class GuiGestionRole : public QWidget
 public:
 	GuiGestionRole(QWidget *parent = Q_NULLPTR);
 	~GuiGestionRole();
+	virtual void closeEvent(QCloseEvent * event);
+
+signals:
+	void editionTerminee();
 
 private:
 	Ui::GuiGestionRole *ui;

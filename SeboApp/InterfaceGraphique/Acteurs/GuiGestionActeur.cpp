@@ -28,6 +28,13 @@ GuiGestionActeur::GuiGestionActeur(QWidget *parent)
 	connect(btnSupprimer, SIGNAL(clicked()), SLOT(supprimer()));
 	connect(btnToutAfficher, SIGNAL(clicked()), SLOT(toutAfficher()));
 	connect(cbFiltreRole, SIGNAL(currentIndexChanged(QString)), SLOT(filtrerRole(QString)));
+	//connect(this, SIGNAL(aboutToQuit()), SLOT(editionTerminee()));
+}
+
+void GuiGestionActeur::closeEvent(QCloseEvent *event)
+{
+	QWidget::closeEvent(event);
+	emit editionTerminee();
 }
 
 GuiGestionActeur::~GuiGestionActeur()
@@ -62,6 +69,7 @@ void GuiGestionActeur::majTable()
 
 	majAffichage();
 }
+
 
 void GuiGestionActeur::ajouterActeur()
 {

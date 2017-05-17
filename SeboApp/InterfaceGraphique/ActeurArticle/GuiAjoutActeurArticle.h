@@ -6,6 +6,7 @@
 
 #include "Entity\Article.h"
 #include "DAO\ManagerArticle.h"
+#include "DAO\ManagerActeurArticle.h"
 
 namespace Ui { class GuiAjoutActeurArticle; };
 

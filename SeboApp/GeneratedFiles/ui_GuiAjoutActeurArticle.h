@@ -114,7 +114,7 @@ public:
         tvActeursDispos->setObjectName(QStringLiteral("tvActeursDispos"));
         tvActeursDispos->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tvActeursDispos->setAlternatingRowColors(true);
-        tvActeursDispos->setSelectionMode(QAbstractItemView::SingleSelection);
+        tvActeursDispos->setSelectionMode(QAbstractItemView::MultiSelection);
         tvActeursDispos->setSelectionBehavior(QAbstractItemView::SelectRows);
         tvActeursDispos->setSortingEnabled(true);
         tvActeursDispos->horizontalHeader()->setVisible(false);
@@ -179,7 +179,7 @@ public:
         tvActeursLies->setObjectName(QStringLiteral("tvActeursLies"));
         tvActeursLies->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tvActeursLies->setAlternatingRowColors(true);
-        tvActeursLies->setSelectionMode(QAbstractItemView::SingleSelection);
+        tvActeursLies->setSelectionMode(QAbstractItemView::MultiSelection);
         tvActeursLies->setSelectionBehavior(QAbstractItemView::SelectRows);
         tvActeursLies->setSortingEnabled(true);
         tvActeursLies->horizontalHeader()->setVisible(false);

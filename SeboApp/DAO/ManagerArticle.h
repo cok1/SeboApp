@@ -70,6 +70,13 @@ public:
 		return m_strLastError;
 	}
 
+	/// <summary>
+	/// Cette fonction permet de récupérer le libellé de l'article dont la référence est fournie
+	/// </summary>
+	/// <param name="referenceArticle">Référence de l'article dont on veut récupérer le libellé</param>
+	/// <returns>Le libellé de l'article associé à la référence</returns>
+	static QString getLibelle(int referenceArticle);
+
 private:
 	/// <summary>
 	/// Constructeur par défaut privé pour empêcher 

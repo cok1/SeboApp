@@ -26,6 +26,12 @@ GuiGestionRole::~GuiGestionRole()
 	delete ui;
 }
 
+void GuiGestionRole::closeEvent(QCloseEvent * event)
+{
+	QWidget::closeEvent(event);
+	emit editionTerminee();
+}
+
 void GuiGestionRole::majTable()
 {
 	// Récupération de la connexion

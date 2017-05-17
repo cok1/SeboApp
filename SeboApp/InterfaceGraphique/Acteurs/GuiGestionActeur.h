@@ -21,7 +21,11 @@ class GuiGestionActeur : public QWidget
 
 public:
 	GuiGestionActeur(QWidget *parent = Q_NULLPTR);
+	virtual void closeEvent(QCloseEvent * event);
 	~GuiGestionActeur();
+
+signals:
+	void editionTerminee();
 
 private:
 	Ui::GuiGestionActeur *ui;

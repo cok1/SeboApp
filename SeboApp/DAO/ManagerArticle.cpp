@@ -2,6 +2,7 @@
 
 QString ManagerArticle::m_strLastError = "";
 
+
 ManagerArticle::ManagerArticle()
 {
 }
@@ -70,7 +71,7 @@ bool ManagerArticle::addArticle(Article *newArticle)
 	// Déclarations
 	bool resultat;	// va contenir le résultat de la procédure
 
-					// Initialisation
+	// Initialisation
 	resultat = false;
 
 	try
@@ -283,4 +284,61 @@ bool ManagerArticle::supArticle(int refArticle)
 
 	// retour du résultat de la fonction
 	return resultat;
+}
+
+QString ManagerArticle::getLibelle(int referenceArticle)
+{
+	// Définitions
+	QString libelle;	// va contenir le libellé de l'article récupéré de la base de données
+
+	// Initialisation
+	libelle = "";
+
+	try
+	{
+		// Récupération du pointeur vers l'instance unique de la connexion
+		shared_ptr<Connexion> conn = Connexion::getInstance();
+
+		// récupération de la connexion
+		QSqlDatabase db = conn->getConnexion();
+
+		bool fermerConnexion = !db.isOpen();
+
+		// ouverture de la connexion
+		if (fermerConnexion)
+		{
+			db.open();
+		}
+
+		// Création de la requête
+		QSqlQuery requete;
+		requete.prepare("Select LibelleArticle from Article where Reference = :reference");
+
+		// binding des valeurs
+		requete.bindValue(":reference", referenceArticle);
+
+		if (!requete.exec())
+		{
+			m_strLastError = requete.lastError().text();
+		}
+		else
+		{
+			// Enregistrement des Articles dans le vecteur
+			while (requete.next())
+			{
+				// Insertion de l'Article dans le vecteur
+				libelle = requete.value("LibelleArticle").toString();
+			}
+		}
+		// fermeture de la connexion
+		if (fermerConnexion)
+			db.close();
+	}
+	catch (const std::exception& e)
+	{
+		m_strLastError = e.what();
+	}
+
+	// retour du vecteur contenant les articles
+	return libelle;
 }
